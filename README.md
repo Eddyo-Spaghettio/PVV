@@ -85,13 +85,3 @@ PVV/
 | Haas ethical service | Canvas module | Required for all new members |
 
 Full contact list and resource breakdown: see `docs/operations-plan.md`.
-
----
-
-## What Changed From the Old Training
-
-The previous training docs were story-driven markdown files with CSV templates. This version: - **Centers Bridge Kit** as PVV's core deliverable (not open-ended consulting) - **Uses interactive HTML workbooks** instead of static docs (progress saves, exercises built in) - **Adds an operations plan** so the club survives leadership turnover - **Proposes a specific youth engagement product** backed by research - **Revises the constitution** to reflect PVV's actual identity and focus - **Works without Cursor** - everything is Google Drive / browser compatible
-
----
-
-*Last updated: August 2026*
