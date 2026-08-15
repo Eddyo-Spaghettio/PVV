@@ -1,0 +1,10 @@
+{
+  "name": "pvv-bridge-kit",
+  "version": "1.0.0",
+  "description": "Bridge Kit - youth engagement packages for PVV partner nonprofits",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "serve": "npx --yes serve site -l 3456"
+  }
+}

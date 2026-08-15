@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PVV Financial Training</title>
+<style>
+  :root { --bg: #faf9f7; --card: #fff; --accent: #1d3557; --accent-light: #e8eef4; --text: #1b1b1b; --muted: #666; --border: #e0ddd8; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  .header { background: var(--accent); color: white; padding: 2rem; }
+  .header h1 { font-size: 1.6rem; font-weight: normal; }
+  .header p { opacity: 0.85; margin-top: 0.5rem; font-size: 0.95rem; }
+  .progress-bar { background: rgba(255,255,255,0.2); height: 6px; border-radius: 3px; margin-top: 1rem; }
+  .progress-fill { background: white; height: 100%; border-radius: 3px; transition: width 0.3s; width: 0%; }
+  nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0.75rem 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; position: sticky; top: 0; z-index: 10; }
+  nav button { background: none; border: 1px solid var(--border); padding: 0.4rem 0.9rem; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.85rem; }
+  nav button.active { background: var(--accent); color: white; border-color: var(--accent); }
+  nav button.done { border-color: var(--accent); color: var(--accent); }
+  .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .module { display: none; }
+  .module.active { display: block; }
+  h2 { font-size: 1.4rem; font-weight: normal; margin-bottom: 1rem; color: var(--accent); }
+  h3 { font-size: 1.1rem; font-weight: normal; margin: 1.5rem 0 0.75rem; }
+  p { margin-bottom: 1rem; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; }
+  .callout { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+  label { display: block; margin-bottom: 0.25rem; font-size: 0.9rem; color: var(--muted); }
+  input[type="text"], textarea, select { width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 4px; font-family: inherit; font-size: 0.95rem; margin-bottom: 1rem; }
+  textarea { min-height: 80px; resize: vertical; }
+  .checklist label { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.6rem; color: var(--text); cursor: pointer; font-size: 0.95rem; }
+  .checklist input { margin-top: 0.3rem; }
+  .quiz-option { display: block; padding: 0.6rem 1rem; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 0.5rem; cursor: pointer; }
+  .quiz-option:hover { background: var(--accent-light); }
+  .quiz-option.correct { background: #d8f3dc; border-color: #2d6a4f; }
+  .quiz-option.wrong { background: #fde8e8; border-color: #c0392b; }
+  .feedback { padding: 0.75rem 1rem; border-radius: 4px; margin-top: 0.75rem; display: none; }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #d8f3dc; }
+  .feedback.no { background: #fde8e8; }
+  .btn { background: var(--accent); color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.95rem; margin-top: 0.5rem; }
+  .btn-outline { background: none; color: var(--accent); border: 1px solid var(--accent); }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th, td { border: 1px solid var(--border); padding: 0.5rem 0.75rem; text-align: left; }
+  th { background: var(--accent-light); font-weight: normal; }
+  .nav-buttons { display: flex; justify-content: space-between; margin-top: 2rem; }
+  .door { display: inline-block; padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.85rem; margin-right: 0.5rem; }
+  .door1 { background: #d8f3dc; color: #2d6a4f; }
+  .door2 { background: #e8eef4; color: #1d3557; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>PVV Financial Training</h1>
+  <p>Grants, budgets, and funding - for the club and for clients. Progress saves in your browser.</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<nav>
+  <button class="active" data-mod="0">1. Two Doors</button>
+  <button data-mod="1">2. Budgets</button>
+  <button data-mod="2">3. Grant Writing</button>
+</nav>
+
+<div class="container">
+
+<div class="module active" id="mod0">
+  <h2>Module 1: Two Doors of Funding</h2>
+  <p>The most common mistake PVV members make is confusing money for the club with money for clients. They're completely different applications, different accounts, different rules.</p>
+
+  <div class="card">
+    <p><span class="door door1">Door 1 - PVV/Stanford</span> Funds PVV operations: transportation, club events, printing. Applied for by our Treasurer through Haas or OSE.</p>
+    <p style="margin-top:1rem"><span class="door door2">Door 2 - Client nonprofits</span> Funds the client's programs: staff, supplies, services. The <em>nonprofit</em> applies. PVV advises and helps write - we don't submit as Stanford.</p>
+  </div>
+
+  <h3>Door 1: What PVV applies for</h3>
+  <table>
+    <tr><th>Source</th><th>Amount</th><th>When</th></tr>
+    <tr><td>Haas transportation grant</td><td>Up to $500/org/quarter</td><td>Reapply each quarter</td></tr>
+    <tr><td>Haas event co-sponsorship</td><td>Under $500</td><td>30+ days before event</td></tr>
+    <tr><td>ASSU Quick Grant</td><td>Varies</td><td>When you need fast funding</td></tr>
+    <tr><td>Stanford Fund (TSF)</td><td>Up to $5,000</td><td>Spring + Autumn cycles</td></tr>
+  </table>
+
+  <h3>Door 2: What clients apply for</h3>
+  <table>
+    <tr><th>Source type</th><th>Typical amount</th><th>Requirements</th></tr>
+    <tr><td>Community foundations (SVCF)</td><td>$5K–$50K</td><td>501(c)(3), narrative + budget</td></tr>
+    <tr><td>Corporate giving</td><td>$1K–$25K</td><td>Alignment with company priorities</td></tr>
+    <tr><td>Volunteer grants (employer match)</td><td>$250–$1K</td><td>Logged volunteer hours</td></tr>
+    <tr><td>Government/CDBG</td><td>Varies</td><td>Detailed reporting</td></tr>
+  </table>
+
+  <div class="callout">
+    <strong>Remember</strong>
+    PVV advises on Door 2. The client's executive director signs and submits. Our name is not on the application.
+  </div>
+
+  <h3>Exercise: Sort these funding sources</h3>
+  <label>Haas transportation grant for volunteer trip to EHP - Door 1 or Door 2?</label>
+  <select id="f_sort1"><option value="">Choose</option><option>Door 1 (PVV)</option><option>Door 2 (Client)</option></select>
+  <label>$15,000 foundation grant for EHP food program - Door 1 or Door 2?</label>
+  <select id="f_sort2"><option value="">Choose</option><option>Door 1 (PVV)</option><option>Door 2 (Client)</option></select>
+  <label>ASSU Quick Grant for PVV recruitment event - Door 1 or Door 2?</label>
+  <select id="f_sort3"><option value="">Choose</option><option>Door 1 (PVV)</option><option>Door 2 (Client)</option></select>
+
+  <h3>Quick check</h3>
+  <div class="quiz" id="quiz1">
+    <p>Can PVV submit a grant application on behalf of a client nonprofit using Stanford's name?</p>
+    <span class="quiz-option" data-q="quiz1" data-c="0">No - the client submits under their own 501(c)(3). PVV helps write it.</span>
+    <span class="quiz-option" data-q="quiz1" data-c="1">Yes - PVV is the applicant since we're doing the work</span>
+    <span class="quiz-option" data-q="quiz1" data-c="2">Only if the grant is under $5,000</span>
+    <div class="feedback" id="quiz1-fb"></div>
+  </div>
+
+  <div class="checklist card" id="cl0">
+    <label><input type="checkbox" data-cl="cl0" data-i="0"> I can explain Door 1 vs Door 2 in 30 seconds</label>
+    <label><input type="checkbox" data-cl="cl0" data-i="1"> I know who our Treasurer is and when to loop them in</label>
+    <label><input type="checkbox" data-cl="cl0" data-i="2"> I completed the sorting exercise above</label>
+  </div>
+
+  <div class="nav-buttons"><span></span><button class="btn" onclick="goMod(1)">Next: Budgets →</button></div>
+</div>
+
+<div class="module" id="mod1">
+  <h2>Module 2: Budgets That Funders Trust</h2>
+  <p>Funders don't fund vibes. They fund line items where every dollar has a job and the math adds up.</p>
+
+  <h3>Budget categories</h3>
+  <table>
+    <tr><th>Category</th><th>Examples</th></tr>
+    <tr><td>Personnel</td><td>Part-time coordinator, tutor stipends</td></tr>
+    <tr><td>Direct program</td><td>Food, textbooks, supplies for clients</td></tr>
+    <tr><td>Transportation</td><td>Van rental, mileage</td></tr>
+    <tr><td>Admin</td><td>Insurance, office supplies (often capped at 10–15%)</td></tr>
+    <tr><td>In-kind match</td><td>Volunteer hours valued at $29.95/hr (Independent Sector rate)</td></tr>
+  </table>
+
+  <div class="callout">
+    <strong>Golden rule</strong>
+    If your narrative says "serve 45 students twice weekly," your budget must show personnel hours and supplies for exactly that. Reviewers check.
+  </div>
+
+  <h3>Exercise: Build a line item</h3>
+  <p>Scenario: A tutoring program serves 30 students, 2 sessions/week, 36 weeks. Each student needs a $35 workbook.</p>
+  <label>Workbook cost calculation</label>
+  <input type="text" id="f_workbook" placeholder="e.g., 30 students × $35 = $1,050">
+  <label>Coordinator cost (15 hrs/wk × 36 wks × $20/hr)</label>
+  <input type="text" id="f_coord" placeholder="e.g., 15 × 36 × $20 = $10,800">
+  <label>Admin cap at 10% - what's the max admin on a $12,000 grant?</label>
+  <input type="text" id="f_admin" placeholder="e.g., $1,200">
+
+  <p>Full template: open <code>training/templates/grant-budget-template.csv</code> in Google Sheets.</p>
+
+  <h3>Quick check</h3>
+  <div class="quiz" id="quiz2">
+    <p>A budget says "$10,000 for supplies" with no breakdown. What does a funder think?</p>
+    <span class="quiz-option" data-q="quiz2" data-c="0">Suspicious - they want itemized calculations</span>
+    <span class="quiz-option" data-q="quiz2" data-c="1">Impressed by the round number</span>
+    <span class="quiz-option" data-q="quiz2" data-c="2">They don't look at budgets</span>
+    <div class="feedback" id="quiz2-fb"></div>
+  </div>
+
+  <div class="checklist card" id="cl1">
+    <label><input type="checkbox" data-cl="cl1" data-i="0"> I built at least one line item with a calculation</label>
+    <label><input type="checkbox" data-cl="cl1" data-i="1"> I know the admin overhead cap (10–15%)</label>
+    <label><input type="checkbox" data-cl="cl1" data-i="2"> I opened the grant budget template in Sheets</label>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goMod(0)">← Back</button>
+    <button class="btn" onclick="goMod(2)">Next: Grant Writing →</button>
+  </div>
+</div>
+
+<div class="module" id="mod2">
+  <h2>Module 3: Grant Narratives</h2>
+  <p>Most grants want the same things in different words: who you are, what problem exists, what you'll do, how you'll measure success, and what it costs.</p>
+
+  <h3>SMART outcomes</h3>
+  <table>
+    <tr><th>Bad</th><th>Good</th></tr>
+    <tr><td>"Help students"</td><td>"80% of 30 students improve ≥1 grade level in math by June 2027"</td></tr>
+    <tr><td>"Reduce hunger"</td><td>"Serve 200 families/month with weekly groceries for 12 months"</td></tr>
+  </table>
+
+  <h3>Problem statement formula</h3>
+  <div class="card">
+    <p><strong>Data:</strong> In [community], [X]% experience [problem].<br>
+    <strong>Story:</strong> [One person, with permission].<br>
+    <strong>Consequence:</strong> Without help, [what happens].<br>
+    <strong>Your angle:</strong> [Org] is positioned to address this because [evidence].</p>
+  </div>
+
+  <h3>Exercise: Draft a problem statement</h3>
+  <label>Pick a client or use EHP (food pantry, East Palo Alto, 50 years operating)</label>
+  <textarea id="f_problem" placeholder="Write 3–4 sentences using the formula above. Include at least one number."></textarea>
+
+  <h3>Exercise: Write 3 SMART outcomes</h3>
+  <textarea id="f_outcomes" placeholder="• Outcome 1&#10;• Outcome 2&#10;• Outcome 3"></textarea>
+
+  <h3>PVV's role vs client's role</h3>
+  <table>
+    <tr><th>Task</th><th>PVV</th><th>Client</th></tr>
+    <tr><td>Research funders</td><td>Lead</td><td>Review</td></tr>
+    <tr><td>Draft narrative + budget</td><td>Lead</td><td>Provide data, edit</td></tr>
+    <tr><td>Submit application</td><td>Advise only</td><td>Executive Director signs + submits</td></tr>
+    <tr><td>Report to funder</td><td>Support</td><td>Owns it</td></tr>
+  </table>
+
+  <h3>Quick check</h3>
+  <div class="quiz" id="quiz3">
+    <p>A client asks you to submit a grant application yourself because "you wrote it anyway." What do you do?</p>
+    <span class="quiz-option" data-q="quiz3" data-c="0">Explain that the client must submit - offer to walk them through the portal</span>
+    <span class="quiz-option" data-q="quiz3" data-c="1">Submit it under your name</span>
+    <span class="quiz-option" data-q="quiz3" data-c="2">Submit it under PVV's name</span>
+    <div class="feedback" id="quiz3-fb"></div>
+  </div>
+
+  <div class="checklist card" id="cl2">
+    <label><input type="checkbox" data-cl="cl2" data-i="0"> I wrote a problem statement with data + story</label>
+    <label><input type="checkbox" data-cl="cl2" data-i="1"> I wrote 3 SMART outcomes</label>
+    <label><input type="checkbox" data-cl="cl2" data-i="2"> I know PVV advises but doesn't submit client grants</label>
+    <label><input type="checkbox" data-cl="cl2" data-i="3"> I'm ready to help a client with a real grant application</label>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goMod(1)">← Back</button>
+    <button class="btn" onclick="markComplete()">Mark training complete</button>
+  </div>
+  <p class="saved-note" id="completeNote"></p>
+</div>
+
+</div>
+
+<script>
+const KEY = 'pvv_financial_v2';
+let state = JSON.parse(localStorage.getItem(KEY) || '{}');
+function save() { localStorage.setItem(KEY, JSON.stringify(state)); updateProgress(); }
+function updateProgress() {
+  let total = 0, done = 0;
+  ['cl0','cl1','cl2'].forEach(cl => {
+    document.querySelectorAll(`#${cl} input`).forEach((inp, i) => {
+      total++; if (state[cl]?.[i]) done++;
+    });
+  });
+  document.getElementById('progressFill').style.width = (total ? done/total*100 : 0) + '%';
+  [0,1,2].forEach(i => {
+    const allDone = [...document.querySelectorAll(`#cl${i} input`)].every((_, j) => state['cl'+i]?.[j]);
+    document.querySelector(`nav button[data-mod="${i}"]`).classList.toggle('done', allDone);
+  });
+}
+function goMod(n) {
+  document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+  document.getElementById('mod'+n).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.querySelector(`nav button[data-mod="${n}"]`).classList.add('active');
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('nav button').forEach(b => b.addEventListener('click', () => goMod(+b.dataset.mod)));
+['f_sort1','f_sort2','f_sort3','f_workbook','f_coord','f_admin','f_problem','f_outcomes'].forEach(id => {
+  const el = document.getElementById(id); if (!el) return;
+  if (state[id]) el.value = state[id];
+  el.addEventListener('change', () => { state[id] = el.value; save(); });
+  el.addEventListener('input', () => { state[id] = el.value; save(); });
+});
+document.querySelectorAll('.checklist input').forEach(inp => {
+  const cl = inp.dataset.cl, i = +inp.dataset.i;
+  if (!state[cl]) state[cl] = {};
+  if (state[cl][i]) inp.checked = true;
+  inp.addEventListener('change', () => { state[cl][i] = inp.checked; save(); });
+});
+const answers = { quiz1: 0, quiz2: 0, quiz3: 0 };
+document.querySelectorAll('.quiz-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    const q = opt.dataset.q, fb = document.getElementById(q+'-fb');
+    opt.parentElement.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('correct','wrong'));
+    if (+opt.dataset.c === answers[q]) { opt.classList.add('correct'); fb.textContent = 'Correct.'; fb.className = 'feedback show ok'; }
+    else { opt.classList.add('wrong'); fb.textContent = 'Re-read the section above.'; fb.className = 'feedback show no'; }
+  });
+});
+function markComplete() {
+  state.complete = true; state.completeDate = new Date().toISOString().split('T')[0]; save();
+  document.getElementById('completeNote').textContent = 'Training marked complete on ' + state.completeDate + '.';
+}
+if (state.complete) document.getElementById('completeNote').textContent = 'Completed on ' + state.completeDate + '.';
+updateProgress();
+</script>
+</body>
+</html>

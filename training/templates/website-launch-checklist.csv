@@ -1,0 +1,26 @@
+Phase,Task,Owner,Status,Notes
+Discovery,Complete client intake form,,Not Started,
+Discovery,Identify 3 competitor/inspiration sites,,Not Started,
+Discovery,Confirm domain name availability,,Not Started,
+Discovery,Get client logo + brand colors + photos,,Not Started,
+Plan,Define site map (list all pages),,Not Started,Usually: Home / About / Programs / Donate / Contact
+Plan,Write draft copy for each page,,Not Started,Client must approve
+Plan,Choose platform (Wix vs WordPress),,Not Started,See Technical Training Module 2
+Build,Create account + select template,,Not Started,
+Build,Build Home page,,Not Started,
+Build,Build About page,,Not Started,
+Build,Build Programs/Services page,,Not Started,
+Build,Set up Donate button or link,,Not Started,Stripe/PayPal/Givebutter
+Build,Build Contact page + form,,Not Started,Google Forms embed works too
+Build,Connect custom domain,,Not Started,
+Build,Mobile responsiveness check,,Not Started,Test on phone!
+QA,Spell-check all pages,,Not Started,
+QA,Test all links and forms,,Not Started,Submit test form yourself
+QA,Run accessibility check,,Not Started,Alt text on all images
+QA,Page speed check,,Not Started,Google PageSpeed Insights
+Launch,Client final approval,,Not Started,Get it in writing (email OK)
+Launch,Publish site,,Not Started,
+Launch,Submit to Google Search Console,,Not Started,
+Launch,Hand off admin credentials to client,,Not Started,Use password manager
+Post-Launch,30-day check-in with client,,Not Started,
+Post-Launch,Document site in PVV project wiki,,Not Started,

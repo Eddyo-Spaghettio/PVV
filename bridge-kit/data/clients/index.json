@@ -1,0 +1,10 @@
+{
+  "clients": [
+    {
+      "slug": "rosalie-rendu-center",
+      "name": "Rosalie Rendu Center",
+      "status": "active",
+      "added": "2026-08-14"
+    }
+  ]
+}

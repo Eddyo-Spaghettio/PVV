@@ -1,0 +1,113 @@
+/* PVV Bridge Kit Console */
+:root {
+  --sidebar: #1a365d;
+  --sidebar-text: #e2e8f0;
+  --accent: #009900;
+  --border: #e2e8f0;
+  --bg: #f7fafc;
+  --card: #fff;
+  --text: #2d3748;
+  --muted: #718096;
+  --radius: 8px;
+  --font: system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.5; min-height: 100dvh; }
+
+.layout { display: grid; grid-template-columns: 220px 1fr; min-height: 100dvh; }
+@media (max-width: 768px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .sidebar.open { display: flex; position: fixed; inset: 0; z-index: 100; width: 220px; }
+}
+
+.sidebar {
+  background: var(--sidebar); color: var(--sidebar-text);
+  padding: 1.25rem 0; display: flex; flex-direction: column;
+}
+.sidebar h1 { font-size: 0.95rem; font-weight: 600; padding: 0 1rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 0.5rem; }
+.sidebar h1 span { display: block; font-size: 0.7rem; opacity: 0.6; font-weight: 400; margin-top: 0.2rem; }
+.client-list { list-style: none; flex: 1; }
+.client-list button {
+  display: block; width: 100%; text-align: left; background: none; border: none;
+  color: inherit; padding: 0.65rem 1rem; cursor: pointer; font-size: 0.9rem;
+  border-left: 3px solid transparent;
+}
+.client-list button:hover { background: rgba(255,255,255,0.08); }
+.client-list button.active { background: rgba(255,255,255,0.12); border-left-color: var(--accent); }
+.sidebar-footer { padding: 1rem; font-size: 0.75rem; opacity: 0.6; border-top: 1px solid rgba(255,255,255,0.1); }
+
+.main { display: flex; flex-direction: column; min-width: 0; }
+.topbar {
+  background: var(--card); border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1.25rem; display: flex; align-items: center;
+  justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+}
+.topbar h2 { font-size: 1.1rem; font-weight: 600; }
+.topbar-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.tabs { display: flex; background: var(--card); border-bottom: 1px solid var(--border); overflow-x: auto; }
+.tabs button {
+  background: none; border: none; padding: 0.75rem 1rem; font-size: 0.85rem;
+  cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap;
+}
+.tabs button.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+.content { padding: 1.25rem; flex: 1; overflow: auto; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+.card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem; }
+.card h3 { font-size: 0.95rem; margin-bottom: 0.75rem; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 0.25rem; margin-top: 0.75rem; }
+label:first-child { margin-top: 0; }
+
+input, textarea, select {
+  width: 100%; padding: 0.5rem 0.65rem; border: 1px solid var(--border);
+  border-radius: 6px; font: inherit; font-size: 0.9rem;
+}
+textarea { min-height: 80px; resize: vertical; }
+
+.btn {
+  display: inline-flex; align-items: center; padding: 0.5rem 1rem;
+  border-radius: 6px; font-size: 0.85rem; font-weight: 500; cursor: pointer;
+  border: none; font-family: inherit;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-secondary { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+.btn-dark { background: var(--sidebar); color: #fff; }
+
+.checklist { list-style: none; }
+.checklist li { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+.checklist input { width: 18px; height: 18px; accent-color: var(--accent); }
+
+.progress-bar-wrap { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin: 0.5rem 0 1rem; }
+.progress-bar-fill { height: 100%; background: var(--accent); transition: width 0.3s; }
+
+.preview-frame { width: 100%; max-width: 420px; margin: 0 auto; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+.preview-frame iframe { width: 100%; height: 720px; border: none; }
+
+.qr-flyer-preview { max-width: 340px; margin: 1rem auto; padding: 1.5rem; background: #fff; border: 3px solid var(--accent); border-radius: 8px; text-align: center; }
+
+.calendar-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.calendar-table th, .calendar-table td { border: 1px solid var(--border); padding: 0.4rem; vertical-align: top; }
+.calendar-table th { background: var(--bg); }
+.calendar-table .post-input { min-height: 50px; font-size: 0.78rem; border: none; background: transparent; width: 100%; resize: vertical; }
+.calendar-table .post-input:focus { outline: 1px solid var(--accent); background: #fff; }
+
+.toast {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--sidebar); color: #fff;
+  padding: 0.75rem 1.25rem; border-radius: 8px; font-size: 0.85rem;
+  opacity: 0; transition: opacity 0.25s; z-index: 200;
+}
+.toast.show { opacity: 1; }
+
+.copy-block { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem; font-size: 0.85rem; white-space: pre-wrap; max-height: 180px; overflow-y: auto; margin-bottom: 0.5rem; }
+
+.mobile-menu { display: none; background: none; border: 1px solid var(--border); padding: 0.4rem 0.6rem; border-radius: 6px; cursor: pointer; }
+@media (max-width: 768px) { .mobile-menu { display: block; } }

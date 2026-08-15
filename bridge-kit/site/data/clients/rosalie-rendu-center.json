@@ -1,0 +1,51 @@
+{
+  "slug": "rosalie-rendu-center",
+  "name": "Rosalie Rendu Center",
+  "tagline": "ESL and Family Programs in East Palo Alto",
+  "mission": "The Rosalie Rendu Center empowers families in East Palo Alto by providing English as a Second Language classes and family cultural and enrichment activities for working adults and parents year round.",
+  "missionEs": "Rosalie Rendu Center capacita a las familias de East Palo Alto ofreciendo cursos de Inglés como Segundo Idioma para adultos que trabajan y padres de familia durante todo el año.",
+  "impactStat": {
+    "value": "200+",
+    "label": "adult learners served each year"
+  },
+  "programs": [
+    "English as a Second Language Classes",
+    "Conversation Club",
+    "Tot Spot: Supervised Play for Students' Children",
+    "Life, College and Career Readiness Workshops",
+    "Basic Computer Skills Instruction",
+    "Language Partners for Adult ESL Learners",
+    "Family Cultural and Educational Enrichment"
+  ],
+  "brand": {
+    "logo": "https://www.rosalie-rendu-center.org/wp-content/themes/rrcenter/images/logo.png",
+    "primary": "#009900",
+    "accent": "#fda30a",
+    "text": "#484848",
+    "background": "#fafafa"
+  },
+  "links": {
+    "website": "https://www.rosalie-rendu-center.org",
+    "donate": "https://www.rosalie-rendu-center.org/donate/",
+    "volunteer": "https://www.rosalie-rendu-center.org/volunteer/",
+    "volunteerForm": "",
+    "email": "",
+    "phone": "6504739522",
+    "phoneDisplay": "(650) 473-9522",
+    "address": "2345 Pulgas Avenue, East Palo Alto, CA 94303",
+    "instagram": "",
+    "facebook": ""
+  },
+  "cta": {
+    "volunteerLabel": "Volunteer",
+    "donateLabel": "Donate",
+    "contactLabel": "Call Us"
+  },
+  "heroImage": "https://www.rosalie-rendu-center.org/wp-content/uploads/2021/08/home-slide-1b.jpg",
+  "bilingual": true,
+  "footerNote": "Sponsored by the Daughters of Charity of St. Vincent de Paul. Serving East Palo Alto for over 25 years.",
+  "pvv": {
+    "builtBy": "Proyecto Vidas Valiosas",
+    "builtDate": "2026-08-14"
+  }
+}

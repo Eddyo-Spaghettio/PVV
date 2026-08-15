@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PVV Marketing Training</title>
+<style>
+  :root { --bg: #faf9f7; --card: #fff; --accent: #2d6a4f; --accent-light: #d8f3dc; --text: #1b1b1b; --muted: #666; --border: #e0ddd8; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  .header { background: var(--accent); color: white; padding: 2rem; }
+  .header h1 { font-size: 1.6rem; font-weight: normal; }
+  .header p { opacity: 0.85; margin-top: 0.5rem; font-size: 0.95rem; }
+  .progress-bar { background: rgba(255,255,255,0.2); height: 6px; border-radius: 3px; margin-top: 1rem; }
+  .progress-fill { background: white; height: 100%; border-radius: 3px; transition: width 0.3s; width: 0%; }
+  nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0.75rem 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; position: sticky; top: 0; z-index: 10; }
+  nav button { background: none; border: 1px solid var(--border); padding: 0.4rem 0.9rem; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.85rem; }
+  nav button.active { background: var(--accent); color: white; border-color: var(--accent); }
+  nav button.done { border-color: var(--accent); color: var(--accent); }
+  .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .module { display: none; }
+  .module.active { display: block; }
+  h2 { font-size: 1.4rem; font-weight: normal; margin-bottom: 1rem; color: var(--accent); }
+  h3 { font-size: 1.1rem; font-weight: normal; margin: 1.5rem 0 0.75rem; }
+  p { margin-bottom: 1rem; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; }
+  .callout { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+  .callout strong { display: block; margin-bottom: 0.25rem; }
+  label { display: block; margin-bottom: 0.25rem; font-size: 0.9rem; color: var(--muted); }
+  input[type="text"], textarea, select { width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 4px; font-family: inherit; font-size: 0.95rem; margin-bottom: 1rem; }
+  textarea { min-height: 80px; resize: vertical; }
+  .checklist label { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.6rem; color: var(--text); cursor: pointer; font-size: 0.95rem; }
+  .checklist input { margin-top: 0.3rem; }
+  .quiz { margin: 1rem 0; }
+  .quiz-option { display: block; padding: 0.6rem 1rem; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 0.5rem; cursor: pointer; transition: background 0.15s; }
+  .quiz-option:hover { background: var(--accent-light); }
+  .quiz-option.correct { background: #d8f3dc; border-color: var(--accent); }
+  .quiz-option.wrong { background: #fde8e8; border-color: #c0392b; }
+  .feedback { padding: 0.75rem 1rem; border-radius: 4px; margin-top: 0.75rem; display: none; }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #d8f3dc; }
+  .feedback.no { background: #fde8e8; }
+  .btn { background: var(--accent); color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.95rem; margin-top: 0.5rem; }
+  .btn:hover { opacity: 0.9; }
+  .btn-outline { background: none; color: var(--accent); border: 1px solid var(--accent); }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th, td { border: 1px solid var(--border); padding: 0.5rem 0.75rem; text-align: left; }
+  th { background: var(--accent-light); font-weight: normal; }
+  .nav-buttons { display: flex; justify-content: space-between; margin-top: 2rem; }
+  .saved-note { font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>PVV Marketing Training</h1>
+  <p>Three modules. Work at your own pace. Progress saves automatically in your browser.</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<nav id="nav">
+  <button class="active" data-mod="0">1. Strategy</button>
+  <button data-mod="1">2. Bridge Kit Assets</button>
+  <button data-mod="2">3. Launch & Measure</button>
+</nav>
+
+<div class="container">
+
+<!-- MODULE 1 -->
+<div class="module active" id="mod0">
+  <h2>Module 1: Strategy Before Posting</h2>
+  <p>Most small nonprofits fail at marketing not because they're bad at it, but because they try to do everything at once. One Instagram post won't fix a visibility problem. A clear plan might.</p>
+
+  <div class="callout">
+    <strong>The rule</strong>
+    One goal. One audience. One or two channels. Master those before adding anything else.
+  </div>
+
+  <h3>Pick one goal for the next 90 days</h3>
+  <div class="card">
+    <table>
+      <tr><th>Goal</th><th>Measure it by</th></tr>
+      <tr><td>Event attendance</td><td>RSVPs or head count</td></tr>
+      <tr><td>Volunteer recruitment</td><td>Form submissions</td></tr>
+      <tr><td>Donations</td><td>Dollars raised or donate-link clicks</td></tr>
+      <tr><td>Awareness</td><td>Followers, reach, or "how did you hear about us" responses</td></tr>
+    </table>
+  </div>
+
+  <h3>Exercise: Define your client's campaign</h3>
+  <p>Fill this in for a real or practice client. Your answers save automatically.</p>
+  <label>Client organization</label>
+  <input type="text" id="f_org" placeholder="e.g., Ecumenical Hunger Program">
+  <label>One goal (with a number)</label>
+  <input type="text" id="f_goal" placeholder="e.g., 30 Stanford students at March food drive">
+  <label>Primary audience</label>
+  <input type="text" id="f_audience" placeholder="e.g., Stanford undergrads interested in service">
+  <label>Key message (one sentence)</label>
+  <textarea id="f_message" placeholder="e.g., EHP has fed EPA families for 50 years - we need you at our next distribution day."></textarea>
+  <label>Primary channel</label>
+  <select id="f_channel">
+    <option value="">Choose one</option>
+    <option>Instagram</option>
+    <option>Haas service4all email</option>
+    <option>Printed QR flyer</option>
+    <option>Facebook</option>
+  </select>
+  <p class="saved-note" id="saveNote0"></p>
+
+  <h3>Quick check</h3>
+  <div class="quiz" id="quiz1">
+    <p>A client says their goal is "increase awareness, get donations, recruit volunteers, and go viral." What do you tell them?</p>
+    <span class="quiz-option" data-q="quiz1" data-c="0">Pick one primary goal for the next 90 days and save the rest for later</span>
+    <span class="quiz-option" data-q="quiz1" data-c="1">Great - the more goals the better</span>
+    <span class="quiz-option" data-q="quiz1" data-c="2">Skip goals and just start posting daily</span>
+    <div class="feedback" id="quiz1-fb"></div>
+  </div>
+
+  <h3>Module 1 checklist</h3>
+  <div class="checklist card" id="cl0">
+    <label><input type="checkbox" data-cl="cl0" data-i="0"> I can explain why "one goal" matters to a new member</label>
+    <label><input type="checkbox" data-cl="cl0" data-i="1"> I filled in the campaign exercise above</label>
+    <label><input type="checkbox" data-cl="cl0" data-i="2"> I know the difference between a Stanford audience and a community audience</label>
+  </div>
+
+  <div class="nav-buttons">
+    <span></span>
+    <button class="btn" onclick="goMod(1)">Next: Bridge Kit Assets →</button>
+  </div>
+</div>
+
+<!-- MODULE 2 -->
+<div class="module" id="mod1">
+  <h2>Module 2: Building Bridge Kit Marketing Assets</h2>
+  <p>Bridge Kit is PVV's core deliverable. The marketing team owns three of its five components: the QR flyer, the 90-day content calendar, and the Stanford Channel Pack.</p>
+
+  <h3>The QR Flyer</h3>
+  <p>A stranger at a laundromat or church bulletin board should understand in 3 seconds: what's happening, when, where, and what to do. The QR code goes to the Reach Page (technical team builds that).</p>
+  <div class="card">
+    <p><strong>Must include:</strong> event/org name (biggest text), date + time, location, one impact line, QR code, logo.</p>
+    <p><strong>Tools:</strong> Canva (free), Adobe Express, or Google Slides. Use the client's colors. Print at Haas copiers or FedEx.</p>
+  </div>
+
+  <h3>Exercise: Write flyer copy</h3>
+  <label>Headline</label>
+  <input type="text" id="f_headline" placeholder="e.g., Volunteer at EHP - Feed 200 Families">
+  <label>Impact line</label>
+  <input type="text" id="f_impact" placeholder="e.g., 2 hours of your time = groceries for 50 families">
+  <label>Date, time, location</label>
+  <input type="text" id="f_event" placeholder="e.g., Sat March 15, 9am–12pm, 2411 Pulgas Ave EPA">
+
+  <h3>The 90-Day Content Calendar</h3>
+  <p>You're not inventing posts from scratch every week. You're filling in a template. Open <code>templates/bridge-kit/90-day-calendar-template.csv</code> in Google Sheets - it has 24 pre-planned posts. Customize the bracketed fields for your client.</p>
+  <div class="callout">
+    <strong>Cadence that works for small orgs</strong>
+    2–3 posts per week beats daily mediocre posts. Consistency over volume.
+  </div>
+
+  <h3>Caption formula</h3>
+  <div class="card">
+    <p><strong>Hook</strong> - question, stat, or bold statement<br>
+    <strong>Story</strong> - 2–3 sentences about why this matters<br>
+    <strong>Details</strong> - date, time, location, link<br>
+    <strong>CTA</strong> - one clear action ("Link in bio to sign up")</p>
+  </div>
+
+  <h3>Exercise: Write one caption</h3>
+  <textarea id="f_caption" placeholder="Write a full caption for your client's next volunteer event using the formula above."></textarea>
+
+  <h3>Stanford Channel Pack</h3>
+  <p>This is PVV's biggest advantage. Every client event should go out on Haas's <strong>service4all</strong> listserv. Template is in <code>templates/bridge-kit/README.md</code>.</p>
+
+  <h3>Quick check</h3>
+  <div class="quiz" id="quiz2">
+    <p>What's PVV's unique marketing advantage over a professional agency?</p>
+    <span class="quiz-option" data-q="quiz2" data-c="0">Access to Stanford students as volunteers and Haas promotion channels</span>
+    <span class="quiz-option" data-q="quiz2" data-c="1">Better graphic design skills</span>
+    <span class="quiz-option" data-q="quiz2" data-c="2">A larger budget for ads</span>
+    <div class="feedback" id="quiz2-fb"></div>
+  </div>
+
+  <h3>Module 2 checklist</h3>
+  <div class="checklist card" id="cl1">
+    <label><input type="checkbox" data-cl="cl1" data-i="0"> I wrote flyer copy for a practice client</label>
+    <label><input type="checkbox" data-cl="cl1" data-i="1"> I wrote one full Instagram caption</label>
+    <label><input type="checkbox" data-cl="cl1" data-i="2"> I know where the 90-day calendar template lives</label>
+    <label><input type="checkbox" data-cl="cl1" data-i="3"> I can draft a service4all email from the template</label>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goMod(0)">← Back</button>
+    <button class="btn" onclick="goMod(2)">Next: Launch & Measure →</button>
+  </div>
+</div>
+
+<!-- MODULE 3 -->
+<div class="module" id="mod2">
+  <h2>Module 3: Launch, Promote, Measure</h2>
+  <p>Posting is half the job. The other half is making sure the right people see it, show up, and come back.</p>
+
+  <h3>Launch sequence</h3>
+  <div class="card">
+    <table>
+      <tr><th>When</th><th>Action</th></tr>
+      <tr><td>2 weeks before event</td><td>Teaser post + service4all email</td></tr>
+      <tr><td>1 week before</td><td>Flyer goes up (QR codes in community + Haas)</td></tr>
+      <tr><td>3 days before</td><td>Countdown post + Assigned Liaison shares on personal account</td></tr>
+      <tr><td>Day of</td><td>Story posts, live updates, photos</td></tr>
+      <tr><td>Week after</td><td>Thank-you post with numbers + "see you next time"</td></tr>
+    </table>
+  </div>
+
+  <h3>What to measure (and what to ignore)</h3>
+  <div class="card">
+    <table>
+      <tr><th>Track this</th><th>Ignore this (for now)</th></tr>
+      <tr><td>Volunteer form submissions</td><td>Total followers</td></tr>
+      <tr><td>Event attendance</td><td>Likes on unrelated posts</td></tr>
+      <tr><td>Donation link clicks</td><td>Vanity impressions</td></tr>
+      <tr><td>"How did you hear about us?" responses</td><td>Competitor follower counts</td></tr>
+    </table>
+  </div>
+
+  <h3>Exercise: Build a launch plan</h3>
+  <label>Client event or campaign</label>
+  <input type="text" id="f_launch" placeholder="e.g., EHP Spring Food Drive, April 12">
+  <label>Launch timeline (list 3 actions with dates)</label>
+  <textarea id="f_timeline" placeholder="e.g., Apr 1: service4all email. Apr 5: QR flyers at Haas + EPA community center. Apr 10: countdown Instagram post."></textarea>
+  <label>Primary metric and target</label>
+  <input type="text" id="f_metric" placeholder="e.g., 25 volunteer sign-ups via Google Form">
+
+  <h3>Assigned Liaison role</h3>
+  <p>Every Bridge Kit includes one PVV member as the Assigned Liaison for the quarter. As a marketing team member, you might be that liaison. Your job: post approved content, recruit Stanford peers, share on your personal account, attend one client event. The client approves copy once at kickoff; you handle execution so they are not adding a new job. Document everything in the handoff template for the next liaison.</p>
+
+  <h3>Quick check</h3>
+  <div class="quiz" id="quiz3">
+    <p>A client's Instagram gained 200 followers but zero new volunteers signed up. What happened?</p>
+    <span class="quiz-option" data-q="quiz3" data-c="0">They tracked the wrong metric - followers don't equal volunteers</span>
+    <span class="quiz-option" data-q="quiz3" data-c="1">They need more followers</span>
+    <span class="quiz-option" data-q="quiz3" data-c="2">Instagram doesn't work for nonprofits</span>
+    <div class="feedback" id="quiz3-fb"></div>
+  </div>
+
+  <h3>Module 3 checklist</h3>
+  <div class="checklist card" id="cl2">
+    <label><input type="checkbox" data-cl="cl2" data-i="0"> I wrote a launch timeline for a practice event</label>
+    <label><input type="checkbox" data-cl="cl2" data-i="1"> I can name 3 metrics that matter for a volunteer campaign</label>
+    <label><input type="checkbox" data-cl="cl2" data-i="2"> I understand the Assigned Liaison role and handoff process</label>
+    <label><input type="checkbox" data-cl="cl2" data-i="3"> I'm ready to work on a real Bridge Kit marketing deliverable</label>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goMod(1)">← Back</button>
+    <button class="btn" onclick="markComplete()">Mark training complete</button>
+  </div>
+  <p class="saved-note" id="completeNote"></p>
+</div>
+
+</div>
+
+<script>
+const KEY = 'pvv_marketing_v2';
+let state = JSON.parse(localStorage.getItem(KEY) || '{}');
+
+function save() {
+  localStorage.setItem(KEY, JSON.stringify(state));
+  updateProgress();
+}
+
+function updateProgress() {
+  let total = 0, done = 0;
+  ['cl0','cl1','cl2'].forEach(cl => {
+    const items = document.querySelectorAll(`#${cl} input`);
+    total += items.length;
+    items.forEach((inp, i) => { if (state[cl]?.[i]) done++; });
+  });
+  document.getElementById('progressFill').style.width = (done / total * 100) + '%';
+  [0,1,2].forEach(i => {
+    const cl = 'cl' + i;
+    const items = document.querySelectorAll(`#${cl} input`);
+    const allDone = [...items].every((_, j) => state[cl]?.[j]);
+    document.querySelector(`nav button[data-mod="${i}"]`).classList.toggle('done', allDone);
+  });
+}
+
+function goMod(n) {
+  document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+  document.getElementById('mod' + n).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.querySelector(`nav button[data-mod="${n}"]`).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+document.querySelectorAll('nav button').forEach(b => {
+  b.addEventListener('click', () => goMod(+b.dataset.mod));
+});
+
+// Text fields
+['f_org','f_goal','f_audience','f_message','f_channel','f_headline','f_impact','f_event','f_caption','f_launch','f_timeline','f_metric'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (state[id]) el.value = state[id];
+  el.addEventListener('input', () => { state[id] = el.value; save(); });
+  el.addEventListener('change', () => { state[id] = el.value; save(); });
+});
+
+// Checklists
+document.querySelectorAll('.checklist input').forEach(inp => {
+  const cl = inp.dataset.cl, i = +inp.dataset.i;
+  if (!state[cl]) state[cl] = {};
+  if (state[cl][i]) inp.checked = true;
+  inp.addEventListener('change', () => { state[cl][i] = inp.checked; save(); });
+});
+
+// Quizzes
+const answers = { quiz1: 0, quiz2: 0, quiz3: 0 };
+document.querySelectorAll('.quiz-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    const q = opt.dataset.q;
+    const fb = document.getElementById(q + '-fb');
+    opt.parentElement.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('correct','wrong'));
+    if (+opt.dataset.c === answers[q]) {
+      opt.classList.add('correct');
+      fb.textContent = 'Correct.';
+      fb.className = 'feedback show ok';
+    } else {
+      opt.classList.add('wrong');
+      fb.textContent = 'Not quite - re-read the section above and try again.';
+      fb.className = 'feedback show no';
+    }
+  });
+});
+
+function markComplete() {
+  state.complete = true;
+  state.completeDate = new Date().toISOString().split('T')[0];
+  save();
+  document.getElementById('completeNote').textContent = 'Training marked complete on ' + state.completeDate + '. Nice work.';
+}
+
+if (state.complete) {
+  document.getElementById('completeNote').textContent = 'Training completed on ' + state.completeDate + '.';
+}
+updateProgress();
+</script>
+</body>
+</html>

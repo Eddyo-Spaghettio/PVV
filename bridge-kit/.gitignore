@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+*.log
+
+# site/ is generated - commit it for GitHub Pages simplicity, or gitignore and CI-only deploy
+# Uncomment next line if you prefer CI-only builds:
+# site/

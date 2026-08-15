@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PVV Bridge Kit Console</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <h1>Bridge Kit<span>PVV Console</span></h1>
+      <ul class="client-list" id="clientList"></ul>
+      <div class="sidebar-footer">Edits save as browser drafts. Export JSON to update the live site.</div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <button class="mobile-menu" id="menuBtn" type="button">☰</button>
+          <h2 id="clientTitle">Loading…</h2>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary" id="openReachBtn" type="button">Open Reach Page</button>
+          <button class="btn btn-primary" id="exportBtn" type="button">Export JSON</button>
+        </div>
+      </header>
+
+      <nav class="tabs">
+        <button type="button" data-tab="overview" class="active">Overview</button>
+        <button type="button" data-tab="edit">Edit Client</button>
+        <button type="button" data-tab="preview">Preview</button>
+        <button type="button" data-tab="qr">QR Flyer</button>
+        <button type="button" data-tab="stanford">Stanford Pack</button>
+        <button type="button" data-tab="calendar">Calendar</button>
+      </nav>
+
+      <div class="content">
+        <!-- Overview -->
+        <div class="panel active" id="panel-overview">
+          <div class="card">
+            <h3>Kit Progress</h3>
+            <div class="progress-label" id="progressLabel">0/7 complete</div>
+            <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+            <ul class="checklist" id="checklist"></ul>
+          </div>
+          <div class="card">
+            <h3>Assigned Liaison</h3>
+            <div class="grid-2">
+              <div><label>Name</label><input type="text" id="liaisonName" placeholder="PVV member name"></div>
+              <div><label>Email</label><input type="email" id="liaisonEmail" placeholder="sunet@stanford.edu"></div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Metrics (update monthly)</h3>
+            <div class="metric-inputs" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.75rem">
+              <div><label>Page visits</label><input type="text" id="metricVisits" inputmode="numeric"></div>
+              <div><label>Volunteer sign-ups</label><input type="text" id="metricSignups" inputmode="numeric"></div>
+              <div><label>Stanford attendees</label><input type="text" id="metricAttendees" inputmode="numeric"></div>
+              <div><label>Posts published</label><input type="text" id="metricPosts" inputmode="numeric"></div>
+            </div>
+            <label style="margin-top:1rem">Notes</label>
+            <textarea id="kitNotes" rows="3" placeholder="Meeting notes, blockers, next steps…"></textarea>
+          </div>
+        </div>
+
+        <!-- Edit -->
+        <div class="panel" id="panel-edit">
+          <div class="card"><h3>Client Configuration</h3><form id="clientForm" onsubmit="return false"></form></div>
+        </div>
+
+        <!-- Preview -->
+        <div class="panel" id="panel-preview">
+          <p style="text-align:center;color:#718096;font-size:0.85rem;margin-bottom:1rem">Live preview - changes in Edit tab update here.</p>
+          <div class="preview-frame"><iframe id="previewFrame" title="Reach Page preview"></iframe></div>
+        </div>
+
+        <!-- QR -->
+        <div class="panel" id="panel-qr">
+          <div class="card">
+            <h3>QR Flyer</h3>
+            <p style="font-size:0.85rem;color:#718096;margin-bottom:1rem">Print at Haas copiers or FedEx. Post at community boards, Haas Center, client lobby.</p>
+            <div id="flyerExport" class="qr-flyer-preview">
+              <h4 id="flyerTitle">Organization</h4>
+              <p id="flyerImpact">Impact line</p>
+              <canvas id="qrCanvas"></canvas>
+              <p style="font-size:0.75rem;word-break:break-all" id="qrUrl"></p>
+              <p style="font-size:0.8rem;margin-top:0.75rem;font-weight:600">Scan to volunteer or learn more</p>
+            </div>
+            <div style="text-align:center;margin-top:1rem">
+              <button class="btn btn-primary" id="downloadFlyerBtn" type="button">Download Flyer PNG</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stanford -->
+        <div class="panel" id="panel-stanford">
+          <div class="card">
+            <h3>Haas service4all Email</h3>
+            <label>Subject</label>
+            <input type="text" id="s4allSubject">
+            <label>Body</label>
+            <textarea id="s4allBody" rows="10"></textarea>
+            <div class="copy-block" id="s4allPreview"></div>
+            <button class="btn btn-secondary" id="copyEmailBtn" type="button">Copy email to clipboard</button>
+          </div>
+          <div class="card">
+            <h3>CardinalEngage Event</h3>
+            <label>Event title</label>
+            <input type="text" id="ceTitle">
+            <label>Description</label>
+            <textarea id="ceDesc" rows="3"></textarea>
+          </div>
+        </div>
+
+        <!-- Calendar -->
+        <div class="panel" id="panel-calendar">
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem">
+              <h3>90-Day Content Calendar</h3>
+              <button class="btn btn-secondary" id="exportCalBtn" type="button">Export CSV</button>
+            </div>
+            <div style="overflow-x:auto">
+              <table class="calendar-table">
+                <thead><tr><th>Wk</th><th>Platform</th><th>Type</th><th>Post draft</th><th>Done</th></tr></thead>
+                <tbody id="calendarBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="./app.js" defer></script>
+  <script>
+    document.getElementById('menuBtn')?.addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

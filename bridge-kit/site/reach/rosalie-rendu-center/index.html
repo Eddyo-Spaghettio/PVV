@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Rosalie Rendu Center empowers families in East Palo Alto by providing English as a Second Language classes and family cultural and enrichment activitie">
+  <title>Rosalie Rendu Center - Get Involved</title>
+  <link rel="stylesheet" href="../../assets/reach.css">
+  <style>
+    :root {
+      --primary: #009900;
+      --accent: #fda30a;
+      --text: #484848;
+      --bg: #fafafa;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <img class="logo" src="https://www.rosalie-rendu-center.org/wp-content/themes/rrcenter/images/logo.png" alt="Rosalie Rendu Center logo" width="200" height="64">
+  </header>
+
+  <section class="hero" style="background-image: url('https://www.rosalie-rendu-center.org/wp-content/uploads/2021/08/home-slide-1b.jpg');">
+    <div class="hero-content">
+      <h1>Rosalie Rendu Center</h1>
+      <p class="tagline">ESL and Family Programs in East Palo Alto</p>
+    </div>
+  </section>
+
+  <main>
+    <div class="stat-card">
+      <div class="value">200+</div>
+      <div class="label">adult learners served each year</div>
+    </div>
+
+    <p class="mission" id="missionEn">The Rosalie Rendu Center empowers families in East Palo Alto by providing English as a Second Language classes and family cultural and enrichment activities for working adults and parents year round.</p>
+    <div class="mission-es" id="missionEs" hidden>Rosalie Rendu Center capacita a las familias de East Palo Alto ofreciendo cursos de Inglés como Segundo Idioma para adultos que trabajan y padres de familia durante todo el año.</div>
+        <button type="button" class="lang-toggle" id="langToggle" aria-pressed="false">Ver en español</button>
+
+    <div class="cta-group">
+      <a class="cta cta-primary" href="https://www.rosalie-rendu-center.org/volunteer/" target="_blank" rel="noopener">
+        Volunteer
+      </a>
+      <a class="cta cta-accent" href="https://www.rosalie-rendu-center.org/donate/" target="_blank" rel="noopener">
+        Donate
+      </a>
+      <a class="cta cta-outline" href="tel:6504739522">
+        Call Us · (650) 473-9522
+      </a>
+    </div>
+
+    <section class="programs">
+      <h2>Our Programs</h2>
+      <ul>
+          <li>English as a Second Language Classes</li>
+          <li>Conversation Club</li>
+          <li>Tot Spot: Supervised Play for Students' Children</li>
+          <li>Life, College and Career Readiness Workshops</li>
+          <li>Basic Computer Skills Instruction</li>
+          <li>Language Partners for Adult ESL Learners</li>
+          <li>Family Cultural and Educational Enrichment</li>
+      </ul>
+    </section>
+
+    <section class="contact-card">
+      <h2>Visit Us</h2>
+      <p>2345 Pulgas Avenue, East Palo Alto, CA 94303</p>
+      <p><a href="tel:6504739522">(650) 473-9522</a></p>
+      
+      <div class="social-links"><a href="https://www.rosalie-rendu-center.org" target="_blank" rel="noopener">Website</a></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Sponsored by the Daughters of Charity of St. Vincent de Paul. Serving East Palo Alto for over 25 years.</p>
+    <p class="pvv-badge">Reach Page built by <a href="https://haas.stanford.edu" target="_blank" rel="noopener">Proyecto Vidas Valiosas</a></p>
+  </footer>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('langToggle');
+      var en = document.getElementById('missionEn');
+      var es = document.getElementById('missionEs');
+      if (!btn || !es) return;
+      btn.addEventListener('click', function () {
+        var showEs = en.style.display !== 'none';
+        en.style.display = showEs ? 'none' : 'block';
+        es.hidden = showEs ? false : true;
+        btn.textContent = showEs ? 'View in English' : 'Ver en español';
+        btn.setAttribute('aria-pressed', showEs ? 'true' : 'false');
+      });
+    })();
+  </script>
+</body>
+</html>

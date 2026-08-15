@@ -1,0 +1,12 @@
+Line Item,Category,Description,Quantity,Unit Cost,Total,Funding Source,Notes
+Program Staff,Personnel,Part-time pantry coordinator (10 hrs/wk x 12 wks),120,$18.00,"$2,160.00",Requested,Must match job description in narrative
+Food Supplies,Direct Program,Fresh produce for 200 families/month,12,$350.00,"$4,200.00",Requested,Get quote from local wholesaler
+Transportation,Direct Program,Delivery van rental,12,$75.00,$900.00,Requested,Include mileage log plan
+Printing & Outreach,Admin/Marketing,Flyers and outreach materials,1,$250.00,$250.00,Requested,3 quotes attached
+Volunteer Training,Direct Program,Food safety certification for 10 volunteers,10,$25.00,$250.00,In-Kind,Partner org providing trainer
+Office Supplies,Admin,Receipt folders and labels,1,$100.00,$100.00,Match,Already secured from local donor
+Insurance,Admin,Event liability for fundraiser,1,$400.00,$400.00,Requested,Required by venue
+Evaluation,Admin,Pre/post survey tools (free),1,$0.00,$0.00,N/A,Google Forms - no cost
+TOTAL REQUESTED,,,,,,"$7,960.00",,
+TOTAL MATCH/IN-KIND,,,,,,$250.00,,
+GRAND TOTAL PROJECT COST,,,,,,"$8,210.00",,

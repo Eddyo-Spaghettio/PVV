@@ -1,0 +1,49 @@
+{
+  "clientSlug": "rosalie-rendu-center",
+  "quarter": "Autumn 2026",
+  "status": "in_progress",
+  "liaison": {
+    "name": "",
+    "email": "",
+    "notes": ""
+  },
+  "checklist": {
+    "reachPage": true,
+    "qrFlyer": false,
+    "stanfordPack": false,
+    "contentCalendar": false,
+    "liaisonAssigned": false,
+    "clientApproved": false,
+    "handoffDoc": false
+  },
+  "metrics": {
+    "pageVisits": null,
+    "volunteerSignups": null,
+    "stanfordAttendees": null,
+    "postsPublished": 0,
+    "lastUpdated": null
+  },
+  "stanfordPack": {
+    "service4allSubject": "Volunteer & Support - Rosalie Rendu Center - ESL Programs in East Palo Alto",
+    "service4allBody": "Proyecto Vidas Valiosas is partnering with the Rosalie Rendu Center to connect Stanford students with volunteer and support opportunities.\n\nThe Rosalie Rendu Center has served East Palo Alto for over 25 years, offering free ESL classes, conversation clubs, and family enrichment programs for 200+ adult learners each year - mostly working parents in the local Latinx community.\n\nWe're looking for Stanford students to:\n• Volunteer as conversation partners for adult ESL learners\n• Help with family enrichment events\n• Spread the word about free classes\n\n📍 2345 Pulgas Avenue, East Palo Alto\n📞 (650) 473-9522\n🔗 Sign up: [REACH PAGE URL]\n\nQuestions? Contact [LIAISON NAME] at [LIAISON EMAIL].",
+    "cardinalEngageTitle": "Volunteer at Rosalie Rendu Center - Free ESL Programs",
+    "cardinalEngageDescription": "Support adult learners in East Palo Alto through conversation practice, events, and outreach. No Spanish required - just patience and enthusiasm."
+  },
+  "calendar": [
+    { "week": 1, "platform": "Instagram", "type": "Intro", "draft": "We're the Rosalie Rendu Center - free ESL and family programs in East Palo Alto for 25+ years. Follow along to meet our learners and see how neighbors help neighbors learn.", "visual": "Logo or classroom photo", "done": false },
+    { "week": 1, "platform": "Instagram", "type": "Impact", "draft": "200+ adult learners walk through our doors each year. Many are working parents learning English so they can support their families. That's who we serve.", "visual": "Classroom photo (with permission)", "done": false },
+    { "week": 2, "platform": "Instagram", "type": "Volunteer", "draft": "Want to practice English conversation with an adult learner? We're looking for patient volunteers - no teaching experience needed. Link in bio.", "visual": "Volunteer with learner", "done": false },
+    { "week": 2, "platform": "Facebook", "type": "Program", "draft": "Free ESL classes for all levels. Conversation Club. Computer skills. Childcare while you learn. All community members welcome. Call (650) 473-9522 to sign up.", "visual": "Program schedule graphic", "done": false },
+    { "week": 3, "platform": "Instagram", "type": "Bilingual", "draft": "Clases gratuitas de inglés en East Palo Alto. Todos son bienvenidos. Llámenos al (650) 473-9522.\n\nFree ESL classes in East Palo Alto. Everyone is welcome.", "visual": "Bilingual text graphic", "done": false },
+    { "week": 4, "platform": "Instagram", "type": "Story", "draft": "Poll: What would you want to learn in a free English class? A) Conversation B) Job skills C) Computer basics", "visual": "Instagram story poll", "done": false },
+    { "week": 5, "platform": "Instagram", "type": "Spotlight", "draft": "Meet one of our learners: [story with permission]. This is why we do what we do.", "visual": "Quote graphic", "done": false },
+    { "week": 6, "platform": "Instagram", "type": "Volunteer", "draft": "Stanford students - we're looking for conversation partners this quarter. 1–2 hours a week makes a real difference. DM us or use the link in bio.", "visual": "Group photo", "done": false },
+    { "week": 7, "platform": "Instagram", "type": "Event", "draft": "Join us for [event name] on [date]. Free, family-friendly, and open to the community.", "visual": "Event flyer", "done": false },
+    { "week": 8, "platform": "Instagram", "type": "Education", "draft": "Did you know? Adults who improve their English are more likely to advance at work and help their children with school. That's the cycle we're breaking.", "visual": "Stat graphic", "done": false },
+    { "week": 9, "platform": "Instagram", "type": "Thank you", "draft": "Thank you to every volunteer who showed up this month. You helped [X] learners practice conversation this week alone.", "visual": "Volunteer thank-you photo", "done": false },
+    { "week": 10, "platform": "Instagram", "type": "Donate", "draft": "Our classes are free because donors make them possible. Every gift keeps ESL open to the community. Link in bio to donate.", "visual": "Impact + donate CTA", "done": false },
+    { "week": 11, "platform": "Instagram", "type": "Recap", "draft": "This quarter: [X] learners, [Y] volunteers, [Z] family events. Grateful for this community.", "visual": "Collage", "done": false },
+    { "week": 12, "platform": "Instagram", "type": "Stay involved", "draft": "Classes run year-round. Volunteer, donate, or spread the word - however you show up, we're glad you're here.", "visual": "Warm community photo", "done": false }
+  ],
+  "notes": "Pilot Bridge Kit client - Autumn 2026. Replace [REACH PAGE URL] in Stanford pack after deploy."
+}
