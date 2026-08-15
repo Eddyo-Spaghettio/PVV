@@ -81,7 +81,6 @@ PVV/
 | Who | Email | For |
 |-----|-------|-----|
 | Geoff Baker, Haas Center | glbaker@stanford.edu | SSO advising, transport grants, space |
-| OSE | studentengagement@stanford.edu | Funding, CardinalEngage, org policies |
-| Haas ethical service | Canvas module | Required for all new members |
+| Edmund Dyer-Essig | edyeres@stanford.edu | PVV President |
 
 Full contact list and resource breakdown: see `docs/operations-plan.md`.
