@@ -2,6 +2,7 @@ node_modules/
 .DS_Store
 *.log
 
-# site/ is generated - commit it for GitHub Pages simplicity, or gitignore and CI-only deploy
-# Uncomment next line if you prefer CI-only builds:
+# site/ is generated, but it is committed on purpose: this repo's GitHub Pages is
+# configured to serve the main branch directly, so removing site/ would take the
+# live Reach Pages offline. Only gitignore it after switching Pages to GitHub Actions.
 # site/

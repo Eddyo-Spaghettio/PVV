@@ -1,0 +1,40 @@
+name: Rebuild training workbooks
+
+# When the training content changes on main, regenerate the workbooks so that
+# editing a JSON file on GitHub's website is enough. See training/docs/EDITING.md.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'training/src/**'
+      - 'training/config.json'
+      - 'training/build.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build workbooks
+        run: python3 training/build.py
+
+      - name: Commit rebuilt files
+        run: |
+          git config user.name "pvv-training-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add training/interactive training/CURRICULUM.md
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+          else
+            git commit -m "Rebuild training workbooks [skip ci]"
+            git push
+          fi

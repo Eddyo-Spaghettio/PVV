@@ -1,0 +1,649 @@
+{
+  "welcome": {
+    "card": "Discovery, Reach Pages, forms, data, accessibility, and secure handoff for nonprofit clients.",
+    "intro": "Technical consulting at PVV is mostly about choosing simple, free tools a client can keep running without you. Under the constitution, that means websites, surveys, forms, data pipelines, and technical advice that makes a nonprofit's operations more efficient. This training uses one practice client throughout.",
+    "outcome": "A client intake, a Reach Page plan, a form design, a data layout, an accessibility check, and an account inventory, all built for a practice client and ready to reuse."
+  },
+  "modules": [
+    {
+      "short": "Discovery",
+      "title": "Your role and discovery",
+      "mins": 8,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "The most common technical mistake is building something the client didn't need, can't maintain, or already had. Discovery prevents that, and it comes before any building."
+        },
+        {
+          "t": "callout",
+          "title": "Five questions before any build",
+          "x": "What problem are we solving? Who will use it? Who maintains it after PVV leaves? What's the timeline? What's the budget? ($0 is the default.)"
+        },
+        {
+          "t": "table",
+          "head": [
+            "Need",
+            "Use this (free)"
+          ],
+          "rows": [
+            [
+              "Simple website or Reach Page",
+              "Google Sites"
+            ],
+            [
+              "Forms and sign-ups",
+              "Google Forms or Tally"
+            ],
+            [
+              "Data tracking",
+              "Google Sheets, linked to Forms"
+            ],
+            [
+              "Donations",
+              "The client's existing donation tool, or a simple payment link"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Our default is <strong>Google Sites + Google Forms + Google Sheets</strong>. The client probably already has Gmail, nothing needs coding, and you can hand it off in about 15 minutes."
+        },
+        {
+          "t": "callout",
+          "title": "Red flags",
+          "x": "\"We need an app\" usually means a form. \"Make it like a big nonprofit's site\" means a budget you don't have. \"We need it Friday\" when it's Wednesday means too much. No one on their team who can update content means it will go stale."
+        },
+        {
+          "t": "media",
+          "kind": "article",
+          "title": "Bridge Kit: what PVV has already built",
+          "url": "https://github.com/Eddyo-Spaghettio/PVV/blob/main/bridge-kit/README.md",
+          "source": "PVV repo",
+          "mins": 3,
+          "why": "Skim how a client's Reach Page and tracking console are structured."
+        },
+        {
+          "t": "exercise",
+          "title": "Run a practice intake",
+          "intro": "Practice client: a small tutoring nonprofit that says, \"We need an app so parents can sign up.\"",
+          "fields": [
+            {
+              "id": "m1_problem",
+              "type": "textarea",
+              "label": "What problem is the client actually trying to solve? Write the discovery questions you would ask.",
+              "placeholder": "They want parents to..."
+            },
+            {
+              "id": "m1_tool",
+              "type": "select",
+              "label": "Recommended tool",
+              "options": [
+                "Google Sites + Forms + Sheets",
+                "Wix (free tier)",
+                "WordPress, only if the client has ongoing tech support",
+                "Something else, to discuss with my chair"
+              ]
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q1_a",
+          "q": "A client says, \"We need an app.\" What do you usually end up building?",
+          "options": [
+            "A native iPhone and Android app",
+            "A mobile-friendly form linked from a simple landing page",
+            "A custom database with a login system"
+          ],
+          "answer": 1,
+          "explain": "It's cheaper, faster, and the client can maintain it.",
+          "hint": "Think about the default stack."
+        },
+        {
+          "t": "quiz",
+          "id": "q1_b",
+          "q": "Which question do you answer before building anything?",
+          "options": [
+            "Which framework is trendiest?",
+            "How many pages can we fit?",
+            "Who will maintain it after PVV leaves?"
+          ],
+          "answer": 2,
+          "explain": "If nobody can maintain it, it will go stale.",
+          "hint": "Think about the day after handoff."
+        }
+      ],
+      "checklist": [
+        "I can name the five discovery questions",
+        "I know why Google Sites, Forms, and Sheets are the default",
+        "I completed the practice intake"
+      ]
+    },
+    {
+      "short": "Reach Page",
+      "title": "Build the Reach Page",
+      "mins": 12,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "The Reach Page is the centerpiece of PVV's Bridge Kit: one mobile-friendly page where someone can volunteer, donate, or learn more in under two minutes. Most visitors will be on a phone, so design for that first."
+        },
+        {
+          "t": "figure",
+          "svg": "phone",
+          "caption": "Everything else can wait. The 5-second test: a new visitor gets all three at a glance.",
+          "legend": [
+            "Mission: what you do and who you help",
+            "Three actions, one tap each",
+            "One number that proves impact"
+          ]
+        },
+        {
+          "t": "callout",
+          "title": "The 5-second test",
+          "x": "A new visitor should understand what the organization does, who it helps, and what they can do, within five seconds of landing."
+        },
+        {
+          "t": "h3",
+          "x": "Build sequence"
+        },
+        {
+          "t": "list",
+          "items": [
+            "Intake: collect the logo, photos, and copy.",
+            "Draft the copy in a Google Doc, where the client edits, not in the site builder.",
+            "Build the pages, embed forms, and add alt text to every image.",
+            "Test on a phone. Click every link and submit every form.",
+            "Get client approval, publish, and write the handoff doc."
+          ]
+        },
+        {
+          "t": "media",
+          "kind": "article",
+          "title": "A real client page, defined as data (pilot Reach Page)",
+          "url": "https://github.com/Eddyo-Spaghettio/PVV/blob/main/bridge-kit/data/clients/rosalie-rendu-center.json",
+          "source": "PVV repo",
+          "mins": 3,
+          "why": "See which pieces of content a Reach Page needs."
+        },
+        {
+          "t": "media",
+          "kind": "template",
+          "title": "Website launch checklist",
+          "url": "https://github.com/Eddyo-Spaghettio/PVV/blob/main/training/templates/website-launch-checklist.csv",
+          "source": "PVV repo",
+          "why": "Use this before showing any site to a client."
+        },
+        {
+          "t": "exercise",
+          "title": "Plan a Reach Page",
+          "fields": [
+            {
+              "id": "m2_org",
+              "type": "text",
+              "label": "Organization (practice client)",
+              "placeholder": "e.g., Eastside Tutoring Collective"
+            },
+            {
+              "id": "m2_hero",
+              "type": "text",
+              "label": "One-sentence mission for the top of the page",
+              "placeholder": "We help..."
+            },
+            {
+              "id": "m2_buttons",
+              "type": "textarea",
+              "label": "Three buttons (Volunteer, Donate, Contact). Where does each one go?",
+              "placeholder": "Volunteer: opens the sign-up form\nDonate: ...\nContact: ..."
+            },
+            {
+              "id": "m2_stat",
+              "type": "text",
+              "label": "One impact number to show",
+              "placeholder": "e.g., 120 students tutored this year"
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q2_a",
+          "q": "What does the 5-second test check?",
+          "options": [
+            "Whether the page loads in five seconds",
+            "Whether a new visitor understands what the org does and what they can do",
+            "Whether the footer has five links"
+          ],
+          "answer": 1,
+          "explain": "It's about clarity for a first-time visitor.",
+          "hint": "It's about the visitor, not the server."
+        },
+        {
+          "t": "quiz",
+          "id": "q2_b",
+          "q": "Why do we default to Google Sites rather than WordPress for most clients?",
+          "options": [
+            "It has the best search ranking",
+            "WordPress is never free",
+            "Clients can edit it themselves with minimal training"
+          ],
+          "answer": 2,
+          "explain": "Maintainability beats features for a small client.",
+          "hint": "Think about who maintains it."
+        }
+      ],
+      "checklist": [
+        "I planned a hero, three buttons, and one impact number",
+        "I know the 5-second test",
+        "I can explain the build sequence"
+      ]
+    },
+    {
+      "short": "Forms",
+      "title": "Forms and surveys",
+      "mins": 10,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "A good form replaces a paper stack and feeds a spreadsheet directly. You're often collecting information from vulnerable people, so ask for less, not more."
+        },
+        {
+          "t": "list",
+          "items": [
+            "Only ask what you need. Every field is a privacy risk and a reason to quit.",
+            "Use dropdowns and checkboxes instead of free text, so the data stays clean.",
+            "Add a consent checkbox, such as \"I agree to be contacted.\"",
+            "Write a clear confirmation message that says what happens next.",
+            "For surveys, allow anonymous responses unless you truly need names.",
+            "Share the response sheet with named people only, never \"anyone with the link.\""
+          ]
+        },
+        {
+          "t": "media",
+          "kind": "tool",
+          "title": "Create your first form in Google Forms",
+          "url": "https://support.google.com/a/users/answer/9303071?hl=en",
+          "source": "Google Workspace Learning Center",
+          "mins": 3,
+          "why": "Follow the steps to add questions, make a field required, and change who can respond."
+        },
+        {
+          "t": "media",
+          "kind": "article",
+          "title": "How to use Google Forms (including saving responses to a Sheet)",
+          "url": "https://support.google.com/docs/answer/6281888?hl=en",
+          "source": "Google Docs Editors Help",
+          "mins": 2,
+          "why": "See how to send responses to a Google Sheet."
+        },
+        {
+          "t": "exercise",
+          "title": "Design a volunteer sign-up form",
+          "fields": [
+            {
+              "id": "m3_fields",
+              "type": "textarea",
+              "label": "List the fields you would include, and mark each as required or optional. Explain one field you left out.",
+              "placeholder": "Name (required)\nEmail (required)\n..."
+            },
+            {
+              "id": "m3_confirm",
+              "type": "text",
+              "label": "Write the confirmation message shown after someone submits.",
+              "placeholder": "Thanks! We'll email you within..."
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q3_a",
+          "q": "Which field would you leave off a basic volunteer sign-up?",
+          "options": [
+            "Email address",
+            "Availability",
+            "Home address and date of birth, when nobody needs them"
+          ],
+          "answer": 2,
+          "explain": "Collect the minimum, because every extra field is a risk.",
+          "hint": "What do you need to contact and schedule someone?"
+        },
+        {
+          "t": "quiz",
+          "id": "q3_b",
+          "q": "You're surveying youth about a program. Which setting is best?",
+          "options": [
+            "Require names on every response",
+            "Allow anonymous responses unless you truly need names",
+            "Make every question required"
+          ],
+          "answer": 1,
+          "explain": "Anonymity tends to produce more honest answers.",
+          "hint": "Think about candor."
+        }
+      ],
+      "checklist": [
+        "I designed a form with only the fields it needs",
+        "I wrote a confirmation message",
+        "I know to share response sheets with named people only"
+      ]
+    },
+    {
+      "short": "Data",
+      "title": "Data and spreadsheets",
+      "mins": 10,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "Most PVV data work follows one simple pipeline. Keep it simple and you can hand it off in minutes."
+        },
+        {
+          "t": "figure",
+          "svg": "pipeline",
+          "caption": "The standard pipeline, entirely in the client's own Google account."
+        },
+        {
+          "t": "h3",
+          "x": "Keep data clean"
+        },
+        {
+          "t": "list",
+          "items": [
+            "One row per record, one value per cell. No merged cells.",
+            "Use dropdowns or data validation for categories, so \"Mon,\" \"monday,\" and \"M\" can't all appear.",
+            "Use one date format everywhere.",
+            "Leave the raw responses tab alone. Do your cleaning and counting in a separate tab."
+          ]
+        },
+        {
+          "t": "callout",
+          "title": "A three-tab master sheet",
+          "x": "<strong>Responses:</strong> raw form data, never edited by hand. <strong>Working:</strong> the cleaned copy. <strong>Dashboard:</strong> the two or three numbers the client reports each month."
+        },
+        {
+          "t": "media",
+          "kind": "article",
+          "title": "How to use Google Forms (see the section on responses in a Sheet)",
+          "url": "https://support.google.com/docs/answer/6281888?hl=en",
+          "source": "Google Docs Editors Help",
+          "mins": 2,
+          "why": "A form can send its responses straight to a Sheet."
+        },
+        {
+          "t": "exercise",
+          "title": "Lay out a master sheet",
+          "fields": [
+            {
+              "id": "m4_tabs",
+              "type": "textarea",
+              "label": "Name three tabs for a volunteer-tracking sheet and say what each one holds.",
+              "placeholder": "Responses: ...\nWorking: ...\nDashboard: ..."
+            },
+            {
+              "id": "m4_metric",
+              "type": "text",
+              "label": "Name one metric the client will report every month.",
+              "placeholder": "e.g., new volunteers per month"
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q4_a",
+          "q": "An \"Availability\" column contains \"Mon,\" \"monday,\" and \"M.\" What fixes this at the source?",
+          "options": [
+            "Clean it by hand every month",
+            "Use a dropdown or checkbox question in the form",
+            "Leave it as is"
+          ],
+          "answer": 1,
+          "explain": "Prevent messy data on the way in rather than cleaning it later.",
+          "hint": "Fix the cause, not the symptom."
+        },
+        {
+          "t": "quiz",
+          "id": "q4_b",
+          "q": "Which tab should people edit by hand?",
+          "options": [
+            "The raw Responses tab",
+            "The Working tab",
+            "The Dashboard tab"
+          ],
+          "answer": 1,
+          "explain": "The raw tab stays untouched so you can always start over.",
+          "hint": "Which tab is your safety net?"
+        }
+      ],
+      "checklist": [
+        "I described a three-tab master sheet",
+        "I named a monthly metric",
+        "I know why raw data stays untouched"
+      ]
+    },
+    {
+      "short": "Accessibility",
+      "title": "Accessibility and mobile",
+      "mins": 10,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "Accessible design helps people with disabilities, and it also helps anyone on a small phone, in bright sun, or on a slow connection. For PVV clients, whose communities often rely on phones, it's not optional."
+        },
+        {
+          "t": "table",
+          "head": [
+            "Check",
+            "How"
+          ],
+          "rows": [
+            [
+              "Contrast",
+              "At least 4.5:1 for normal text and 3:1 for large text. Check with a contrast checker."
+            ],
+            [
+              "Images",
+              "Add short, meaningful alt text. Decorative images get empty alt text."
+            ],
+            [
+              "Forms",
+              "Every field has a visible label."
+            ],
+            [
+              "Links",
+              "Say where they go. \"Volunteer sign-up,\" not \"click here.\""
+            ],
+            [
+              "Mobile",
+              "Open the page on a real phone and try every button."
+            ]
+          ]
+        },
+        {
+          "t": "media",
+          "kind": "video",
+          "title": "Section 508: how to use the WebAIM contrast checker",
+          "url": "https://www.section508.gov/training/create/making-color-usage-accessible/webaim-contrast-checker/",
+          "source": "Section508.gov",
+          "mins": 3,
+          "why": "A short walkthrough of testing real color choices."
+        },
+        {
+          "t": "media",
+          "kind": "tool",
+          "title": "WebAIM contrast checker",
+          "url": "https://webaim.org/resources/contrastchecker/",
+          "source": "WebAIM",
+          "mins": 2,
+          "why": "Try your own pair of colors."
+        },
+        {
+          "t": "media",
+          "kind": "article",
+          "title": "W3C: accessibility principles",
+          "url": "https://www.w3.org/WAI/fundamentals/accessibility-principles/",
+          "source": "W3C Web Accessibility Initiative",
+          "mins": 2,
+          "why": "The big ideas behind the checklist above."
+        },
+        {
+          "t": "exercise",
+          "title": "Test and describe",
+          "fields": [
+            {
+              "id": "m5_pair",
+              "type": "text",
+              "label": "Pick a text and background color pair for the practice site and report the contrast ratio.",
+              "placeholder": "e.g., #2D3142 on #FFFFFF = 12.5:1"
+            },
+            {
+              "id": "m5_alt",
+              "type": "text",
+              "label": "Write alt text for a photo of two volunteers sorting oranges into crates at a pantry table.",
+              "placeholder": "Two volunteers..."
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q5_a",
+          "q": "What is the minimum contrast ratio for normal-size text at WCAG level AA?",
+          "options": [
+            "2:1",
+            "3:1",
+            "4.5:1"
+          ],
+          "answer": 2,
+          "explain": "3:1 is only enough for large text.",
+          "hint": "It's higher than 3:1."
+        },
+        {
+          "t": "quiz",
+          "id": "q5_b",
+          "q": "Which is the best alt text for the photo of volunteers sorting oranges?",
+          "options": [
+            "Photo",
+            "IMG_4021.jpg",
+            "Two volunteers sort oranges into crates at the pantry's Saturday distribution"
+          ],
+          "answer": 2,
+          "explain": "Good alt text says what matters about the image in a short sentence.",
+          "hint": "Imagine you can't see the picture."
+        }
+      ],
+      "checklist": [
+        "I tested a color pair and read the ratio",
+        "I wrote meaningful alt text",
+        "I know to test on a real phone"
+      ]
+    },
+    {
+      "short": "Security",
+      "title": "Security, privacy, and handoff",
+      "mins": 10,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "You'll often handle information about vulnerable people. The client owns that data, and your job is to protect it and then hand everything back cleanly."
+        },
+        {
+          "t": "list",
+          "items": [
+            "Keep client data in the client's accounts, not your personal one.",
+            "Share sheets with named people only, never \"anyone with the link.\"",
+            "Never discuss individuals' personal information in PVV meetings.",
+            "Use long, unique passwords with a password manager, and turn on multifactor authentication.",
+            "Never put passwords, tokens, or API keys in a public GitHub repo. Keep them in environment variables."
+          ]
+        },
+        {
+          "t": "h3",
+          "x": "The handoff document"
+        },
+        {
+          "t": "p",
+          "x": "Every project ends with a one-page guide for the client: how to check new form responses, how to edit the site's text, how to update the donate link, and who to contact if something breaks. Include an inventory of every account, who owns it, and who can access it."
+        },
+        {
+          "t": "media",
+          "kind": "article",
+          "title": "CISA: use strong passwords",
+          "url": "https://www.cisa.gov/secure-our-world/use-strong-passwords",
+          "source": "CISA",
+          "mins": 2,
+          "why": "Length, uniqueness, and password managers."
+        },
+        {
+          "t": "media",
+          "kind": "article",
+          "title": "CISA: turn on multifactor authentication",
+          "url": "https://www.cisa.gov/secure-our-world/turn-mfa",
+          "source": "CISA",
+          "mins": 2,
+          "why": "How to find the setting in any account."
+        },
+        {
+          "t": "exercise",
+          "title": "Inventory the accounts",
+          "fields": [
+            {
+              "id": "m6_inventory",
+              "type": "textarea",
+              "label": "For a practice Reach Page, list every account involved (site, form, sheet, email) and who should own each.",
+              "placeholder": "Google Site: owned by the client's director\nForm: ...\nSheet: ..."
+            }
+          ]
+        },
+        {
+          "t": "exercise",
+          "title": "Capstone: your handoff package",
+          "capstone": true,
+          "intro": "Create a one-page handoff guide in Google Docs for your practice client, including the account inventory. Set sharing to <strong>Anyone with the link can view</strong> (use no real client data), then paste the link. Your category chair will review it.",
+          "fields": [
+            {
+              "id": "cap_link",
+              "type": "url",
+              "required": true,
+              "label": "Link to your practice handoff guide",
+              "placeholder": "https://docs.google.com/..."
+            },
+            {
+              "id": "cap_reflect",
+              "type": "textarea",
+              "label": "What would make the handoff fail on a real project, and how would you prevent it?",
+              "placeholder": "It would fail if..."
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q6_a",
+          "q": "Where should a client's form response data live?",
+          "options": [
+            "In your personal Google account, so you can forward it",
+            "In a public sheet anyone can view",
+            "In the client's Google account, with access limited to named people"
+          ],
+          "answer": 2,
+          "explain": "The client owns the data, and access should be limited.",
+          "hint": "Who owns the data?"
+        },
+        {
+          "t": "quiz",
+          "id": "q6_b",
+          "q": "Which belongs in a handoff document?",
+          "options": [
+            "Your personal passwords",
+            "How to read responses, edit text, update the donate link, and who to contact",
+            "Nothing. The client will figure it out."
+          ],
+          "answer": 1,
+          "explain": "A handoff makes the client self-sufficient.",
+          "hint": "What will the client need on day one?"
+        }
+      ],
+      "checklist": [
+        "I listed every account and who owns it",
+        "I submitted my capstone link",
+        "I know to keep client data in the client's accounts"
+      ]
+    }
+  ]
+}

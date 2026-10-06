@@ -1,0 +1,747 @@
+{
+  "welcome": {
+    "card": "Audiences, messages, flyers, and launch plans for nonprofit clients.",
+    "intro": "Marketing is how a small nonprofit gets seen, gets supported, and gets sustainable. PVV's marketing team helps clients with social media, flyers, and promoting their events to Stanford students through the Haas Center. This training walks you through that work with one practice client from start to finish.",
+    "outcome": "A one-goal campaign plan, flyer copy, a launch timeline, and a metric you can defend. All of it built for a practice client, ready to adapt for a real one."
+  },
+  "modules": [
+    {
+      "short": "Your role",
+      "title": "Your role at PVV",
+      "mins": 8,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "PVV exists to connect local nonprofits and community organizations serving low-income communities with free, student-provided consulting. Marketing is one of three consulting tracks, alongside Financial and Technical."
+        },
+        {
+          "t": "p",
+          "x": "Under PVV's constitution, marketing help means three things: creating and maintaining a client's online presence (social media), designing and distributing flyers, and promoting client events to Stanford students through the Haas Center for Public Service."
+        },
+        {
+          "t": "table",
+          "head": [
+            "Who",
+            "What they do for you"
+          ],
+          "rows": [
+            [
+              "Consulting Category Chair",
+              "Directs the marketing team, assigns projects, and reviews your work."
+            ],
+            [
+              "Vice President",
+              "Oversees the chairs and helps with workflow."
+            ],
+            [
+              "Treasurer",
+              "Handles the club's own money, including printing costs. Ask before you spend."
+            ],
+            [
+              "Community Outreach Organizers",
+              "Find new partner nonprofits and organize events."
+            ]
+          ]
+        },
+        {
+          "t": "callout",
+          "title": "PVV advises. Clients decide.",
+          "x": "You draft; the client approves. Nothing goes out in a client's name until they have seen the final version and said yes."
+        },
+        {
+          "t": "media",
+          "kind": "article",
+          "title": "PVV constitution (2026 draft)",
+          "url": "https://github.com/Eddyo-Spaghettio/PVV/blob/main/docs/constitution-2026-draft.md",
+          "source": "PVV repo",
+          "mins": 3,
+          "why": "Skim Articles II and III: the club's purpose and what each team does."
+        },
+        {
+          "t": "exercise",
+          "title": "Say it in your own words",
+          "fields": [
+            {
+              "id": "m1_role",
+              "type": "textarea",
+              "label": "In two sentences, explain to a friend what PVV does and what the marketing team's job is.",
+              "placeholder": "PVV helps..."
+            },
+            {
+              "id": "m1_interest",
+              "type": "select",
+              "label": "Which part of this work are you most excited about?",
+              "options": [
+                "Social media",
+                "Flyers and print design",
+                "Promoting events to Stanford students",
+                "Not sure yet"
+              ]
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q1_a",
+          "q": "A client asks you to post their fundraiser flyer tonight, but they haven't seen the final design. What do you do?",
+          "options": [
+            "Post it. You're the expert.",
+            "Get their approval on the final version first, then post.",
+            "Post it from PVV's account instead."
+          ],
+          "answer": 1,
+          "explain": "Clients approve anything published in their name.",
+          "hint": "Think about whose name is on the post."
+        },
+        {
+          "t": "quiz",
+          "id": "q1_b",
+          "q": "Which of these is part of the marketing team's scope?",
+          "options": [
+            "Preparing the client's tax filings",
+            "Writing the client's legal contracts",
+            "Promoting the client's events to Stanford students through the Haas Center"
+          ],
+          "answer": 2,
+          "explain": "Event promotion through the Haas Center is named in the constitution.",
+          "hint": "Look back at the three things marketing help means."
+        }
+      ],
+      "checklist": [
+        "I can explain what PVV does in one sentence",
+        "I know who my category chair is",
+        "I know that clients approve before anything is published"
+      ]
+    },
+    {
+      "short": "Goal",
+      "title": "One goal, one audience",
+      "mins": 10,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "Small nonprofits rarely struggle with marketing because they're bad at it. They struggle because they try to do everything at once. Your first job is to narrow the plan."
+        },
+        {
+          "t": "callout",
+          "title": "The rule",
+          "x": "One goal. One primary audience. One or two channels. Master those before adding anything else."
+        },
+        {
+          "t": "table",
+          "head": [
+            "Goal",
+            "Measure it by"
+          ],
+          "rows": [
+            [
+              "Event attendance",
+              "RSVPs or head count"
+            ],
+            [
+              "Volunteer recruitment",
+              "Sign-up form submissions"
+            ],
+            [
+              "Donations",
+              "Dollars raised or donate-link clicks"
+            ],
+            [
+              "Awareness",
+              "Followers, reach, or \"how did you hear about us\" answers"
+            ]
+          ]
+        },
+        {
+          "t": "h3",
+          "x": "Two audiences, two messages"
+        },
+        {
+          "t": "p",
+          "x": "Most PVV campaigns speak to two groups. The first is the community the nonprofit serves, who find events on Instagram, Facebook, and flyers at laundromats and churches. The second is Stanford students who might attend or volunteer, who hear about things through Haas Center emails and Instagram. They need different words in different places."
+        },
+        {
+          "t": "media",
+          "kind": "article",
+          "title": "Canva: A guide to nonprofit marketing, social media, and fundraising",
+          "url": "https://www.canva.com/learn/your-guide-to-nonprofit-marketing-social-media-and-fundraising/",
+          "source": "Canva",
+          "mins": 4,
+          "why": "Skim the parts on knowing your supporters and segmenting your campaign goals."
+        },
+        {
+          "t": "exercise",
+          "title": "Define a practice campaign",
+          "intro": "Practice client: <strong>Eastside Community Pantry</strong>, a fictional food pantry in East Palo Alto holding a Taco Tuesday fundraiser on March 15.",
+          "fields": [
+            {
+              "id": "m2_goal",
+              "type": "text",
+              "label": "One goal, with a number",
+              "placeholder": "e.g., 150 people at the March 15 fundraiser"
+            },
+            {
+              "id": "m2_comm",
+              "type": "text",
+              "label": "Community audience: who exactly, and where do they look?",
+              "placeholder": "e.g., parents in East Palo Alto who check Facebook events"
+            },
+            {
+              "id": "m2_stan",
+              "type": "text",
+              "label": "Stanford audience: who exactly, and where do they look?",
+              "placeholder": "e.g., undergrads who read Haas Center emails"
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q2_a",
+          "q": "A client says their goal is \"increase awareness, get donations, recruit volunteers, and go viral.\" What do you tell them?",
+          "options": [
+            "Great, more goals is better.",
+            "Pick one primary goal for the next 90 days and save the rest for later.",
+            "Skip goals and just start posting daily."
+          ],
+          "answer": 1,
+          "explain": "One goal with a number is what lets you tell if the campaign worked.",
+          "hint": "What does the rule say about goals?"
+        },
+        {
+          "t": "quiz",
+          "id": "q2_b",
+          "q": "Why does a PVV campaign usually have two audiences?",
+          "options": [
+            "The Haas Center requires it.",
+            "Two audiences doubles the follower count.",
+            "Community members and Stanford students look in different places and need different messages."
+          ],
+          "answer": 2,
+          "explain": "Different audiences, different words, different channels.",
+          "hint": "Where does each group hear about events?"
+        }
+      ],
+      "checklist": [
+        "I wrote a goal with a number",
+        "I described both a community and a Stanford audience",
+        "I can explain why 'more goals' makes a campaign weaker"
+      ]
+    },
+    {
+      "short": "Message",
+      "title": "Message and story",
+      "mins": 10,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "People act when they understand what's happening and why it matters to someone. A key message gives every post, flyer, and email the same spine, so you aren't reinventing the pitch each time."
+        },
+        {
+          "t": "callout",
+          "title": "Key message formula",
+          "x": "<strong>[Organization]</strong> helps <strong>[who]</strong> by <strong>[how]</strong>. Right now, we need <strong>[specific ask]</strong> so that <strong>[impact]</strong>."
+        },
+        {
+          "t": "p",
+          "x": "Example: Eastside Community Pantry helps low-income families in East Palo Alto by providing free weekly groceries. Right now, we need you at our Taco Tuesday fundraiser on March 15 so that we can keep our shelves stocked through summer."
+        },
+        {
+          "t": "h3",
+          "x": "The caption formula"
+        },
+        {
+          "t": "table",
+          "head": [
+            "Part",
+            "What it does"
+          ],
+          "rows": [
+            [
+              "Hook",
+              "A question, a number, or a bold statement that stops the scroll"
+            ],
+            [
+              "Story",
+              "Two or three sentences on why this matters to a real person"
+            ],
+            [
+              "Details",
+              "Date, time, location, and where to find more"
+            ],
+            [
+              "Call to action",
+              "One clear next step, such as \"Link in bio to RSVP\""
+            ]
+          ]
+        },
+        {
+          "t": "callout",
+          "title": "Stories need permission",
+          "x": "Before you share a client's photo, name, or story, get their permission and the nonprofit's approval. When in doubt, tell the story without identifying details."
+        },
+        {
+          "t": "media",
+          "kind": "course",
+          "title": "Candid Learning course catalog (find the video on storytelling tips)",
+          "url": "https://learning.candid.org/page/course-catalog",
+          "source": "Candid Learning",
+          "mins": 3,
+          "why": "Search the page for the storytelling tips video for nonprofit communications."
+        },
+        {
+          "t": "exercise",
+          "title": "Write the message and one caption",
+          "fields": [
+            {
+              "id": "m3_message",
+              "type": "textarea",
+              "label": "Write the key message for Eastside Community Pantry using the formula.",
+              "placeholder": "Eastside Community Pantry helps..."
+            },
+            {
+              "id": "m3_caption",
+              "type": "textarea",
+              "label": "Write one Instagram caption for the fundraiser: hook, story, details, one clear call to action.",
+              "placeholder": "Hook first. Then two or three sentences of story..."
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q3_a",
+          "q": "Which caption opening makes the strongest hook?",
+          "options": [
+            "Hello everyone! We are having an event.",
+            "Please like and share this post.",
+            "200 families eat from our pantry every week. Help us keep the shelves full on March 15."
+          ],
+          "answer": 2,
+          "explain": "A specific number and a stake beat a generic greeting.",
+          "hint": "Which one gives a reader a reason to keep reading?"
+        },
+        {
+          "t": "quiz",
+          "id": "q3_b",
+          "q": "You'd like to feature a photo of a family picking up groceries. What first?",
+          "options": [
+            "Post it. The pantry is public.",
+            "Get permission from the family and approval from the nonprofit.",
+            "Blur the name and post it."
+          ],
+          "answer": 1,
+          "explain": "Permission comes first, and the client approves what goes out.",
+          "hint": "Who has to say yes?"
+        }
+      ],
+      "checklist": [
+        "I wrote a key message with a specific ask",
+        "I wrote a caption with a hook and one call to action",
+        "I know to get permission before sharing stories or photos"
+      ]
+    },
+    {
+      "short": "Flyer",
+      "title": "Design a flyer people read",
+      "mins": 12,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "A stranger at a laundromat bulletin board gives your flyer about three seconds. In that time they should know what's happening, when, where, and what to do next. If any of those is missing, the flyer fails."
+        },
+        {
+          "t": "figure",
+          "svg": "flyer",
+          "caption": "Build the flyer from biggest to smallest. If everything is the same size, nothing stands out.",
+          "legend": [
+            "Event name: biggest, readable from 10 feet",
+            "Date and time: second biggest",
+            "Location: always include the street address",
+            "One line on why it matters",
+            "QR code and logo: smallest, but always there"
+          ]
+        },
+        {
+          "t": "callout",
+          "title": "The squint test",
+          "x": "Zoom out until the flyer is thumbnail-sized. Can you still read the event name and the date? If not, simplify."
+        },
+        {
+          "t": "p",
+          "x": "Readable also means high contrast. WCAG, the standard for accessible design, asks for at least 4.5:1 contrast between normal-size text and its background, and 3:1 for large text. A free checker will tell you the ratio for any pair of colors."
+        },
+        {
+          "t": "media",
+          "kind": "course",
+          "title": "Canva Design School: Canva Pro for Nonprofits",
+          "url": "https://www.canva.com/design-school/courses/canva-pro-for-nonprofits/",
+          "source": "Canva",
+          "mins": 4,
+          "why": "Watch the lessons on nonprofit templates and Brand Kit. Canva's nonprofit program is free for registered nonprofits, so your clients may qualify. PVV, as a student group, does not."
+        },
+        {
+          "t": "media",
+          "kind": "tool",
+          "title": "WebAIM contrast checker",
+          "url": "https://webaim.org/resources/contrastchecker/",
+          "source": "WebAIM",
+          "mins": 2,
+          "why": "Enter your text and background colors as hex codes and read the ratio."
+        },
+        {
+          "t": "exercise",
+          "title": "Write the flyer copy",
+          "intro": "Practice client: Eastside Community Pantry, Taco Tuesday fundraiser, March 15, 5 to 8 PM. Colors: forest green and gold.",
+          "fields": [
+            {
+              "id": "m4_headline",
+              "type": "text",
+              "label": "Headline (the event name, biggest text)",
+              "placeholder": "e.g., Taco Tuesday for 200 Families"
+            },
+            {
+              "id": "m4_impact",
+              "type": "text",
+              "label": "One line on why it matters",
+              "placeholder": "e.g., Every plate keeps a family's shelves stocked"
+            },
+            {
+              "id": "m4_details",
+              "type": "text",
+              "label": "Date, time, and location (make up a realistic address)",
+              "placeholder": "March 15, 5 to 8 PM, ..."
+            },
+            {
+              "id": "m4_contrast",
+              "type": "text",
+              "label": "Your text and background colors, and the contrast ratio the checker reports",
+              "placeholder": "e.g., #1B4332 on #FFFFFF = 11.3:1"
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q4_a",
+          "q": "Which element should be the largest text on the flyer?",
+          "options": [
+            "The mission statement",
+            "The sponsor logos",
+            "The event name"
+          ],
+          "answer": 2,
+          "explain": "The event name comes first in the reading order, then date and time.",
+          "hint": "Check the diagram's number 1."
+        },
+        {
+          "t": "quiz",
+          "id": "q4_b",
+          "q": "The checker says your normal-size text has a 3.1:1 contrast ratio. Does it meet the WCAG AA minimum?",
+          "options": [
+            "Yes, anything above 3:1 passes.",
+            "No. Normal text needs at least 4.5:1, so darken the text or lighten the background.",
+            "It depends on the printer."
+          ],
+          "answer": 1,
+          "explain": "3:1 is only enough for large text.",
+          "hint": "Remember the two thresholds."
+        }
+      ],
+      "checklist": [
+        "I wrote flyer copy in biggest-to-smallest order",
+        "I checked a color pair with the contrast checker",
+        "I know the squint test"
+      ]
+    },
+    {
+      "short": "Channels",
+      "title": "Channels and Stanford promotion",
+      "mins": 10,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "Pick one primary channel and one secondary channel, and do them well. Consistency beats volume: two or three good posts a week outperform daily filler."
+        },
+        {
+          "t": "table",
+          "head": [
+            "Channel",
+            "Best for",
+            "Effort"
+          ],
+          "rows": [
+            [
+              "Instagram",
+              "Visual stories, events, younger audiences",
+              "Medium"
+            ],
+            [
+              "Facebook",
+              "Community groups, event pages, older audiences",
+              "Medium"
+            ],
+            [
+              "Printed flyer with QR code",
+              "Laundromats, churches, libraries, Haas Center boards",
+              "Low after design"
+            ],
+            [
+              "Haas Center promotion",
+              "Stanford volunteers and attendees",
+              "Low: one blurb or email"
+            ],
+            [
+              "Email",
+              "Existing supporters and donors",
+              "Low if a list exists"
+            ]
+          ]
+        },
+        {
+          "t": "h3",
+          "x": "A launch sequence that works"
+        },
+        {
+          "t": "table",
+          "head": [
+            "When",
+            "Action"
+          ],
+          "rows": [
+            [
+              "2 weeks before",
+              "Teaser post and Haas promotion"
+            ],
+            [
+              "1 week before",
+              "Flyers go up in the community and at Haas"
+            ],
+            [
+              "3 days before",
+              "Countdown post; PVV liaison shares it"
+            ],
+            [
+              "Day of",
+              "Story posts and photos (with permission)"
+            ],
+            [
+              "Week after",
+              "Thank-you post with real numbers"
+            ]
+          ]
+        },
+        {
+          "t": "media",
+          "kind": "template",
+          "title": "90-day content calendar template (24 pre-planned posts)",
+          "url": "https://github.com/Eddyo-Spaghettio/PVV/blob/main/templates/bridge-kit/90-day-calendar-template.csv",
+          "source": "PVV repo",
+          "why": "Open it in Google Sheets and customize the bracketed fields. You aren't inventing posts from scratch."
+        },
+        {
+          "t": "media",
+          "kind": "article",
+          "title": "Haas Center: resources for student groups",
+          "url": "https://haas.stanford.edu/resources/student",
+          "source": "Haas Center",
+          "mins": 2,
+          "why": "This is where PVV's Stanford-facing promotion and event support lives."
+        },
+        {
+          "t": "exercise",
+          "title": "Plan the launch",
+          "fields": [
+            {
+              "id": "m5_primary",
+              "type": "select",
+              "label": "Primary channel for Eastside Community Pantry",
+              "options": [
+                "Instagram",
+                "Facebook",
+                "Printed flyer with QR code",
+                "Haas Center promotion",
+                "Email"
+              ]
+            },
+            {
+              "id": "m5_secondary",
+              "type": "select",
+              "label": "Secondary channel",
+              "options": [
+                "Instagram",
+                "Facebook",
+                "Printed flyer with QR code",
+                "Haas Center promotion",
+                "Email"
+              ]
+            },
+            {
+              "id": "m5_plan",
+              "type": "textarea",
+              "label": "List three launch actions with dates.",
+              "placeholder": "Mar 1: ... Mar 8: ... Mar 12: ..."
+            },
+            {
+              "id": "m5_blurb",
+              "type": "textarea",
+              "label": "Write a three-sentence blurb for Stanford students: what, when and where, and why come.",
+              "placeholder": "This Tuesday..."
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q5_a",
+          "q": "What posting rhythm works best for a small nonprofit?",
+          "options": [
+            "Daily posts, even if they're rushed",
+            "Two or three consistent posts a week",
+            "One big post a month"
+          ],
+          "answer": 1,
+          "explain": "Consistency over volume.",
+          "hint": "Think about what a small team can keep up."
+        },
+        {
+          "t": "quiz",
+          "id": "q5_b",
+          "q": "What is PVV's biggest marketing advantage over a professional agency?",
+          "options": [
+            "A large ad budget",
+            "Better design software",
+            "Access to Stanford student volunteers and Haas Center promotion channels"
+          ],
+          "answer": 2,
+          "explain": "Reaching Stanford students is something clients can't easily buy.",
+          "hint": "Think about what only PVV can offer."
+        }
+      ],
+      "checklist": [
+        "I picked one primary and one secondary channel",
+        "I wrote a dated launch plan",
+        "I wrote a blurb for Stanford students"
+      ]
+    },
+    {
+      "short": "Measure",
+      "title": "Measure and hand off",
+      "mins": 10,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "Posting is half the job. The other half is knowing whether it worked and leaving the client able to carry on without you."
+        },
+        {
+          "t": "table",
+          "head": [
+            "Track this",
+            "Ignore this, for now"
+          ],
+          "rows": [
+            [
+              "Volunteer form submissions",
+              "Total follower count"
+            ],
+            [
+              "Event attendance",
+              "Likes on unrelated posts"
+            ],
+            [
+              "Donation link clicks",
+              "Impressions with no action"
+            ],
+            [
+              "\"How did you hear about us?\" answers",
+              "Competitors' follower counts"
+            ]
+          ]
+        },
+        {
+          "t": "h3",
+          "x": "The Assigned Liaison"
+        },
+        {
+          "t": "p",
+          "x": "Each Bridge Kit has one PVV member as its Assigned Liaison for the quarter. The client approves copy once at kickoff, and the liaison handles posting, recruiting Stanford peers, and attending one client event. At the end of the quarter, the liaison writes a handoff note so the next person can pick up cleanly. The client keeps the logins."
+        },
+        {
+          "t": "media",
+          "kind": "tool",
+          "title": "Create your first form in Google Forms",
+          "url": "https://support.google.com/a/users/answer/9303071?hl=en",
+          "source": "Google Workspace Learning Center",
+          "mins": 3,
+          "why": "A short form with a \"how did you hear about us?\" question is the simplest way to measure what worked."
+        },
+        {
+          "t": "exercise",
+          "title": "Choose what to measure",
+          "fields": [
+            {
+              "id": "m6_metric",
+              "type": "text",
+              "label": "Primary metric and target for the Taco Tuesday campaign",
+              "placeholder": "e.g., 150 RSVPs through the Google Form"
+            },
+            {
+              "id": "m6_ignore",
+              "type": "textarea",
+              "label": "One week after the event, what will you check, and what will you deliberately ignore?",
+              "placeholder": "I'll check... I'll ignore..."
+            }
+          ]
+        },
+        {
+          "t": "exercise",
+          "title": "Capstone: your campaign in one place",
+          "capstone": true,
+          "intro": "Pull your work from this training into one Google Doc or Canva design: goal, audiences, key message, flyer, launch plan, and metric. Set sharing to <strong>Anyone with the link can view</strong>, then paste the link. Your category chair will review it.",
+          "fields": [
+            {
+              "id": "cap_link",
+              "type": "url",
+              "required": true,
+              "label": "Link to your practice campaign",
+              "placeholder": "https://docs.google.com/..."
+            },
+            {
+              "id": "cap_reflect",
+              "type": "textarea",
+              "label": "What is one thing you would do differently on a real client campaign?",
+              "placeholder": "I would..."
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q6_a",
+          "q": "A client's Instagram gained 200 followers but zero new volunteers signed up. What happened?",
+          "options": [
+            "Instagram doesn't work for nonprofits.",
+            "They need even more followers.",
+            "They tracked the wrong metric. Followers aren't volunteers."
+          ],
+          "answer": 2,
+          "explain": "Measure the action you want, not the vanity number.",
+          "hint": "What was the goal?"
+        },
+        {
+          "t": "quiz",
+          "id": "q6_b",
+          "q": "After the handoff, who holds the client's social media logins?",
+          "options": [
+            "The PVV liaison, so they can keep posting",
+            "The client",
+            "Whoever posted last"
+          ],
+          "answer": 1,
+          "explain": "The client owns their accounts. PVV never keeps the keys.",
+          "hint": "Who owns the account?"
+        }
+      ],
+      "checklist": [
+        "I chose a primary metric with a target",
+        "I submitted my capstone link",
+        "I understand the Assigned Liaison role and handoff"
+      ]
+    }
+  ]
+}

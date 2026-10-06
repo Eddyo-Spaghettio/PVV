@@ -1,0 +1,728 @@
+{
+  "welcome": {
+    "card": "Funding sources, proposals, budgets, and letters of inquiry for nonprofit clients.",
+    "intro": "Funders don't fund good intentions. They fund clear needs, measurable outcomes, and budgets where every dollar has a job. PVV's financial team helps clients find funding and write grant materials, and this training walks you through that process with one practice client.",
+    "outcome": "A funder shortlist, a need statement, SMART outcomes, a checked line-item budget, and the opening of a letter of inquiry, all built for a practice client."
+  },
+  "modules": [
+    {
+      "short": "Two doors",
+      "title": "Two doors of funding",
+      "mins": 8,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "Under PVV's constitution, the financial team assists nonprofits in writing grants. Before you touch a single application, learn the most common mistake new members make: confusing money for PVV with money for clients. They are different applications, different accounts, and different rules."
+        },
+        {
+          "t": "figure",
+          "svg": "doors",
+          "caption": "Door 1 keeps PVV running. Door 2 is what you help clients pursue."
+        },
+        {
+          "t": "p",
+          "x": "The PVV Treasurer manages the club's budget and makes sure operational grants like Haas Transportation Grants and Haas Center Event Co-Sponsorship are applied for. Amounts and deadlines change, so ask the Treasurer for current numbers. Your category chair directs the client grant work."
+        },
+        {
+          "t": "callout",
+          "title": "Remember",
+          "x": "PVV advises on Door 2. The client's executive director signs and submits. Our name is not on the application."
+        },
+        {
+          "t": "media",
+          "kind": "article",
+          "title": "Haas Center: resources for student groups",
+          "url": "https://haas.stanford.edu/resources/student",
+          "source": "Haas Center",
+          "mins": 2,
+          "why": "This is where PVV's own Door 1 funding and event support are explained."
+        },
+        {
+          "t": "exercise",
+          "title": "Explain it back",
+          "fields": [
+            {
+              "id": "m1_explain",
+              "type": "textarea",
+              "label": "In two sentences, explain the difference between Door 1 and Door 2 to a new member.",
+              "placeholder": "Door 1 is... Door 2 is..."
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q1_a",
+          "q": "A Haas transportation grant for a PVV volunteer trip is...",
+          "options": [
+            "Door 1: PVV's own funding",
+            "Door 2: client funding"
+          ],
+          "answer": 0,
+          "explain": "It pays for PVV's own operations, and the Treasurer applies.",
+          "hint": "Who is the money for?"
+        },
+        {
+          "t": "quiz",
+          "id": "q1_b",
+          "q": "A $15,000 foundation grant for a client's food program is...",
+          "options": [
+            "Door 1: PVV's own funding",
+            "Door 2: client funding"
+          ],
+          "answer": 1,
+          "explain": "It funds the client's program, and the client applies.",
+          "hint": "Who is the money for?"
+        },
+        {
+          "t": "quiz",
+          "id": "q1_c",
+          "q": "Can PVV submit a client's grant application in PVV's or Stanford's name?",
+          "options": [
+            "Yes, because we did the work",
+            "Only if the grant is small",
+            "No. The client applies under its own name and PVV helps write it."
+          ],
+          "answer": 2,
+          "explain": "The client's director signs and submits.",
+          "hint": "Whose name is on the application?"
+        }
+      ],
+      "checklist": [
+        "I can explain Door 1 vs Door 2 in 30 seconds",
+        "I know the Treasurer handles PVV's own grants",
+        "I know the client submits, not PVV"
+      ]
+    },
+    {
+      "short": "Funders",
+      "title": "Find funders that fit",
+      "mins": 10,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "The goal of prospecting is fit, not volume. Sending one generic proposal to a long list of funders doesn't work. A short list of funders who already care about your client's work and place does."
+        },
+        {
+          "t": "callout",
+          "title": "The fit check",
+          "x": "Does the funder support this location, this cause, and this size of request? Is the client eligible, for example as a 501(c)(3)? What is the deadline? Who have they funded before?"
+        },
+        {
+          "t": "table",
+          "head": [
+            "Where to look",
+            "What it's good for"
+          ],
+          "rows": [
+            [
+              "Candid",
+              "Searching funders and learning how grants work, with free courses, videos, and sample documents"
+            ],
+            [
+              "ProPublica Nonprofit Explorer",
+              "Free access to nonprofit tax filings (Form 990), so you can see what a funder gives and what peer nonprofits raise"
+            ],
+            [
+              "Community foundations",
+              "Local funders focused on one region"
+            ],
+            [
+              "Corporate giving programs",
+              "Smaller grants tied to a company's priorities"
+            ],
+            [
+              "Government programs",
+              "Larger awards with heavier reporting"
+            ]
+          ]
+        },
+        {
+          "t": "media",
+          "kind": "tool",
+          "title": "ProPublica Nonprofit Explorer",
+          "url": "https://projects.propublica.org/nonprofits/",
+          "source": "ProPublica",
+          "mins": 3,
+          "why": "Search for any real nonprofit and open one Form 990. Look at revenue, expenses, and grants paid."
+        },
+        {
+          "t": "media",
+          "kind": "course",
+          "title": "Candid Learning course catalog (find the grantseeking kickoff video)",
+          "url": "https://learning.candid.org/page/course-catalog",
+          "source": "Candid Learning",
+          "mins": 4,
+          "why": "Look for the video on how to find grants and potential funders."
+        },
+        {
+          "t": "exercise",
+          "title": "Build a shortlist",
+          "intro": "Practice client: a small food pantry in East Palo Alto serving about 200 families a week.",
+          "fields": [
+            {
+              "id": "m2_source",
+              "type": "select",
+              "label": "Which source did you use first?",
+              "options": [
+                "Candid",
+                "ProPublica Nonprofit Explorer",
+                "A foundation's own website",
+                "Other"
+              ]
+            },
+            {
+              "id": "m2_funders",
+              "type": "textarea",
+              "label": "List three possible funders. For each, give one sentence on why it fits (place, cause, size).",
+              "placeholder": "1. ... because...\n2. ...\n3. ..."
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q2_a",
+          "q": "A foundation funds only organizations in Marin County. Your client is in East Palo Alto. What do you do?",
+          "options": [
+            "Apply anyway and hope",
+            "Cross it off the list and note why",
+            "Change the client's address"
+          ],
+          "answer": 1,
+          "explain": "A poor fit wastes everyone's time. Note the reason so nobody re-checks it.",
+          "hint": "Run the fit check."
+        },
+        {
+          "t": "quiz",
+          "id": "q2_b",
+          "q": "What can Nonprofit Explorer show you?",
+          "options": [
+            "Which grants are open this month",
+            "A nonprofit's Form 990 financials, like revenue and expenses",
+            "Private donor contact details"
+          ],
+          "answer": 1,
+          "explain": "Form 990s are public records, which makes them useful for research.",
+          "hint": "Where does the data come from?"
+        }
+      ],
+      "checklist": [
+        "I can run a fit check on a funder",
+        "I opened a real Form 990",
+        "I wrote a shortlist of three funders with reasons"
+      ]
+    },
+    {
+      "short": "Proposal",
+      "title": "Anatomy of a proposal",
+      "mins": 10,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "Most grant proposals want the same things in different words. Candid's introductory material lists the typical parts, and learning them lets you read any funder's guidelines quickly."
+        },
+        {
+          "t": "table",
+          "head": [
+            "Section",
+            "What it answers"
+          ],
+          "rows": [
+            [
+              "Executive summary",
+              "Who are you, what do you need, and why does it matter?"
+            ],
+            [
+              "Statement of need",
+              "What specific problem exists, and how big is it?"
+            ],
+            [
+              "Project description",
+              "What will you do, and how?"
+            ],
+            [
+              "Goals and outcomes",
+              "What will change, and how will you measure it?"
+            ],
+            [
+              "Organization information",
+              "Why are you the right group to do this?"
+            ],
+            [
+              "Budget",
+              "What does it cost, and where does the money come from?"
+            ]
+          ]
+        },
+        {
+          "t": "h3",
+          "x": "Make outcomes measurable"
+        },
+        {
+          "t": "table",
+          "head": [
+            "Vague",
+            "SMART"
+          ],
+          "rows": [
+            [
+              "Help students",
+              "80% of 30 students improve at least one grade level in math by June"
+            ],
+            [
+              "Reduce hunger",
+              "Serve 200 families a month with weekly groceries for 12 months"
+            ]
+          ]
+        },
+        {
+          "t": "callout",
+          "title": "Need statement formula",
+          "x": "<strong>Data:</strong> in [community], [X]% experience [problem]. <strong>Story:</strong> one person, with permission. <strong>Consequence:</strong> without help, [what happens]. <strong>Your angle:</strong> [org] is positioned to help because [evidence]."
+        },
+        {
+          "t": "media",
+          "kind": "article",
+          "title": "Candid: nonprofit grant writing tips and free proposal resources",
+          "url": "https://candid.org/blogs/nonprofit-grant-writing-tips-free-proposal-resources-expert-how-tos/",
+          "source": "Candid",
+          "mins": 4,
+          "why": "Read the pieces on red flags and green flags funders look for."
+        },
+        {
+          "t": "media",
+          "kind": "template",
+          "title": "Candid sample documents: real proposals, budgets, and letters",
+          "url": "https://learning.candid.org/resources/sample-documents/",
+          "source": "Candid",
+          "why": "Open one sample proposal and match its sections to the table above."
+        },
+        {
+          "t": "exercise",
+          "title": "Write a need statement and outcomes",
+          "intro": "Use the pantry from the last module. Invent plausible numbers and mark them as practice data.",
+          "fields": [
+            {
+              "id": "m3_need",
+              "type": "textarea",
+              "label": "Write a three-sentence need statement using data, a story, and a consequence.",
+              "placeholder": "In East Palo Alto, X% of..."
+            },
+            {
+              "id": "m3_outcomes",
+              "type": "textarea",
+              "label": "Write two SMART outcomes for the pantry.",
+              "placeholder": "1. By ..., ...\n2. ..."
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q3_a",
+          "q": "Which outcome is SMART?",
+          "options": [
+            "Help more families",
+            "Reduce hunger in the community",
+            "Serve 200 families a month with weekly groceries for 12 months"
+          ],
+          "answer": 2,
+          "explain": "It has a number, a time frame, and something you can count.",
+          "hint": "Which one could you check off later?"
+        },
+        {
+          "t": "quiz",
+          "id": "q3_b",
+          "q": "A client says, \"You wrote it, so you should submit it.\" What do you do?",
+          "options": [
+            "Submit it under PVV's name",
+            "Submit it under your own name",
+            "Explain that the client must submit, and offer to walk them through the portal"
+          ],
+          "answer": 2,
+          "explain": "The executive director signs and submits. PVV advises.",
+          "hint": "Go back to Module 1."
+        }
+      ],
+      "checklist": [
+        "I can name the main sections of a proposal",
+        "I wrote a need statement with data, story, and consequence",
+        "I wrote two SMART outcomes"
+      ]
+    },
+    {
+      "short": "Budgets",
+      "title": "Budgets funders trust",
+      "mins": 12,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "Many funders read the budget before the narrative, and they check that the two agree. A budget describes the project in numbers the same way the proposal describes it in words."
+        },
+        {
+          "t": "table",
+          "head": [
+            "Category",
+            "Examples"
+          ],
+          "rows": [
+            [
+              "Personnel",
+              "Part-time coordinator, tutor stipends"
+            ],
+            [
+              "Direct program costs",
+              "Food, books, supplies for participants"
+            ],
+            [
+              "Transportation",
+              "Van rental, mileage"
+            ],
+            [
+              "Administrative costs",
+              "Insurance, office supplies. Many funders cap this, so check each funder's rules."
+            ],
+            [
+              "In-kind match",
+              "Donated goods and volunteer time, valued at a published rate"
+            ]
+          ]
+        },
+        {
+          "t": "callout",
+          "title": "Golden rule",
+          "x": "If the narrative says \"serve 45 students twice a week,\" the budget must show the staff hours and supplies for exactly that. Reviewers check."
+        },
+        {
+          "t": "p",
+          "x": "For volunteer time, the standard is Independent Sector's annual estimate. For 2026 it is $36.14 per hour nationally, with a different figure for each state."
+        },
+        {
+          "t": "media",
+          "kind": "video",
+          "title": "Candid: What do funders look for in grant proposal budgets?",
+          "url": "https://learning.candid.org/what-do-funders-look-for-in-grant-proposal-budgets/285820",
+          "source": "Candid Learning",
+          "mins": 5,
+          "why": "Funders' own view of what makes a budget credible."
+        },
+        {
+          "t": "media",
+          "kind": "article",
+          "title": "Candid: examples of nonprofit budgets",
+          "url": "https://learning.candid.org/nonprofit-budget-examples/275332",
+          "source": "Candid Learning",
+          "mins": 2,
+          "why": "Skim the difference between direct and indirect costs and what counts as in-kind."
+        },
+        {
+          "t": "media",
+          "kind": "template",
+          "title": "PVV grant budget template",
+          "url": "https://github.com/Eddyo-Spaghettio/PVV/blob/main/training/templates/grant-budget-template.csv",
+          "source": "PVV repo",
+          "why": "Open in Google Sheets for the capstone."
+        },
+        {
+          "t": "exercise",
+          "title": "Do the math",
+          "intro": "A tutoring program serves 30 students, 2 sessions a week, for 36 weeks. Each student needs a $35 workbook. The coordinator works 15 hours a week at $20 an hour. The grant is $12,000, and the funder caps administrative costs at 10%. Enter numbers only.",
+          "fields": [
+            {
+              "id": "m4_workbooks",
+              "type": "text",
+              "label": "Total workbook cost",
+              "expect": 1050,
+              "placeholder": "e.g., 1050"
+            },
+            {
+              "id": "m4_coord",
+              "type": "text",
+              "label": "Total coordinator cost for the 36 weeks",
+              "expect": 10800,
+              "placeholder": "e.g., 10800"
+            },
+            {
+              "id": "m4_admin",
+              "type": "text",
+              "label": "Maximum administrative costs on the $12,000 grant",
+              "expect": 1200,
+              "placeholder": "e.g., 1200"
+            },
+            {
+              "id": "m4_inkind",
+              "type": "text",
+              "label": "Value of 100 volunteer hours at $36.14 an hour",
+              "expect": 3614,
+              "placeholder": "e.g., 3614"
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q4_a",
+          "q": "A budget says \"$10,000 for supplies\" with no breakdown. What does a funder think?",
+          "options": [
+            "It looks confident.",
+            "It looks suspicious. They want itemized calculations.",
+            "Funders rarely read budgets."
+          ],
+          "answer": 1,
+          "explain": "Itemizing shows you've planned the project and makes the budget checkable.",
+          "hint": "Remember the golden rule."
+        },
+        {
+          "t": "quiz",
+          "id": "q4_b",
+          "q": "Which rate should you use to value volunteer time as an in-kind match?",
+          "options": [
+            "The minimum wage",
+            "Independent Sector's published rate, nationally or for your state",
+            "Whatever the client prefers"
+          ],
+          "answer": 1,
+          "explain": "It's the standard funders recognize, and it's updated every April.",
+          "hint": "Which source is widely recognized?"
+        }
+      ],
+      "checklist": [
+        "My budget math matched on all four lines",
+        "I know what in-kind means",
+        "I opened the PVV budget template"
+      ]
+    },
+    {
+      "short": "LOI",
+      "title": "Narrative and letter of inquiry",
+      "mins": 10,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "Many funders ask for a letter of inquiry (LOI) before a full proposal. It's a short letter that introduces your client and the request, and it decides whether you're invited to apply. Treat it as your best two minutes."
+        },
+        {
+          "t": "table",
+          "head": [
+            "Part",
+            "Job"
+          ],
+          "rows": [
+            [
+              "Opening",
+              "Who the client is and what you are asking for, in one or two sentences"
+            ],
+            [
+              "Need",
+              "The problem, with one number"
+            ],
+            [
+              "Program",
+              "What the money will do"
+            ],
+            [
+              "Outcomes",
+              "One or two measurable results"
+            ],
+            [
+              "Close",
+              "The total request, and a thank-you"
+            ]
+          ]
+        },
+        {
+          "t": "callout",
+          "title": "Always follow the funder's guidelines",
+          "x": "Length, format, and questions vary. Candid's examples of green flags include tailoring the proposal to the funder and answering each question clearly. Never send the same letter to every funder."
+        },
+        {
+          "t": "media",
+          "kind": "template",
+          "title": "Candid sample documents: letters of inquiry",
+          "url": "https://learning.candid.org/resources/sample-documents/",
+          "source": "Candid",
+          "why": "Open one sample letter of inquiry and notice how short it is."
+        },
+        {
+          "t": "exercise",
+          "title": "Draft the opening",
+          "fields": [
+            {
+              "id": "m5_loi",
+              "type": "textarea",
+              "label": "Write a five-sentence LOI opening for the practice pantry: who we are, the need, the ask, the outcome, and the amount.",
+              "placeholder": "Dear ..."
+            },
+            {
+              "id": "m5_tailor",
+              "type": "text",
+              "label": "Which of the funder's stated priorities does your letter echo?",
+              "placeholder": "e.g., food access for families"
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q5_a",
+          "q": "A funder's guidelines say \"no more than one page.\" Your LOI is a page and a half. What do you do?",
+          "options": [
+            "Shrink the font",
+            "Cut it to fit",
+            "Send it as two files"
+          ],
+          "answer": 1,
+          "explain": "Following the guidelines is the first thing reviewers check.",
+          "hint": "What do guidelines signal about the reviewer?"
+        },
+        {
+          "t": "quiz",
+          "id": "q5_b",
+          "q": "Which is a green flag for a funder?",
+          "options": [
+            "One proposal sent unchanged to 50 funders",
+            "The longest possible narrative",
+            "A proposal tailored to the funder that answers each question clearly"
+          ],
+          "answer": 2,
+          "explain": "Tailoring shows you read their priorities.",
+          "hint": "Think about fit."
+        }
+      ],
+      "checklist": [
+        "I wrote an LOI opening that includes the ask and amount",
+        "I know to follow each funder's guidelines",
+        "I tailored the letter to a specific funder's priorities"
+      ]
+    },
+    {
+      "short": "Track",
+      "title": "Track, comply, and stay in scope",
+      "mins": 10,
+      "blocks": [
+        {
+          "t": "p",
+          "x": "Grants run on deadlines and follow-up. A funding tracker keeps the client from missing either, and it's what a new liaison reads first when taking over."
+        },
+        {
+          "t": "table",
+          "head": [
+            "Tracker column",
+            "Example"
+          ],
+          "rows": [
+            [
+              "Funder",
+              "A local community foundation"
+            ],
+            [
+              "Ask and fit",
+              "$10,000 for food purchasing"
+            ],
+            [
+              "Deadline",
+              "A date, with a reminder two weeks earlier"
+            ],
+            [
+              "Status",
+              "Researching, drafting, submitted, awarded, declined"
+            ],
+            [
+              "Next step and owner",
+              "Client reviews draft by Friday"
+            ]
+          ]
+        },
+        {
+          "t": "h3",
+          "x": "Stay in scope"
+        },
+        {
+          "t": "list",
+          "items": [
+            "PVV advises and drafts. The client decides, signs, and submits.",
+            "No legal or tax advice. If a client asks whether they qualify as a 501(c)(3), point them to their board or accountant.",
+            "Keep client financial information in the client's accounts, not your personal ones.",
+            "Beyond grants, PVV also helps clients navigate benefits and connect to available resources. Ask your chair before taking on anything new."
+          ]
+        },
+        {
+          "t": "media",
+          "kind": "template",
+          "title": "PVV funding tracker template",
+          "url": "https://github.com/Eddyo-Spaghettio/PVV/blob/main/training/templates/funding-tracker.csv",
+          "source": "PVV repo",
+          "why": "Open in Google Sheets and add one row for your shortlist."
+        },
+        {
+          "t": "media",
+          "kind": "article",
+          "title": "Candid: grant writing tips, including what to do after a rejection",
+          "url": "https://candid.org/blogs/nonprofit-grant-writing-tips-free-proposal-resources-expert-how-tos/",
+          "source": "Candid",
+          "why": "A rejection is also a chance to ask the funder for feedback."
+        },
+        {
+          "t": "exercise",
+          "title": "Fill in a tracker row",
+          "fields": [
+            {
+              "id": "m6_tracker",
+              "type": "textarea",
+              "label": "Write one tracker row for your top funder: funder, ask, deadline, status, next step.",
+              "placeholder": "Funder | Ask | Deadline | Status | Next step"
+            }
+          ]
+        },
+        {
+          "t": "exercise",
+          "title": "Capstone: your funding brief",
+          "capstone": true,
+          "intro": "Combine your work into one Google Doc or Sheet: funder shortlist, need statement, outcomes, the budget math, and your LOI opening. Set sharing to <strong>Anyone with the link can view</strong>, then paste the link. Your category chair will review it.",
+          "fields": [
+            {
+              "id": "cap_link",
+              "type": "url",
+              "required": true,
+              "label": "Link to your practice funding brief",
+              "placeholder": "https://docs.google.com/..."
+            },
+            {
+              "id": "cap_reflect",
+              "type": "textarea",
+              "label": "What would be hardest about doing this for a real client?",
+              "placeholder": "I think..."
+            }
+          ]
+        },
+        {
+          "t": "quiz",
+          "id": "q6_a",
+          "q": "A client asks whether their organization qualifies for 501(c)(3) status. What do you say?",
+          "options": [
+            "\"Yes, you should qualify.\"",
+            "PVV can't give legal or tax advice. Please check with your board or an accountant.",
+            "Ignore the question."
+          ],
+          "answer": 1,
+          "explain": "Legal and tax questions go to qualified professionals.",
+          "hint": "What is outside PVV's role?"
+        },
+        {
+          "t": "quiz",
+          "id": "q6_b",
+          "q": "A funder declines the proposal. What is the best next step?",
+          "options": [
+            "Resubmit the same proposal immediately",
+            "Ask the funder for feedback and record it in the tracker",
+            "Never contact them again"
+          ],
+          "answer": 1,
+          "explain": "Feedback strengthens the next application and the relationship.",
+          "hint": "What can you learn?"
+        }
+      ],
+      "checklist": [
+        "I wrote a funding tracker row",
+        "I submitted my capstone link",
+        "I know what is outside PVV's scope"
+      ]
+    }
+  ]
+}
