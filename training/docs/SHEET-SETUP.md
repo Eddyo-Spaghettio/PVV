@@ -62,11 +62,17 @@ Commit the change. The workbooks rebuild automatically (see [EDITING.md](EDITING
 | **Progress** | One row per person per module: status, checklist, quiz, and field counts. |
 | **Members** | One row per person per track, with where they left off and when they finished. |
 
+### Reading feedback
+Every track ends with an optional Feedback module. Its answers land on the **Responses** tab with Type `feedback` (ratings are stored as 1 to 5). The **Dashboard** shows the average rating for each question by track, and the newest written comments. Check the "average by question" table to see which modules people found least useful, and the comments for how to improve them.
+
 ### Reviewing capstones
 On the **Responses** tab, find rows where **Type** is `capstone`. Open the link, then set **Review status** from the dropdown (Approved, Needs revision, Reviewed) and add **Review notes** if you like. The member sees your status and notes next to their capstone the next time they open the workbook. The script never overwrites these columns.
 
 ### Giving chairs access
 Share the sheet with category chairs as **Editor** if they will review, or **Viewer** if they only look. The sheet's sharing list is your "admin login": only people you share with can see responses.
+
+## Updating an existing sheet
+If your sheet was set up before the Feedback module was added, feedback answers still arrive with no changes. To also get the two new Dashboard sections: replace the code in Apps Script with the latest `Code.gs`, **Save**, choose **setup** and **Run**. This is safe to repeat and never deletes answers; it only rebuilds the Dashboard tab and re-applies formatting. Then follow "Changing the script later" below so the live version matches.
 
 ## Changing the script later
 If you edit `Code.gs` in Apps Script, **Save** and then choose **Deploy > Manage deployments > pencil icon > Version: New version > Deploy**. The web app URL stays the same. Saving alone does not update the live version.

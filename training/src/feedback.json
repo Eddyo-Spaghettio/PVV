@@ -1,0 +1,22 @@
+{
+  "title": "Your feedback",
+  "short": "Feedback",
+  "mins": 2,
+  "intro": "Two minutes, and it directly shapes the next version of this training. Your answers go to PVV's leadership. Be honest: nothing here affects your capstone review.",
+  "module_scale": {
+    "section": "How useful was each module?",
+    "label": "{title}",
+    "low": "Not useful",
+    "high": "Very useful"
+  },
+  "questions": [
+    {"id": "fb_clear", "type": "scale", "section": "The training overall", "label": "The training was clear and easy to follow.", "low": "Strongly disagree", "high": "Strongly agree"},
+    {"id": "fb_ready", "type": "scale", "section": "The training overall", "label": "I feel ready to start a shadow project with a client.", "low": "Not ready", "high": "Very ready"},
+    {"id": "fb_media", "type": "scale", "section": "The training overall", "label": "The videos, readings, and diagrams helped me learn.", "low": "Not at all", "high": "A lot"},
+    {"id": "fb_recommend", "type": "scale", "section": "The training overall", "label": "I would recommend this training to a new member.", "low": "Strongly disagree", "high": "Strongly agree"},
+    {"id": "fb_time", "type": "select", "section": "The training overall", "label": "About how long did the whole training take you?", "options": ["Under 45 minutes", "45 to 60 minutes", "60 to 75 minutes", "More than 75 minutes"]},
+    {"id": "fb_best", "type": "textarea", "section": "In your own words", "label": "What was the most useful thing you learned?", "placeholder": "Optional", "optional": true},
+    {"id": "fb_improve", "type": "textarea", "section": "In your own words", "label": "How could we improve this training? What should we change, cut, or add?", "placeholder": "Optional, but this is the most helpful question", "optional": true},
+    {"id": "fb_broken", "type": "textarea", "section": "In your own words", "label": "Did anything feel confusing, broken, or out of date?", "placeholder": "Optional. Tell us which module.", "optional": true}
+  ]
+}
