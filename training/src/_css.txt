@@ -75,6 +75,10 @@
   .scale-btn:hover { border-color: var(--accent); }
   .scale-btn.on { background: var(--accent); border-color: var(--accent); color: #fff; }
   .scale-ends { display: flex; justify-content: space-between; max-width: 19.5rem; font-size: 0.8rem; color: var(--muted); margin-bottom: 1.25rem; }
+  .trackbar { font-size: 0.85rem; margin-bottom: 0.9rem; display: flex; flex-wrap: wrap; gap: 0.25rem 1.1rem; }
+  .trackbar a { color: #fff; opacity: 0.85; text-decoration: underline; }
+  .trackbar a:hover { opacity: 1; }
+  .trackbar [aria-current] { font-weight: bold; }
   .header .note { font-size: 0.8rem; opacity: 0.8; margin: 0.5rem 0 0; }
   .nav-buttons .btn[disabled] { opacity: 0.5; cursor: default; }
   .field-note { font-size: 0.85rem; color: var(--muted); margin: -0.75rem 0 1rem; min-height: 1em; }

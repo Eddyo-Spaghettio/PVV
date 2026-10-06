@@ -13,6 +13,9 @@
 <!-- GENERATED FILE. Edit training/src/%%TRACK%%.json and run: python3 training/build.py -->
 
 <div class="header">
+  <div class="trackbar" aria-label="Training tracks">
+  %%TRACKBAR%%
+  </div>
   <h1>PVV %%TITLE%% Training</h1>
   <p>%%SUBTITLE%%</p>
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
@@ -247,7 +250,16 @@ function render() {
   var cn = $('#completeNote');
   if (cn) cn.textContent = S.done ? ('Training marked complete on ' + S.done.date + '. Your category chair will review your capstone.') : '';
   renderStart();
+  paintTracks();
   updateProgress();
+}
+function paintTracks() {
+  $$('.trackbar [data-track]').forEach(function (el) {
+    var done = false;
+    if (el.dataset.track === CFG.track) { done = !!S.done; }
+    else { try { var o = JSON.parse(localStorage.getItem('pvv_' + el.dataset.track + '_v3') || 'null'); done = !!(o && o.done); } catch (e) {} }
+    el.textContent = el.dataset.label + (done ? ' (done)' : '');
+  });
 }
 function renderStart() {
   var has = !!S.user;
@@ -326,6 +338,7 @@ $('#startBtn').addEventListener('click', function () {
   err.textContent = '';
   S.user = { name: name, email: email };
   persist();
+  try { localStorage.setItem('pvv_identity', JSON.stringify(S.user)); } catch (e) {}
   status('Looking for saved progress...');
   pull().then(function (found) {
     markAll(); persist();
@@ -340,6 +353,7 @@ $('#resumeBtn').addEventListener('click', function () { go(S.last > 0 ? S.last :
 $('#switchUser').addEventListener('click', function () {
   if (!confirm('Switch to a different person? Answers saved on this device for ' + S.user.email + ' stay in PVV\'s sheet.')) return;
   sync();
+  try { localStorage.removeItem('pvv_identity'); } catch (e) {}
   S = fresh(); persist();
   $$('[data-f]').forEach(function (el) { el.value = ''; });
   render(); go(0);
@@ -370,6 +384,13 @@ window.addEventListener('beforeunload', function () { if (S.dirty.length || S.pd
 document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden' && (S.dirty.length || S.pdirty)) sync(); });
 
 /* ---------- init ---------- */
+// Signed in on another track? Reuse that name and email.
+if (!S.user) {
+  try {
+    var idn = JSON.parse(localStorage.getItem('pvv_identity') || 'null');
+    if (idn && idn.email) { S.user = { name: idn.name || '', email: idn.email }; persist(); }
+  } catch (e) {}
+}
 render();
 if (S.user) {
   status(CFG.endpoint ? 'Signed in as ' + S.user.email + '.' : 'Saved in this browser only (PVV sync is not set up yet).');

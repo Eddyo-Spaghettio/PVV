@@ -216,7 +216,7 @@ def render_module(m, n, total, ctx_global):
 </div>"""
 
 
-def render_feedback(fb, mods, n, ctx_global):
+def render_feedback(fb, mods, n, ctx_global, other=""):
     ms = fb["module_scale"]
     fields = [dict(id=f"fb_mod{i}", type="scale", section=ms["section"], low=ms["low"], high=ms["high"], feedback=True,
                    label=ms["label"].replace("{title}", f"Module {i}: {m['title']}")) for i, m in enumerate(mods, 1)]
@@ -241,6 +241,7 @@ def render_feedback(fb, mods, n, ctx_global):
     <button class="btn" id="completeBtn">Mark training complete</button>
   </div>
   <p class="saved-note" id="completeNote"></p>
+  {other}
 </div>"""
 
 
@@ -289,6 +290,22 @@ def render_start(data, theme, fb):
 </div>"""
 
 
+def render_trackbar(current):
+    parts = ['<a href="index.html">All tracks</a>']
+    for t, th in THEMES.items():
+        if t == current:
+            parts.append(f'<span aria-current="page" data-track="{t}" data-label="{th["title"]}">{th["title"]}</span>')
+        else:
+            parts.append(f'<a href="{t}-workbook.html" data-track="{t}" data-label="{th["title"]}">{th["title"]}</a>')
+    return "\n  ".join(parts)
+
+
+def render_other_tracks(current):
+    links = ", ".join(f'<a href="{t}-workbook.html">{th["title"]}</a>' for t, th in THEMES.items() if t != current)
+    return (f'<p class="saved-note">Curious how the other PVV teams work? You can open the {links} training '
+            f'any time. Each one takes about an hour.</p>')
+
+
 def build_track(track, cfg):
     theme = THEMES[track]
     data = json.loads((SRC / f"{track}.json").read_text(encoding="utf-8"))
@@ -306,7 +323,7 @@ def build_track(track, cfg):
         nav.append(f'<button data-mod="{i}">{i}. {m["short"]}</button>')
     nav.append(f'<button data-mod="{len(mods) + 1}">{len(mods) + 1}. {fb["short"]}</button>')
     modules_html = "\n\n".join(render_module(m, i, len(mods) + 1, ctx_global) for i, m in enumerate(mods, 1))
-    modules_html += "\n\n" + render_feedback(fb, mods, len(mods) + 1, ctx_global)
+    modules_html += "\n\n" + render_feedback(fb, mods, len(mods) + 1, ctx_global, render_other_tracks(track))
 
     css = (SRC / "_css.txt").read_text(encoding="utf-8").replace("%%ACCENT_LIGHT%%", theme["light"]).replace("%%ACCENT%%", theme["accent"])
     page_cfg = {"endpoint": cfg.get("endpoint", ""), "key": cfg.get("key", ""), "track": track}
@@ -315,6 +332,7 @@ def build_track(track, cfg):
                .replace("%%TITLE%%", theme["title"])
                .replace("%%TRACK%%", track)
                .replace("%%SUBTITLE%%", f"{len(mods)} short modules, about an hour in total, plus a quick feedback form. Your progress saves automatically, and you can pick up where you left off.")
+               .replace("%%TRACKBAR%%", render_trackbar(track))
                .replace("%%NAV%%", "\n".join(nav))
                .replace("%%START%%", render_start(data, theme, fb))
                .replace("%%MODULES%%", modules_html)
