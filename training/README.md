@@ -17,7 +17,7 @@ Start page: `https://YOUR-USERNAME.github.io/PVV/training/interactive/` (or open
 ## How it works for members
 
 1. Open your track and enter your name and email on the Start tab.
-2. Work through the modules in any order. Answers save automatically, and you can leave and come back on any device: enter the same email and you'll resume where you left off.
+2. Work through the modules in any order. The links at the top of every page switch between the Marketing, Financial, and Technical tracks, and you stay signed in. Finished tracks are marked "(done)". Answers save automatically, and you can leave and come back on any device: enter the same email and you'll resume where you left off.
 3. Submit your capstone link in module 6, then rate the training in the optional Feedback module and click **Mark training complete**.
 4. Your category chair reviews the capstone. Their status and notes appear next to it the next time you open the workbook.
 5. Then you're assigned a **shadow project** with a real client, supervised by your chair, before solo client work.

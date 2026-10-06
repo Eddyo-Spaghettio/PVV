@@ -89,6 +89,10 @@ To add a question, add an entry to `questions`:
 3. Keep each track near 60 minutes in total. The build warns if it drifts outside 50 to 70.
 4. Rebuild.
 
+## Adding a new track
+
+Add it to `THEMES` in `training/build.py` and create `training/src/<name>.json`. The links at the top of every workbook, the landing page, and the "other teams" note are generated from `THEMES`, so they update by themselves.
+
 ## Changing a track's colors or look
 
 Colors are set per track in `THEMES` at the top of `training/build.py`. The shared stylesheet is `training/src/_css.txt`, and the page layout and saving logic are in `training/src/template.html`. Changing those affects all three workbooks.
