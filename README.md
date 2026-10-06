@@ -21,14 +21,14 @@ Everything PVV needs to operate, train members, and deliver Bridge Kits to partn
 
 ## Interactive Training (No Install Needed)
 
-Three self-paced HTML workbooks. Open in any browser - Chrome, Safari, Firefox. Progress and exercises save automatically in the browser.
+Three self-paced workbooks - Marketing, Financial, Technical. Each is **6 modules and about one hour**, with videos and readings, exercises, quick checks, and a capstone reviewed by your category chair. Open in any browser (Chrome, Safari, Firefox).
 
-**To use during the school year:**
-1. Upload the `training/interactive/` folder to PVV's shared Google Drive
-2. Share the link with new members - they open the HTML file in their browser
-3. Or host on Google Sites / GitHub Pages if you want a permanent URL
+- **Members:** open your track from the table above. Enter your name and email, and your answers save automatically. You can resume on any device.
+- **Chairs and officers:** answers and progress flow into a Google Sheet with a dashboard. One-time setup: [`training/docs/SHEET-SETUP.md`](training/docs/SHEET-SETUP.md).
+- **Editing lessons:** [`training/docs/EDITING.md`](training/docs/EDITING.md).
+- **Overview and ground rules:** [`training/README.md`](training/README.md).
 
-Each workbook has 3 modules (~45–60 min each), fill-in exercises, quick-check quizzes, and completion checklists.
+Live URL (GitHub Pages serves this repo from `main`): `https://eddyo-spaghettio.github.io/PVV/training/interactive/`
 
 ---
 
@@ -56,22 +56,20 @@ Legacy copy-paste templates still in `templates/bridge-kit/` if needed.
 
 ```
 PVV/
-├── README.md                          ← you are here
-├── bridge-kit/                        ← Reach Pages + PVV Console (deploy via GitHub Pages)
-├── .github/workflows/                 ← Pages deploy workflow
-├── docs/
-│   ├── operations-plan.md             ← how to keep the club running
-│   ├── bridge-kit-proposal.md         ← youth engagement product proposal
-│   ├── constitution-2026-draft.md   ← revised constitution
-│   └── research-notes.md            ← evidence behind our decisions
-├── training/
-│   ├── interactive/
-│   │   ├── marketing-workbook.html
-│   │   ├── financial-workbook.html
-│   │   └── technical-workbook.html
-│   └── templates/                     ← CSV templates for projects
-└── templates/
-    └── bridge-kit/                    ← legacy client deliverable templates
+├── README.md                          <- you are here
+├── bridge-kit/                        <- Reach Pages + PVV Console
+│   └── site/                          <- generated, but committed ON PURPOSE: GitHub Pages serves from main
+├── docs/                              <- operations plan, proposal, constitution draft, research
+├── training/                          <- consultant training (see training/README.md)
+│   ├── src/                           <- lesson content (JSON) and page template
+│   ├── interactive/                   <- generated workbooks members open
+│   ├── backend/Code.gs                <- Google Apps Script for the tracker sheet
+│   ├── docs/                          <- SHEET-SETUP.md, EDITING.md
+│   ├── templates/                     <- CSV templates used in exercises
+│   └── archive/                       <- earlier quest docs and CSV trackers
+├── templates/bridge-kit/              <- legacy client deliverable templates
+├── scripts/wordpress/                 <- one-off WordPress site scripts
+└── .github/workflows/                 <- Bridge Kit deploy, training rebuild
 ```
 
 ---

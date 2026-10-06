@@ -1,61 +1,54 @@
-# PVV Team Training Documents - Design Guide
+# PVV Consultant Training
 
-**Proyecto Vidas Valiosas (PVV)** · AY 2025–26  
-*Free nonprofit consulting for local community organizations*
+**Proyecto Vidas Valiosas** offers free, student-provided consulting to local nonprofits. Every new consultant completes one short training for their team before working with a client.
 
----
+## The tracks
 
-## What's in this folder?
+Each track is **6 modules and about one hour**, with videos and readings, short exercises, quick checks, and a capstone your category chair reviews.
 
-| File | Team | Format | Est. time |
-|------|------|--------|-----------|
-| `01-Financial-Team-Training.md` | Financial / Grants | Module quest doc + CSV tracker | ~6–8 hrs |
-| `02-Marketing-Team-Training.md` | Marketing | Module quest doc + CSV tracker | ~6–8 hrs |
-| `03-Technical-Team-Training.md` | Technical | Module quest doc + CSV tracker | ~8–10 hrs |
-| `*-module-tracker.csv` | All | Excel/Google Sheets progress tracker | - |
+| Track | For | Modules |
+|-------|-----|---------|
+| **Marketing** | Social media, flyers, promoting events to Stanford students | Your role, Goal and audience, Message and story, Design a flyer, Channels and Stanford promotion, Measure and hand off |
+| **Financial** | Grant research and writing | Two doors of funding, Find funders, Anatomy of a proposal, Budgets, Letters of inquiry, Track and stay in scope |
+| **Technical** | Websites, forms, data | Discovery, Reach Page, Forms and surveys, Data and spreadsheets, Accessibility, Security and handoff |
 
----
+Start page: `https://YOUR-USERNAME.github.io/PVV/training/interactive/` (or open `training/interactive/index.html`). A readable list of every module and linked resource is in [CURRICULUM.md](CURRICULUM.md).
 
-## Design philosophy
+## How it works for members
 
-These aren't textbooks. They're **onboarding quests** - each module ends with a real deliverable you could show a client (or your CCC chair).
+1. Open your track and enter your name and email on the Start tab.
+2. Work through the modules in any order. Answers save automatically, and you can leave and come back on any device: enter the same email and you'll resume where you left off.
+3. Submit your capstone link in the last module and click **Mark training complete**.
+4. Your category chair reviews the capstone. Their status and notes appear next to it the next time you open the workbook.
+5. Then you're assigned a **shadow project** with a real client, supervised by your chair, before solo client work.
 
-### Recommended delivery formats
+## How it works for chairs and officers
 
-1. **Workshop series (best for engagement)**  
-   Run one module per weekly meeting (~75 min). Start with the story cold-open (5 min), teach (25 min), hands-on lab (35 min), debrief (10 min).
+- **Progress and answers** arrive in a Google Sheet, with a Dashboard of completion, most-missed questions, and capstones waiting for review. One-time setup: [docs/SHEET-SETUP.md](docs/SHEET-SETUP.md).
+- **Editing lessons** means editing a JSON file, no code needed: [docs/EDITING.md](docs/EDITING.md).
 
-2. **Self-paced + buddy system**  
-   Pair every new member with a "Quest Buddy" who completed the track last quarter. Buddies sign off on the CSV tracker.
+## Folder guide
 
-3. **Certification badge**  
-   When all modules + boss battle are done, the Category Chair adds them to the project roster as "consultant-ready."
+```
+training/
+├── README.md              you are here
+├── CURRICULUM.md          generated list of modules and linked resources
+├── config.json            the Google Sheet connection (endpoint and key)
+├── build.py               regenerates the workbooks from src/
+├── src/                   lesson content (marketing/financial/technical.json) and page template
+├── interactive/           the generated workbooks members open
+├── backend/Code.gs        Google Apps Script that writes answers to the Sheet
+├── docs/                  setup and editing guides
+├── templates/             CSV templates used in the exercises
+└── archive/               earlier quest-style documents and CSV trackers, kept for reference
+```
 
-4. **Client bridge**  
-   After training, assign a **shadow project** (real client, CCC supervises) before solo client work.
+## Before client work: ground rules
 
-### Gamification ideas (optional but fun) - **XP points** per module (listed in each doc) - **Boss Battle presentations** at end-of-quarter social - best fictional deliverable wins a silly trophy ("Golden Spreadsheet," "Viral Potato Award") - **Character cards** - print the recurring characters (Professor McBudget, Captain Clickbait, Agent Formstack) as desk references
-
-### Tools you'll need (free tier friendly)
-
-| Purpose | Suggested tools |
-|---------|-----------------|
-| Docs & collaboration | Google Drive, Notion |
-| Budgets | Google Sheets |
-| Grant research | Instrumentl (trial), Candid, foundation websites |
-| Design | Canva (nonprofit free tier) |
-| Websites | Google Sites, Wix, or WordPress.com |
-| Forms/surveys | Google Forms, Tally |
-| Social scheduling | Buffer free, Later, or native platform schedulers |
-
----
-
-## Important disclaimers (read before client work) - **PVV students advise; clients decide.** We help write drafts, research grants, and build tools - final submissions and financial decisions belong to the nonprofit's leadership. - **Two funding worlds:** (1) **Club funding** - Haas Center transportation grants, event co-sponsorship, OSE/VSO sources for *PVV's* operations. (2) **Client funding** - foundation/government/corporate grants for *nonprofit clients*. Never confuse the two on an application. - **No legal/tax advice.** Flag 501(c)(3) questions to the client's board or accountant. - **Brand & ethics.** Always get client approval before publishing anything in their name.
-
----
-
-## Questions?
-
-Contact your **Consulting Category Chair** (Financial, Marketing, or Technical) or the PVV VP for project placement.
+- **PVV students advise; clients decide.** We help draft, research, and build. Final submissions and financial decisions belong to the nonprofit's leadership.
+- **Two funding worlds.** Club funding (Haas transportation and event grants, other Stanford sources) supports PVV's own operations. Client funding (foundation, government, and corporate grants) supports the nonprofit. Never mix them on an application.
+- **No legal or tax advice.** Send 501(c)(3) and similar questions to the client's board or accountant.
+- **Brand and ethics.** Get client approval before publishing anything in their name, and permission before sharing anyone's story or photo.
+- **Privacy.** Use practice scenarios in the training. Never type real client details into a workbook.
 
 *¡Vidas valiosas merecen herramientas excelentes!*

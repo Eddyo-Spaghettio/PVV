@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PVV Technical Training</title>
 <style>
+
   :root { --bg: #faf9f7; --card: #fff; --accent: #5c4d7d; --accent-light: #ede8f5; --text: #1b1b1b; --muted: #666; --border: #e0ddd8; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
@@ -25,280 +26,731 @@
   p { margin-bottom: 1rem; }
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; }
   .callout { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+  .callout strong { display: block; margin-bottom: 0.25rem; }
   label { display: block; margin-bottom: 0.25rem; font-size: 0.9rem; color: var(--muted); }
   input[type="text"], textarea, select { width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 4px; font-family: inherit; font-size: 0.95rem; margin-bottom: 1rem; }
   textarea { min-height: 80px; resize: vertical; }
-  .checklist label { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.6rem; cursor: pointer; font-size: 0.95rem; }
+  .checklist label { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.6rem; color: var(--text); cursor: pointer; font-size: 0.95rem; }
   .checklist input { margin-top: 0.3rem; }
-  .quiz-option { display: block; padding: 0.6rem 1rem; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 0.5rem; cursor: pointer; }
+  .quiz { margin: 1rem 0; }
+  .quiz-option { display: block; padding: 0.6rem 1rem; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 0.5rem; cursor: pointer; transition: background 0.15s; }
   .quiz-option:hover { background: var(--accent-light); }
-  .quiz-option.correct { background: #d8f3dc; border-color: #2d6a4f; }
+  .quiz-option.correct { background: var(--accent-light); border-color: var(--accent); }
   .quiz-option.wrong { background: #fde8e8; border-color: #c0392b; }
   .feedback { padding: 0.75rem 1rem; border-radius: 4px; margin-top: 0.75rem; display: none; }
   .feedback.show { display: block; }
-  .feedback.ok { background: #d8f3dc; }
+  .feedback.ok { background: var(--accent-light); }
   .feedback.no { background: #fde8e8; }
-  .btn { background: var(--accent); color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.95rem; }
+  .btn { background: var(--accent); color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.95rem; margin-top: 0.5rem; }
+  .btn:hover { opacity: 0.9; }
   .btn-outline { background: none; color: var(--accent); border: 1px solid var(--accent); }
   table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
   th, td { border: 1px solid var(--border); padding: 0.5rem 0.75rem; text-align: left; }
   th { background: var(--accent-light); font-weight: normal; }
   .nav-buttons { display: flex; justify-content: space-between; margin-top: 2rem; }
-  code { background: var(--accent-light); padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  .saved-note { font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; }
+
+  /* additions (same look, small helpers) */
+  a { color: var(--accent); }
+  ul, ol { margin: 0 0 1rem 1.25rem; }
+  li { margin-bottom: 0.35rem; }
+  button.quiz-option { width: 100%; text-align: left; background: var(--card); font: inherit; color: inherit; }
+  .meta { font-size: 0.8rem; color: var(--muted); margin-top: -0.5rem; margin-bottom: 1rem; }
+  .media { margin: 1.25rem 0; }
+  .media .kind { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.25rem; }
+  .media p:last-child { margin-bottom: 0; }
+  .fig { width: 100%; height: auto; display: block; }
+  .fig text { font-family: Georgia, 'Times New Roman', serif; fill: var(--text); font-size: 14px; }
+  .fig .box { fill: var(--accent-light); stroke: var(--accent); stroke-width: 1.5; }
+  .fig .plain { fill: var(--card); stroke: var(--border); stroke-width: 1.5; }
+  .fig .solid { fill: var(--accent); }
+  .fig text.onsolid { fill: #fff; }
+  .figrow { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; }
+  .figrow .fig { flex: 0 0 220px; max-width: 220px; margin: 0 auto; }
+  .figrow .legend { flex: 1 1 220px; margin: 0 0 0 1.25rem; }
+  .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .panel { border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.25rem; background: var(--card); }
+  .panel.on { background: var(--accent-light); border-color: var(--accent); }
+  .panel h4 { font-size: 1rem; font-weight: normal; color: var(--accent); margin-bottom: 0.5rem; }
+  .panel p { margin-bottom: 0.4rem; font-size: 0.92rem; }
+  .flow { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; align-items: center; }
+  .step { background: var(--accent-light); border: 1px solid var(--accent); border-radius: 4px; padding: 0.45rem 0.9rem; font-size: 0.92rem; }
+  .arrow { color: var(--accent); }
+  figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.75rem; }
+  .header .note { font-size: 0.8rem; opacity: 0.8; margin: 0.5rem 0 0; }
+  .nav-buttons .btn[disabled] { opacity: 0.5; cursor: default; }
+  .field-note { font-size: 0.85rem; color: var(--muted); margin: -0.75rem 0 1rem; min-height: 1em; }
+  .linkbtn { background: none; border: none; color: var(--accent); text-decoration: underline; cursor: pointer; font: inherit; padding: 0; }
+  .err { color: #c0392b; font-size: 0.9rem; margin-top: 0.5rem; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (max-width: 560px) { .panels { grid-template-columns: 1fr; } .figrow .legend { margin-left: 1.25rem; } .container { padding: 1.25rem 1rem 3rem; } nav { padding: 0.6rem 0.75rem; } .header { padding: 1.5rem 1rem; } }
+
 </style>
 </head>
 <body>
 
+<!-- GENERATED FILE. Edit training/src/technical.json and run: python3 training/build.py -->
+
 <div class="header">
   <h1>PVV Technical Training</h1>
-  <p>Websites, forms, and data - built for clients who won't maintain complex systems. Progress saves in your browser.</p>
+  <p>6 short modules, about an hour in total. Your progress saves automatically, and you can pick up where you left off.</p>
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <p class="note" id="syncStatus" aria-live="polite"></p>
 </div>
 
-<nav>
-  <button class="active" data-mod="0">1. Discovery</button>
-  <button data-mod="1">2. Reach Page</button>
-  <button data-mod="2">3. Data & Handoff</button>
+<nav id="nav" aria-label="Modules">
+<button class="active" data-mod="0">Start</button>
+<button data-mod="1">1. Discovery</button>
+<button data-mod="2">2. Reach Page</button>
+<button data-mod="3">3. Forms</button>
+<button data-mod="4">4. Data</button>
+<button data-mod="5">5. Accessibility</button>
+<button data-mod="6">6. Security</button>
 </nav>
 
 <div class="container">
 
-<div class="module active" id="mod0">
-  <h2>Module 1: Discovery Before Building</h2>
-  <p>The most common technical mistake is building something the client didn't need, can't maintain, or already had. Ask first.</p>
+<!-- START -->
+<div class="module" id="mod0">
+  <h2>Welcome to Technical training</h2>
+  <p class="meta">About 60 minutes in total</p>
+  <p>Technical consulting at PVV is mostly about choosing simple, free tools a client can keep running without you. Under the constitution, that means websites, surveys, forms, data pipelines, and technical advice that makes a nonprofit's operations more efficient. This training uses one practice client throughout.</p>
 
-  <h3>Five questions before any build</h3>
+  <div class="callout">
+    <strong>What you'll leave with</strong>
+    A client intake, a Reach Page plan, a form design, a data layout, an accessibility check, and an account inventory, all built for a practice client and ready to reuse.
+  </div>
+
   <div class="card">
-    <ol style="padding-left:1.25rem">
-      <li>What problem are we solving?</li>
-      <li>Who will use this?</li>
-      <li>Who maintains it after we leave?</li>
-      <li>What's the timeline?</li>
-      <li>What's the budget? ($0 is the default)</li>
-    </ol>
+    <table>
+      <tr><th>#</th><th>Module</th><th>Time</th></tr><tr><td>1</td><td>Your role and discovery</td><td>8 min</td></tr><tr><td>2</td><td>Build the Reach Page</td><td>12 min</td></tr><tr><td>3</td><td>Forms and surveys</td><td>10 min</td></tr><tr><td>4</td><td>Data and spreadsheets</td><td>10 min</td></tr><tr><td>5</td><td>Accessibility and mobile</td><td>10 min</td></tr><tr><td>6</td><td>Security, privacy, and handoff</td><td>10 min</td></tr>
+    </table>
   </div>
 
   <div class="callout">
-    <strong>Red flags</strong>
-    "We need an app" (usually means a form). "Make it like [big nonprofit]" ($500K budget). "We need it Friday" (it's Wednesday). No one on their team can update content.
+    <strong>How your answers are used</strong>
+    Your name, email, and answers are saved to PVV's training sheet so your category chair can see your progress and give feedback. Use practice scenarios only. Never type real client names, contact details, or personal information into an exercise.
   </div>
 
-  <h3>Tool decision guide</h3>
-  <table>
-    <tr><th>Need</th><th>Use this (free)</th></tr>
-    <tr><td>Simple website / Reach Page</td><td>Google Sites</td></tr>
-    <tr><td>More design control</td><td>Wix (free tier)</td></tr>
-    <tr><td>Forms / sign-ups</td><td>Google Forms or Tally.so</td></tr>
-    <tr><td>Donations</td><td>Givebutter, PayPal Donate, Stripe link</td></tr>
-    <tr><td>Data tracking</td><td>Google Sheets (linked to Forms)</td></tr>
-  </table>
-
-  <p><strong>Default recommendation:</strong> Google Sites + Google Forms + Google Sheets. The client probably already has Gmail. No coding. You can hand off in 15 minutes.</p>
-
-  <h3>Exercise: Client intake</h3>
-  <label>Client name</label>
-  <input type="text" id="f_client" placeholder="e.g., Rise Up Legal Aid">
-  <label>What problem are we solving?</label>
-  <input type="text" id="f_problem" placeholder="e.g., No way for tenants to request help online">
-  <label>Recommended tool</label>
-  <select id="f_tool">
-    <option value="">Choose</option>
-    <option>Google Sites + Forms</option>
-    <option>Wix</option>
-    <option>WordPress (only if client has ongoing tech support)</option>
-  </select>
-  <label>What we're NOT building (scope boundary)</label>
-  <textarea id="f_scope" placeholder="e.g., No custom app, no case management system, no automated legal documents"></textarea>
-
-  <h3>Quick check</h3>
-  <div class="quiz" id="quiz1">
-    <p>A client says "we need an app." What do you usually actually build?</p>
-    <span class="quiz-option" data-q="quiz1" data-c="0">A mobile-friendly form (Google Forms) linked from a simple landing page</span>
-    <span class="quiz-option" data-q="quiz1" data-c="1">A native iOS/Android app</span>
-    <span class="quiz-option" data-q="quiz1" data-c="2">A custom database with login system</span>
-    <div class="feedback" id="quiz1-fb"></div>
+  <div id="signupBox">
+    <label for="u_name">Your name</label>
+    <input type="text" id="u_name" autocomplete="name">
+    <label for="u_email">Your email</label>
+    <input type="text" id="u_email" autocomplete="email" inputmode="email">
+    <button class="btn" id="startBtn" type="button">Save and begin</button>
+    <p class="err" id="startErr" role="alert"></p>
   </div>
 
-  <div class="checklist card" id="cl0">
-    <label><input type="checkbox" data-cl="cl0" data-i="0"> I can name the 5 discovery questions</label>
-    <label><input type="checkbox" data-cl="cl0" data-i="1"> I completed the intake exercise</label>
-    <label><input type="checkbox" data-cl="cl0" data-i="2"> I know why Google Sites is the default</label>
+  <div id="resumeBox" style="display:none">
+    <p>Welcome back, <strong id="whoName"></strong>. You can open any module from the tabs above, in any order.</p>
+    <button class="btn" id="resumeBtn" type="button"></button>
+    <p class="saved-note"><button class="linkbtn" id="switchUser" type="button">Not you? Switch person</button> &nbsp; <button class="linkbtn" id="downloadBtn" type="button">Download my answers (CSV)</button></p>
   </div>
-
-  <div class="nav-buttons"><span></span><button class="btn" onclick="goMod(1)">Next: Reach Page →</button></div>
 </div>
 
+<!-- MODULE 1 -->
 <div class="module" id="mod1">
-  <h2>Module 2: Building the Reach Page</h2>
-  <p>The Reach Page is the centerpiece of Bridge Kit. One mobile-friendly page where someone can volunteer, donate, or learn more - in under 2 minutes.</p>
+  <h2>Module 1: Your role and discovery</h2>
+  <p class="meta">About 8 minutes</p>
 
-  <h3>Standard 5-page site (when client needs more than a landing page)</h3>
-  <table>
-    <tr><th>Page</th><th>Must have</th></tr>
-    <tr><td>Home</td><td>Mission, hero image, 3 quick links, donate button</td></tr>
-    <tr><td>About</td><td>Story, team, 501(c)(3) info, impact numbers</td></tr>
-    <tr><td>Programs</td><td>What you do, who qualifies, how to access</td></tr>
-    <tr><td>Get Involved</td><td>Volunteer form, donate button</td></tr>
-    <tr><td>Contact</td><td>Form, email, phone, address, map</td></tr>
-  </table>
+  <p>The most common technical mistake is building something the client didn't need, can't maintain, or already had. Discovery prevents that, and it comes before any building.</p>
+
+  <div class="callout"><strong>Five questions before any build</strong>What problem are we solving? Who will use it? Who maintains it after PVV leaves? What's the timeline? What's the budget? ($0 is the default.)</div>
+
+  <div class="card"><table><tr><th>Need</th><th>Use this (free)</th></tr><tr><td>Simple website or Reach Page</td><td>Google Sites</td></tr><tr><td>Forms and sign-ups</td><td>Google Forms or Tally</td></tr><tr><td>Data tracking</td><td>Google Sheets, linked to Forms</td></tr><tr><td>Donations</td><td>The client's existing donation tool, or a simple payment link</td></tr></table></div>
+
+  <p>Our default is <strong>Google Sites + Google Forms + Google Sheets</strong>. The client probably already has Gmail, nothing needs coding, and you can hand it off in about 15 minutes.</p>
+
+  <div class="callout"><strong>Red flags</strong>"We need an app" usually means a form. "Make it like a big nonprofit's site" means a budget you don't have. "We need it Friday" when it's Wednesday means too much. No one on their team who can update content means it will go stale.</div>
+
+  <div class="card media"><p class="kind">Read, about 3 min, PVV repo</p><p><a href="https://github.com/Eddyo-Spaghettio/PVV/blob/main/bridge-kit/README.md" target="_blank" rel="noopener">Bridge Kit: what PVV has already built</a></p><p>Skim how a client's Reach Page and tracking console are structured.</p></div>
+
+  <h3>Exercise: Run a practice intake</h3>
+  <p>Practice client: a small tutoring nonprofit that says, "We need an app so parents can sign up."</p>
+  <label for="m1_problem">What problem is the client actually trying to solve? Write the discovery questions you would ask.</label>
+  <textarea id="m1_problem" data-f="m1_problem" placeholder="They want parents to..."></textarea>
+  <label for="m1_tool">Recommended tool</label>
+  <select id="m1_tool" data-f="m1_tool"><option value="">Choose one</option><option>Google Sites + Forms + Sheets</option><option>Wix (free tier)</option><option>WordPress, only if the client has ongoing tech support</option><option>Something else, to discuss with my chair</option></select>
+
+  <h3>Quick check</h3>
+
+  <div class="quiz" data-q="q1_a" data-a="1" data-ok="It&#x27;s cheaper, faster, and the client can maintain it." data-no="Think about the default stack."><p>A client says, "We need an app." What do you usually end up building?</p><button type="button" class="quiz-option">A native iPhone and Android app</button><button type="button" class="quiz-option">A mobile-friendly form linked from a simple landing page</button><button type="button" class="quiz-option">A custom database with a login system</button><div class="feedback" aria-live="polite"></div></div>
+
+  <div class="quiz" data-q="q1_b" data-a="2" data-ok="If nobody can maintain it, it will go stale." data-no="Think about the day after handoff."><p>Which question do you answer before building anything?</p><button type="button" class="quiz-option">Which framework is trendiest?</button><button type="button" class="quiz-option">How many pages can we fit?</button><button type="button" class="quiz-option">Who will maintain it after PVV leaves?</button><div class="feedback" aria-live="polite"></div></div>
+
+  <h3>Module 1 checklist</h3>
+  <div class="checklist card" id="cl1">
+    <label><input type="checkbox" data-cl="cl1" data-i="0" data-key="cl1_0"> I can name the five discovery questions</label>
+    <label><input type="checkbox" data-cl="cl1" data-i="1" data-key="cl1_1"> I know why Google Sites, Forms, and Sheets are the default</label>
+    <label><input type="checkbox" data-cl="cl1" data-i="2" data-key="cl1_2"> I completed the practice intake</label>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goMod(0)">Back to start</button>
+    <button class="btn" onclick="goMod(2)">Next: Reach Page</button>
+  </div>
+</div>
+
+<!-- MODULE 2 -->
+<div class="module" id="mod2">
+  <h2>Module 2: Build the Reach Page</h2>
+  <p class="meta">About 12 minutes</p>
+
+  <p>The Reach Page is the centerpiece of PVV's Bridge Kit: one mobile-friendly page where someone can volunteer, donate, or learn more in under two minutes. Most visitors will be on a phone, so design for that first.</p>
+
+  <figure class="card"><div class="figrow"><svg class="fig" viewBox="0 0 200 330" role="img" aria-label="A phone-sized Reach Page wireframe: a mission sentence, three buttons, and one impact number">
+<rect class="plain" x="6" y="6" width="188" height="318" rx="18"/>
+<circle class="solid" cx="26" cy="62" r="10"/><text class="onsolid" x="26" y="67" text-anchor="middle">1</text>
+<rect class="box" x="44" y="34" width="136" height="56" rx="4"/><text x="112" y="66" text-anchor="middle">Mission sentence</text>
+<circle class="solid" cx="26" cy="140" r="10"/><text class="onsolid" x="26" y="145" text-anchor="middle">2</text>
+<rect class="solid" x="44" y="104" width="136" height="28" rx="4"/><text class="onsolid" x="112" y="123" text-anchor="middle">Volunteer</text>
+<rect class="solid" x="44" y="140" width="136" height="28" rx="4"/><text class="onsolid" x="112" y="159" text-anchor="middle">Donate</text>
+<rect class="solid" x="44" y="176" width="136" height="28" rx="4"/><text class="onsolid" x="112" y="195" text-anchor="middle">Contact</text>
+<circle class="solid" cx="26" cy="245" r="10"/><text class="onsolid" x="26" y="250" text-anchor="middle">3</text>
+<rect class="box" x="44" y="220" width="136" height="50" rx="4"/><text x="112" y="250" text-anchor="middle">200 families a week</text>
+</svg><ol class="legend"><li>Mission: what you do and who you help</li><li>Three actions, one tap each</li><li>One number that proves impact</li></ol></div><figcaption>Everything else can wait. The 5-second test: a new visitor gets all three at a glance.</figcaption></figure>
+
+  <div class="callout"><strong>The 5-second test</strong>A new visitor should understand what the organization does, who it helps, and what they can do, within five seconds of landing.</div>
 
   <h3>Build sequence</h3>
-  <div class="card">
-    <p><strong>Week 1:</strong> Intake + collect logo, photos, copy<br>
-    <strong>Week 2:</strong> Draft copy in Google Doc (client edits here, not in builder)<br>
-    <strong>Week 3–4:</strong> Build pages. Embed forms. Add alt text to every image.<br>
-    <strong>Week 5:</strong> Test on mobile. Click every link. Submit every form.<br>
-    <strong>Week 6:</strong> Client approval → publish → handoff doc</p>
-  </div>
 
-  <div class="callout">
-    <strong>The 5-second test</strong>
-    A new visitor should understand: what this org does, who it helps, and what they can do - within 5 seconds of landing on the page.
-  </div>
+  <ul><li>Intake: collect the logo, photos, and copy.</li><li>Draft the copy in a Google Doc, where the client edits, not in the site builder.</li><li>Build the pages, embed forms, and add alt text to every image.</li><li>Test on a phone. Click every link and submit every form.</li><li>Get client approval, publish, and write the handoff doc.</li></ul>
+
+  <div class="card media"><p class="kind">Read, about 3 min, PVV repo</p><p><a href="https://github.com/Eddyo-Spaghettio/PVV/blob/main/bridge-kit/data/clients/rosalie-rendu-center.json" target="_blank" rel="noopener">A real client page, defined as data (pilot Reach Page)</a></p><p>See which pieces of content a Reach Page needs.</p></div>
+
+  <div class="card media"><p class="kind">Open, PVV repo</p><p><a href="https://github.com/Eddyo-Spaghettio/PVV/blob/main/training/templates/website-launch-checklist.csv" target="_blank" rel="noopener">Website launch checklist</a></p><p>Use this before showing any site to a client.</p></div>
 
   <h3>Exercise: Plan a Reach Page</h3>
-  <label>Organization</label>
-  <input type="text" id="f_org" placeholder="e.g., EHP">
-  <label>Hero text (one sentence mission)</label>
-  <input type="text" id="f_hero" placeholder="e.g., Neighbors helping neighbors in East Palo Alto since 1975">
-  <label>Three buttons (Volunteer / Donate / Contact - write the link each goes to)</label>
-  <textarea id="f_buttons" placeholder="Volunteer → Google Form URL&#10;Donate → Givebutter URL&#10;Contact → email or form"></textarea>
-  <label>One impact stat to display</label>
-  <input type="text" id="f_stat" placeholder="e.g., 200 families served weekly">
-
-  <p>Checklist template: <code>training/templates/website-launch-checklist.csv</code></p>
+  <label for="m2_org">Organization (practice client)</label>
+  <input type="text" id="m2_org" data-f="m2_org" placeholder="e.g., Eastside Tutoring Collective">
+  <label for="m2_hero">One-sentence mission for the top of the page</label>
+  <input type="text" id="m2_hero" data-f="m2_hero" placeholder="We help...">
+  <label for="m2_buttons">Three buttons (Volunteer, Donate, Contact). Where does each one go?</label>
+  <textarea id="m2_buttons" data-f="m2_buttons" placeholder="Volunteer: opens the sign-up form
+Donate: ...
+Contact: ..."></textarea>
+  <label for="m2_stat">One impact number to show</label>
+  <input type="text" id="m2_stat" data-f="m2_stat" placeholder="e.g., 120 students tutored this year">
 
   <h3>Quick check</h3>
-  <div class="quiz" id="quiz2">
-    <p>Why do we default to Google Sites instead of WordPress for most clients?</p>
-    <span class="quiz-option" data-q="quiz2" data-c="0">Clients can maintain it themselves with minimal training</span>
-    <span class="quiz-option" data-q="quiz2" data-c="1">Google Sites has better SEO</span>
-    <span class="quiz-option" data-q="quiz2" data-c="2">WordPress is not free</span>
-    <div class="feedback" id="quiz2-fb"></div>
-  </div>
 
-  <div class="checklist card" id="cl1">
-    <label><input type="checkbox" data-cl="cl1" data-i="0"> I planned a Reach Page with hero, buttons, and stat</label>
-    <label><input type="checkbox" data-cl="cl1" data-i="1"> I know the 5-second test</label>
-    <label><input type="checkbox" data-cl="cl1" data-i="2"> I can explain the build sequence to a new member</label>
+  <div class="quiz" data-q="q2_a" data-a="1" data-ok="It&#x27;s about clarity for a first-time visitor." data-no="It&#x27;s about the visitor, not the server."><p>What does the 5-second test check?</p><button type="button" class="quiz-option">Whether the page loads in five seconds</button><button type="button" class="quiz-option">Whether a new visitor understands what the org does and what they can do</button><button type="button" class="quiz-option">Whether the footer has five links</button><div class="feedback" aria-live="polite"></div></div>
+
+  <div class="quiz" data-q="q2_b" data-a="2" data-ok="Maintainability beats features for a small client." data-no="Think about who maintains it."><p>Why do we default to Google Sites rather than WordPress for most clients?</p><button type="button" class="quiz-option">It has the best search ranking</button><button type="button" class="quiz-option">WordPress is never free</button><button type="button" class="quiz-option">Clients can edit it themselves with minimal training</button><div class="feedback" aria-live="polite"></div></div>
+
+  <h3>Module 2 checklist</h3>
+  <div class="checklist card" id="cl2">
+    <label><input type="checkbox" data-cl="cl2" data-i="0" data-key="cl2_0"> I planned a hero, three buttons, and one impact number</label>
+    <label><input type="checkbox" data-cl="cl2" data-i="1" data-key="cl2_1"> I know the 5-second test</label>
+    <label><input type="checkbox" data-cl="cl2" data-i="2" data-key="cl2_2"> I can explain the build sequence</label>
   </div>
 
   <div class="nav-buttons">
-    <button class="btn btn-outline" onclick="goMod(0)">← Back</button>
-    <button class="btn" onclick="goMod(2)">Next: Data & Handoff →</button>
+    <button class="btn btn-outline" onclick="goMod(1)">Back</button>
+    <button class="btn" onclick="goMod(3)">Next: Forms</button>
   </div>
 </div>
 
-<div class="module" id="mod2">
-  <h2>Module 3: Forms, Data, and Handoff</h2>
-  <p>You're often handling sensitive information for vulnerable people. Build carefully. Hand off cleanly.</p>
+<!-- MODULE 3 -->
+<div class="module" id="mod3">
+  <h2>Module 3: Forms and surveys</h2>
+  <p class="meta">About 10 minutes</p>
 
-  <h3>The standard pipeline</h3>
-  <div class="card" style="text-align:center; font-size:0.95rem">
-    Google Form → Google Sheet → (optional) simple dashboard → monthly report
-  </div>
+  <p>A good form replaces a paper stack and feeds a spreadsheet directly. You're often collecting information from vulnerable people, so ask for less, not more.</p>
 
-  <h3>Form design rules</h3>
-  <ul style="padding-left:1.25rem; margin-bottom:1rem">
-    <li>Only ask what you need - minimum data collection</li>
-    <li>Use dropdowns instead of free text when possible (cleaner data)</li>
-    <li>Include a consent checkbox ("I agree to be contacted")</li>
-    <li>Enable email notifications for new submissions</li>
-    <li>Set Sheet permissions to specific emails - never "anyone with link"</li>
-  </ul>
+  <ul><li>Only ask what you need. Every field is a privacy risk and a reason to quit.</li><li>Use dropdowns and checkboxes instead of free text, so the data stays clean.</li><li>Add a consent checkbox, such as "I agree to be contacted."</li><li>Write a clear confirmation message that says what happens next.</li><li>For surveys, allow anonymous responses unless you truly need names.</li><li>Share the response sheet with named people only, never "anyone with the link."</li></ul>
 
-  <h3>Privacy rules (non-negotiable)</h3>
-  <div class="callout">
-    <strong>Never</strong> store client data in your personal Google account long-term. Never share PII in PVV meetings. The client owns the data - hand off all accounts.
-  </div>
+  <div class="card media"><p class="kind">Try, about 3 min, Google Workspace Learning Center</p><p><a href="https://support.google.com/a/users/answer/9303071?hl=en" target="_blank" rel="noopener">Create your first form in Google Forms</a></p><p>Follow the steps to add questions, make a field required, and change who can respond.</p></div>
 
-  <h3>Handoff doc (required for every project)</h3>
-  <p>Write a one-page guide for the client covering:</p>
-  <div class="card">
-    <ul style="padding-left:1.25rem">
-      <li>How to check new form submissions</li>
-      <li>How to edit website text</li>
-      <li>How to update the donate link</li>
-      <li>Who to contact if something breaks (you, during transition period)</li>
-    </ul>
-  </div>
+  <div class="card media"><p class="kind">Read, about 2 min, Google Docs Editors Help</p><p><a href="https://support.google.com/docs/answer/6281888?hl=en" target="_blank" rel="noopener">How to use Google Forms (including saving responses to a Sheet)</a></p><p>See how to send responses to a Google Sheet.</p></div>
 
   <h3>Exercise: Design a volunteer sign-up form</h3>
-  <label>List the fields you'd include (name, email, availability, etc.)</label>
-  <textarea id="f_fields" placeholder="e.g.,&#10;1. Full name (required)&#10;2. Email (required)&#10;3. Phone&#10;4. Availability - dropdown: Weekday mornings / Weekends / Flexible&#10;5. How did you hear about us? - dropdown&#10;6. Consent checkbox"></textarea>
-  <label>Write the confirmation message after someone submits</label>
-  <input type="text" id="f_confirm" placeholder="e.g., Thank you! We'll contact you within 48 hours.">
+  <label for="m3_fields">List the fields you would include, and mark each as required or optional. Explain one field you left out.</label>
+  <textarea id="m3_fields" data-f="m3_fields" placeholder="Name (required)
+Email (required)
+..."></textarea>
+  <label for="m3_confirm">Write the confirmation message shown after someone submits.</label>
+  <input type="text" id="m3_confirm" data-f="m3_confirm" placeholder="Thanks! We&#x27;ll email you within...">
 
   <h3>Quick check</h3>
-  <div class="quiz" id="quiz3">
-    <p>Where should client form response data be stored?</p>
-    <span class="quiz-option" data-q="quiz3" data-c="0">In the client's Google account, with restricted permissions</span>
-    <span class="quiz-option" data-q="quiz3" data-c="1">In your personal Google account - you'll forward responses</span>
-    <span class="quiz-option" data-q="quiz3" data-c="2">In a public Google Sheet anyone can view</span>
-    <div class="feedback" id="quiz3-fb"></div>
-  </div>
 
-  <div class="checklist card" id="cl2">
-    <label><input type="checkbox" data-cl="cl2" data-i="0"> I designed a form with appropriate fields</label>
-    <label><input type="checkbox" data-cl="cl2" data-i="1"> I know the privacy rules</label>
-    <label><input type="checkbox" data-cl="cl2" data-i="2"> I can write a one-page handoff doc</label>
-    <label><input type="checkbox" data-cl="cl2" data-i="3"> I'm ready to build a real Reach Page for a client</label>
+  <div class="quiz" data-q="q3_a" data-a="2" data-ok="Collect the minimum, because every extra field is a risk." data-no="What do you need to contact and schedule someone?"><p>Which field would you leave off a basic volunteer sign-up?</p><button type="button" class="quiz-option">Email address</button><button type="button" class="quiz-option">Availability</button><button type="button" class="quiz-option">Home address and date of birth, when nobody needs them</button><div class="feedback" aria-live="polite"></div></div>
+
+  <div class="quiz" data-q="q3_b" data-a="1" data-ok="Anonymity tends to produce more honest answers." data-no="Think about candor."><p>You're surveying youth about a program. Which setting is best?</p><button type="button" class="quiz-option">Require names on every response</button><button type="button" class="quiz-option">Allow anonymous responses unless you truly need names</button><button type="button" class="quiz-option">Make every question required</button><div class="feedback" aria-live="polite"></div></div>
+
+  <h3>Module 3 checklist</h3>
+  <div class="checklist card" id="cl3">
+    <label><input type="checkbox" data-cl="cl3" data-i="0" data-key="cl3_0"> I designed a form with only the fields it needs</label>
+    <label><input type="checkbox" data-cl="cl3" data-i="1" data-key="cl3_1"> I wrote a confirmation message</label>
+    <label><input type="checkbox" data-cl="cl3" data-i="2" data-key="cl3_2"> I know to share response sheets with named people only</label>
   </div>
 
   <div class="nav-buttons">
-    <button class="btn btn-outline" onclick="goMod(1)">← Back</button>
-    <button class="btn" onclick="markComplete()">Mark training complete</button>
+    <button class="btn btn-outline" onclick="goMod(2)">Back</button>
+    <button class="btn" onclick="goMod(4)">Next: Data</button>
   </div>
-  <p id="completeNote" style="font-size:0.85rem;color:#666;margin-top:0.5rem"></p>
+</div>
+
+<!-- MODULE 4 -->
+<div class="module" id="mod4">
+  <h2>Module 4: Data and spreadsheets</h2>
+  <p class="meta">About 10 minutes</p>
+
+  <p>Most PVV data work follows one simple pipeline. Keep it simple and you can hand it off in minutes.</p>
+
+  <figure class="card"><div class="flow"><span class="step">Google Form</span><span class="arrow">&rarr;</span><span class="step">Google Sheet</span><span class="arrow">&rarr;</span><span class="step">Dashboard</span><span class="arrow">&rarr;</span><span class="step">Monthly report</span></div><figcaption>The standard pipeline, entirely in the client's own Google account.</figcaption></figure>
+
+  <h3>Keep data clean</h3>
+
+  <ul><li>One row per record, one value per cell. No merged cells.</li><li>Use dropdowns or data validation for categories, so "Mon," "monday," and "M" can't all appear.</li><li>Use one date format everywhere.</li><li>Leave the raw responses tab alone. Do your cleaning and counting in a separate tab.</li></ul>
+
+  <div class="callout"><strong>A three-tab master sheet</strong><strong>Responses:</strong> raw form data, never edited by hand. <strong>Working:</strong> the cleaned copy. <strong>Dashboard:</strong> the two or three numbers the client reports each month.</div>
+
+  <div class="card media"><p class="kind">Read, about 2 min, Google Docs Editors Help</p><p><a href="https://support.google.com/docs/answer/6281888?hl=en" target="_blank" rel="noopener">How to use Google Forms (see the section on responses in a Sheet)</a></p><p>A form can send its responses straight to a Sheet.</p></div>
+
+  <h3>Exercise: Lay out a master sheet</h3>
+  <label for="m4_tabs">Name three tabs for a volunteer-tracking sheet and say what each one holds.</label>
+  <textarea id="m4_tabs" data-f="m4_tabs" placeholder="Responses: ...
+Working: ...
+Dashboard: ..."></textarea>
+  <label for="m4_metric">Name one metric the client will report every month.</label>
+  <input type="text" id="m4_metric" data-f="m4_metric" placeholder="e.g., new volunteers per month">
+
+  <h3>Quick check</h3>
+
+  <div class="quiz" data-q="q4_a" data-a="1" data-ok="Prevent messy data on the way in rather than cleaning it later." data-no="Fix the cause, not the symptom."><p>An "Availability" column contains "Mon," "monday," and "M." What fixes this at the source?</p><button type="button" class="quiz-option">Clean it by hand every month</button><button type="button" class="quiz-option">Use a dropdown or checkbox question in the form</button><button type="button" class="quiz-option">Leave it as is</button><div class="feedback" aria-live="polite"></div></div>
+
+  <div class="quiz" data-q="q4_b" data-a="1" data-ok="The raw tab stays untouched so you can always start over." data-no="Which tab is your safety net?"><p>Which tab should people edit by hand?</p><button type="button" class="quiz-option">The raw Responses tab</button><button type="button" class="quiz-option">The Working tab</button><button type="button" class="quiz-option">The Dashboard tab</button><div class="feedback" aria-live="polite"></div></div>
+
+  <h3>Module 4 checklist</h3>
+  <div class="checklist card" id="cl4">
+    <label><input type="checkbox" data-cl="cl4" data-i="0" data-key="cl4_0"> I described a three-tab master sheet</label>
+    <label><input type="checkbox" data-cl="cl4" data-i="1" data-key="cl4_1"> I named a monthly metric</label>
+    <label><input type="checkbox" data-cl="cl4" data-i="2" data-key="cl4_2"> I know why raw data stays untouched</label>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goMod(3)">Back</button>
+    <button class="btn" onclick="goMod(5)">Next: Accessibility</button>
+  </div>
+</div>
+
+<!-- MODULE 5 -->
+<div class="module" id="mod5">
+  <h2>Module 5: Accessibility and mobile</h2>
+  <p class="meta">About 10 minutes</p>
+
+  <p>Accessible design helps people with disabilities, and it also helps anyone on a small phone, in bright sun, or on a slow connection. For PVV clients, whose communities often rely on phones, it's not optional.</p>
+
+  <div class="card"><table><tr><th>Check</th><th>How</th></tr><tr><td>Contrast</td><td>At least 4.5:1 for normal text and 3:1 for large text. Check with a contrast checker.</td></tr><tr><td>Images</td><td>Add short, meaningful alt text. Decorative images get empty alt text.</td></tr><tr><td>Forms</td><td>Every field has a visible label.</td></tr><tr><td>Links</td><td>Say where they go. "Volunteer sign-up," not "click here."</td></tr><tr><td>Mobile</td><td>Open the page on a real phone and try every button.</td></tr></table></div>
+
+  <div class="card media"><p class="kind">Watch, about 3 min, Section508.gov</p><p><a href="https://www.section508.gov/training/create/making-color-usage-accessible/webaim-contrast-checker/" target="_blank" rel="noopener">Section 508: how to use the WebAIM contrast checker</a></p><p>A short walkthrough of testing real color choices.</p></div>
+
+  <div class="card media"><p class="kind">Try, about 2 min, WebAIM</p><p><a href="https://webaim.org/resources/contrastchecker/" target="_blank" rel="noopener">WebAIM contrast checker</a></p><p>Try your own pair of colors.</p></div>
+
+  <div class="card media"><p class="kind">Read, about 2 min, W3C Web Accessibility Initiative</p><p><a href="https://www.w3.org/WAI/fundamentals/accessibility-principles/" target="_blank" rel="noopener">W3C: accessibility principles</a></p><p>The big ideas behind the checklist above.</p></div>
+
+  <h3>Exercise: Test and describe</h3>
+  <label for="m5_pair">Pick a text and background color pair for the practice site and report the contrast ratio.</label>
+  <input type="text" id="m5_pair" data-f="m5_pair" placeholder="e.g., #2D3142 on #FFFFFF = 12.5:1">
+  <label for="m5_alt">Write alt text for a photo of two volunteers sorting oranges into crates at a pantry table.</label>
+  <input type="text" id="m5_alt" data-f="m5_alt" placeholder="Two volunteers...">
+
+  <h3>Quick check</h3>
+
+  <div class="quiz" data-q="q5_a" data-a="2" data-ok="3:1 is only enough for large text." data-no="It&#x27;s higher than 3:1."><p>What is the minimum contrast ratio for normal-size text at WCAG level AA?</p><button type="button" class="quiz-option">2:1</button><button type="button" class="quiz-option">3:1</button><button type="button" class="quiz-option">4.5:1</button><div class="feedback" aria-live="polite"></div></div>
+
+  <div class="quiz" data-q="q5_b" data-a="2" data-ok="Good alt text says what matters about the image in a short sentence." data-no="Imagine you can&#x27;t see the picture."><p>Which is the best alt text for the photo of volunteers sorting oranges?</p><button type="button" class="quiz-option">Photo</button><button type="button" class="quiz-option">IMG_4021.jpg</button><button type="button" class="quiz-option">Two volunteers sort oranges into crates at the pantry's Saturday distribution</button><div class="feedback" aria-live="polite"></div></div>
+
+  <h3>Module 5 checklist</h3>
+  <div class="checklist card" id="cl5">
+    <label><input type="checkbox" data-cl="cl5" data-i="0" data-key="cl5_0"> I tested a color pair and read the ratio</label>
+    <label><input type="checkbox" data-cl="cl5" data-i="1" data-key="cl5_1"> I wrote meaningful alt text</label>
+    <label><input type="checkbox" data-cl="cl5" data-i="2" data-key="cl5_2"> I know to test on a real phone</label>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goMod(4)">Back</button>
+    <button class="btn" onclick="goMod(6)">Next: Security</button>
+  </div>
+</div>
+
+<!-- MODULE 6 -->
+<div class="module" id="mod6">
+  <h2>Module 6: Security, privacy, and handoff</h2>
+  <p class="meta">About 10 minutes</p>
+
+  <p>You'll often handle information about vulnerable people. The client owns that data, and your job is to protect it and then hand everything back cleanly.</p>
+
+  <ul><li>Keep client data in the client's accounts, not your personal one.</li><li>Share sheets with named people only, never "anyone with the link."</li><li>Never discuss individuals' personal information in PVV meetings.</li><li>Use long, unique passwords with a password manager, and turn on multifactor authentication.</li><li>Never put passwords, tokens, or API keys in a public GitHub repo. Keep them in environment variables.</li></ul>
+
+  <h3>The handoff document</h3>
+
+  <p>Every project ends with a one-page guide for the client: how to check new form responses, how to edit the site's text, how to update the donate link, and who to contact if something breaks. Include an inventory of every account, who owns it, and who can access it.</p>
+
+  <div class="card media"><p class="kind">Read, about 2 min, CISA</p><p><a href="https://www.cisa.gov/secure-our-world/use-strong-passwords" target="_blank" rel="noopener">CISA: use strong passwords</a></p><p>Length, uniqueness, and password managers.</p></div>
+
+  <div class="card media"><p class="kind">Read, about 2 min, CISA</p><p><a href="https://www.cisa.gov/secure-our-world/turn-mfa" target="_blank" rel="noopener">CISA: turn on multifactor authentication</a></p><p>How to find the setting in any account.</p></div>
+
+  <h3>Exercise: Inventory the accounts</h3>
+  <label for="m6_inventory">For a practice Reach Page, list every account involved (site, form, sheet, email) and who should own each.</label>
+  <textarea id="m6_inventory" data-f="m6_inventory" placeholder="Google Site: owned by the client&#x27;s director
+Form: ...
+Sheet: ..."></textarea>
+
+  <h3>Exercise: Capstone: your handoff package</h3>
+  <p>Create a one-page handoff guide in Google Docs for your practice client, including the account inventory. Set sharing to <strong>Anyone with the link can view</strong> (use no real client data), then paste the link. Your category chair will review it.</p>
+  <label for="cap_link">Link to your practice handoff guide</label>
+  <input type="url" id="cap_link" data-f="cap_link" data-cap="1" data-req="1" placeholder="https://docs.google.com/...">
+  <p class="field-note" id="rv_cap_link"></p>
+  <label for="cap_reflect">What would make the handoff fail on a real project, and how would you prevent it?</label>
+  <textarea id="cap_reflect" data-f="cap_reflect" data-cap="1" placeholder="It would fail if..."></textarea>
+  <p class="field-note" id="rv_cap_reflect"></p>
+
+  <h3>Quick check</h3>
+
+  <div class="quiz" data-q="q6_a" data-a="2" data-ok="The client owns the data, and access should be limited." data-no="Who owns the data?"><p>Where should a client's form response data live?</p><button type="button" class="quiz-option">In your personal Google account, so you can forward it</button><button type="button" class="quiz-option">In a public sheet anyone can view</button><button type="button" class="quiz-option">In the client's Google account, with access limited to named people</button><div class="feedback" aria-live="polite"></div></div>
+
+  <div class="quiz" data-q="q6_b" data-a="1" data-ok="A handoff makes the client self-sufficient." data-no="What will the client need on day one?"><p>Which belongs in a handoff document?</p><button type="button" class="quiz-option">Your personal passwords</button><button type="button" class="quiz-option">How to read responses, edit text, update the donate link, and who to contact</button><button type="button" class="quiz-option">Nothing. The client will figure it out.</button><div class="feedback" aria-live="polite"></div></div>
+
+  <h3>Module 6 checklist</h3>
+  <div class="checklist card" id="cl6">
+    <label><input type="checkbox" data-cl="cl6" data-i="0" data-key="cl6_0"> I listed every account and who owns it</label>
+    <label><input type="checkbox" data-cl="cl6" data-i="1" data-key="cl6_1"> I submitted my capstone link</label>
+    <label><input type="checkbox" data-cl="cl6" data-i="2" data-key="cl6_2"> I know to keep client data in the client's accounts</label>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goMod(5)">Back</button>
+    <button class="btn" id="completeBtn">Mark training complete</button>
+  </div>
+  <p class="saved-note" id="completeNote"></p>
 </div>
 
 </div>
 
 <script>
-const KEY = 'pvv_technical_v2';
-let state = JSON.parse(localStorage.getItem(KEY) || '{}');
-function save() { localStorage.setItem(KEY, JSON.stringify(state)); updateProgress(); }
+(function () {
+'use strict';
+
+var CFG = {"endpoint": "", "key": "CHANGE-ME-to-the-same-word-you-set-as-PVV_KEY", "track": "technical"};
+var STORE = 'pvv_' + CFG.track + '_v3';
+
+function $(s, r) { return (r || document).querySelector(s); }
+function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+function enc(s) { return encodeURIComponent(s); }
+function nowMs() { return Date.now(); }
+
+var NMOD = $$('.module').length - 1; // module 0 is the Start panel
+
+/* ---------- state ---------- */
+function fresh() { return { user: null, last: 0, f: {}, c: {}, q: {}, rv: {}, done: null, dirty: [], pdirty: false }; }
+var S = fresh();
+try { var raw = localStorage.getItem(STORE); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
+function persist() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} }
+
+function stamp(k) {
+  var p = k.indexOf(':'), type = k.slice(0, p), id = k.slice(p + 1);
+  var o = type === 'f' ? S.f[id] : type === 'c' ? S.c[id] : S.q[id];
+  return o ? o.t : 0;
+}
+function mark(k) {
+  if (S.dirty.indexOf(k) < 0) S.dirty.push(k);
+  persist(); schedule(1500);
+}
+function markAll() {
+  Object.keys(S.f).forEach(function (id) { if (S.dirty.indexOf('f:' + id) < 0) S.dirty.push('f:' + id); });
+  Object.keys(S.c).forEach(function (id) { if (S.dirty.indexOf('c:' + id) < 0) S.dirty.push('c:' + id); });
+  Object.keys(S.q).forEach(function (id) { if (S.dirty.indexOf('q:' + id) < 0) S.dirty.push('q:' + id); });
+  S.pdirty = true; persist();
+}
+
+/* ---------- helpers that read the page ---------- */
+function modOf(el) { var m = el.closest('.module'); return m ? +m.id.replace('mod', '') : 0; }
+function labelOf(el) { var l = document.querySelector('label[for="' + el.id + '"]'); return l ? l.textContent.trim() : el.id; }
+function modTitle(k) { var h = $('#mod' + k + ' h2'); return h ? h.textContent.replace(/^Module \d+:\s*/, '') : ''; }
+
+/* ---------- status line ---------- */
+function status(msg) { $('#syncStatus').textContent = msg; }
+function clock() { var d = new Date(); return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); }
+
+/* ---------- payload builders ---------- */
+function buildItems(keys) {
+  var items = [];
+  keys.forEach(function (k) {
+    var p = k.indexOf(':'), type = k.slice(0, p), id = k.slice(p + 1);
+    if (type === 'f') {
+      var el = document.getElementById(id), s = S.f[id];
+      if (!el || !s) return;
+      items.push({ id: id, module: modOf(el), type: el.dataset.cap === '1' ? 'capstone' : 'text', prompt: labelOf(el), answer: s.v, t: s.t });
+    } else if (type === 'c') {
+      var inp = document.querySelector('input[data-key="' + id + '"]'), c = S.c[id];
+      if (!inp || !c) return;
+      items.push({ id: id, module: modOf(inp), type: 'checklist', prompt: inp.parentElement.textContent.trim(), answer: c.v ? 'TRUE' : 'FALSE', t: c.t });
+    } else if (type === 'q') {
+      var box = document.querySelector('.quiz[data-q="' + id + '"]'), q = S.q[id];
+      if (!box || !q || q.pick == null) return;
+      var opts = $$('.quiz-option', box);
+      items.push({ id: id, module: modOf(box), type: 'quiz', prompt: $('p', box).textContent.trim(), answer: opts[q.pick] ? opts[q.pick].textContent.trim() : '', correct: !!q.ok, wrong: q.wrong || 0, t: q.t });
+    }
+  });
+  return items;
+}
+
+function buildProgress() {
+  var out = [];
+  for (var k = 1; k <= NMOD; k++) {
+    var mod = $('#mod' + k);
+    var cks = $$('.checklist input', mod), qs = $$('.quiz', mod), fs = $$('[data-f]', mod);
+    var cd = cks.filter(function (i) { return i.checked; }).length;
+    var qc = qs.filter(function (b) { var s = S.q[b.dataset.q]; return s && s.ok; }).length;
+    var ff = fs.filter(function (e) { return e.value.trim(); }).length;
+    var st = (cks.length && cd === cks.length && qc === qs.length) ? 'Complete' : ((cd || qc || ff) ? 'In progress' : 'Not started');
+    out.push({ module: k, title: modTitle(k), status: st, checklistDone: cd, checklistTotal: cks.length, quizCorrect: qc, quizTotal: qs.length, fieldsFilled: ff, fieldsTotal: fs.length });
+  }
+  return out;
+}
+
+/* ---------- sync to the PVV Google Sheet ---------- */
+var timer = null, retry = null, busy = false;
+function schedule(ms) {
+  clearTimeout(timer);
+  timer = setTimeout(sync, ms || 1500);
+  if (S.user) status(CFG.endpoint ? 'Saving...' : 'Saved in this browser.');
+  updateProgress();
+}
+function sync() {
+  if (!S.user) return;
+  if (!CFG.endpoint) { status('Saved in this browser only (PVV sync is not set up yet).'); return; }
+  if (!S.dirty.length && !S.pdirty) return;
+  if (busy) { schedule(1500); return; }
+  var keys = S.dirty.slice(), sent = {};
+  keys.forEach(function (k) { sent[k] = stamp(k); });
+  var wasP = S.pdirty;
+  S.pdirty = false;
+  var body = JSON.stringify({ action: 'save', key: CFG.key, track: CFG.track, user: S.user, items: buildItems(keys), progress: buildProgress(), last: S.last, complete: S.done ? S.done.date : '' });
+  busy = true;
+  return fetch(CFG.endpoint, { method: 'POST', body: body, keepalive: body.length < 60000 })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      busy = false;
+      if (!d || !d.ok) throw new Error((d && d.error) || 'Sync failed');
+      S.dirty = S.dirty.filter(function (k) { return !(k in sent) || stamp(k) !== sent[k]; });
+      persist();
+      status('Saved to PVV at ' + clock() + '.');
+      if (S.dirty.length || S.pdirty) schedule(500);
+    })
+    .catch(function () {
+      busy = false;
+      if (wasP) S.pdirty = true;
+      persist();
+      status("Couldn't reach PVV's sheet. Your answers are saved in this browser and will retry.");
+      clearTimeout(retry); retry = setTimeout(sync, 20000);
+    });
+}
+
+function pull() {
+  if (!CFG.endpoint || !S.user) return Promise.resolve(false);
+  var url = CFG.endpoint + '?action=load&key=' + enc(CFG.key) + '&track=' + enc(CFG.track) + '&email=' + enc(S.user.email);
+  return fetch(url).then(function (r) { return r.json(); }).then(function (d) {
+    if (!d || !d.ok) return false;
+    merge(d);
+    return true;
+  }).catch(function () { return false; });
+}
+
+function merge(d) {
+  (d.items || []).forEach(function (it) {
+    var t = +it.t || 0;
+    if (it.type === 'text' || it.type === 'capstone') {
+      var cur = S.f[it.id];
+      if (!cur || cur.t < t) S.f[it.id] = { v: String(it.answer == null ? '' : it.answer), t: t };
+      if (it.review && it.review.status) S.rv[it.id] = it.review;
+    } else if (it.type === 'checklist') {
+      var cc = S.c[it.id];
+      if (!cc || cc.t < t) S.c[it.id] = { v: String(it.answer).toUpperCase() === 'TRUE', t: t };
+    } else if (it.type === 'quiz') {
+      var box = document.querySelector('.quiz[data-q="' + it.id + '"]');
+      if (!box) return;
+      var idx = -1;
+      $$('.quiz-option', box).forEach(function (o, i) { if (o.textContent.trim() === String(it.answer).trim()) idx = i; });
+      var cq = S.q[it.id];
+      if (idx >= 0 && (!cq || cq.t < t)) S.q[it.id] = { pick: idx, ok: it.correct === true || String(it.correct).toUpperCase() === 'TRUE', wrong: +it.wrong || 0, t: t };
+    }
+  });
+  if (+d.last > 0 && !S.last) S.last = +d.last;
+  if (d.complete && !S.done) S.done = { date: String(d.complete).slice(0, 10), t: nowMs() };
+  persist(); render();
+}
+
+/* ---------- rendering ---------- */
+function renderQuiz(box) {
+  var st = S.q[box.dataset.q], opts = $$('.quiz-option', box), fb = $('.feedback', box);
+  opts.forEach(function (o) { o.classList.remove('correct', 'wrong'); });
+  if (!st || st.pick == null || !opts[st.pick]) { fb.className = 'feedback'; fb.textContent = ''; return; }
+  opts[st.pick].classList.add(st.ok ? 'correct' : 'wrong');
+  fb.className = 'feedback show ' + (st.ok ? 'ok' : 'no');
+  fb.textContent = st.ok ? ('Correct. ' + box.dataset.ok) : ('Not quite. ' + box.dataset.no);
+}
+function checkExpect(el) {
+  var ex = el.dataset.expect;
+  if (!ex) return;
+  var note = document.querySelector('[data-for="' + el.id + '"]');
+  if (!note) return;
+  if (!el.value.trim()) { note.textContent = ''; return; }
+  var v = parseFloat(el.value.replace(/[$,\s]/g, ''));
+  note.textContent = (Math.abs(v - parseFloat(ex)) < 0.005) ? 'That matches.' : "That doesn't match yet. Recheck your math.";
+}
 function updateProgress() {
-  let total=0,done=0;
-  ['cl0','cl1','cl2'].forEach(cl => document.querySelectorAll(`#${cl} input`).forEach((_,i) => { total++; if(state[cl]?.[i]) done++; }));
-  document.getElementById('progressFill').style.width = (total?done/total*100:0)+'%';
-  [0,1,2].forEach(i => {
-    const all=[...document.querySelectorAll(`#cl${i} input`)].every((_,j)=>state['cl'+i]?.[j]);
-    document.querySelector(`nav button[data-mod="${i}"]`).classList.toggle('done',all);
-  });
+  var total = 0, done = 0;
+  for (var k = 1; k <= NMOD; k++) {
+    var mod = $('#mod' + k);
+    var cks = $$('.checklist input', mod), qs = $$('.quiz', mod);
+    var cd = cks.filter(function (i) { return i.checked; }).length;
+    var qc = qs.filter(function (b) { var s = S.q[b.dataset.q]; return s && s.ok; }).length;
+    total += cks.length + qs.length; done += cd + qc;
+    var all = cks.length && cd === cks.length && qc === qs.length;
+    var btn = document.querySelector('nav button[data-mod="' + k + '"]');
+    if (btn) btn.classList.toggle('done', !!all);
+  }
+  $('#progressFill').style.width = (total ? (done / total * 100) : 0) + '%';
 }
-function goMod(n) {
-  document.querySelectorAll('.module').forEach(m=>m.classList.remove('active'));
-  document.getElementById('mod'+n).classList.add('active');
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  document.querySelector(`nav button[data-mod="${n}"]`).classList.add('active');
-  window.scrollTo(0,0);
+function render() {
+  $$('[data-f]').forEach(function (el) {
+    var s = S.f[el.id];
+    if (s && el.value !== s.v) el.value = s.v;
+    checkExpect(el);
+  });
+  $$('.checklist input').forEach(function (i) { var s = S.c[i.dataset.key]; i.checked = !!(s && s.v); });
+  $$('.quiz').forEach(renderQuiz);
+  Object.keys(S.rv).forEach(function (id) {
+    var n = document.getElementById('rv_' + id), r = S.rv[id];
+    if (n && r && r.status) n.textContent = 'Chair review: ' + r.status + (r.notes ? ' - ' + r.notes : '');
+  });
+  var cn = $('#completeNote');
+  if (cn) cn.textContent = S.done ? ('Training marked complete on ' + S.done.date + '. Your category chair will review your capstone.') : '';
+  renderStart();
+  updateProgress();
 }
-document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>goMod(+b.dataset.mod)));
-['f_client','f_problem','f_tool','f_scope','f_org','f_hero','f_buttons','f_stat','f_fields','f_confirm'].forEach(id=>{
-  const el=document.getElementById(id); if(!el)return;
-  if(state[id])el.value=state[id];
-  el.addEventListener('input',()=>{state[id]=el.value;save();});
-  el.addEventListener('change',()=>{state[id]=el.value;save();});
+function renderStart() {
+  var has = !!S.user;
+  $('#signupBox').style.display = has ? 'none' : 'block';
+  $('#resumeBox').style.display = has ? 'block' : 'none';
+  if (has) {
+    $('#whoName').textContent = S.user.name;
+    var n = S.last > 0 ? S.last : 1;
+    $('#resumeBtn').textContent = (S.last > 0 ? 'Resume: Module ' : 'Begin: Module ') + n + ' - ' + modTitle(n);
+  }
+}
+
+/* ---------- navigation ---------- */
+function go(n) {
+  $$('.module').forEach(function (m) { m.classList.remove('active'); });
+  $('#mod' + n).classList.add('active');
+  $$('nav button').forEach(function (b) { b.classList.remove('active'); b.removeAttribute('aria-current'); });
+  var btn = document.querySelector('nav button[data-mod="' + n + '"]');
+  btn.classList.add('active'); btn.setAttribute('aria-current', 'page');
+  window.scrollTo(0, 0);
+  if (n > 0 && S.last !== n) { S.last = n; S.pdirty = true; persist(); if (S.user) schedule(1500); }
+  if (n === 0) renderStart();
+}
+window.goMod = go;
+
+/* ---------- wiring ---------- */
+$$('nav button').forEach(function (b) { b.addEventListener('click', function () { go(+b.dataset.mod); }); });
+
+$$('[data-f]').forEach(function (el) {
+  function onEdit() {
+    S.f[el.id] = { v: el.value, t: nowMs() };
+    checkExpect(el);
+    mark('f:' + el.id);
+  }
+  el.addEventListener('input', onEdit);
+  el.addEventListener('change', onEdit);
 });
-document.querySelectorAll('.checklist input').forEach(inp=>{
-  const cl=inp.dataset.cl,i=+inp.dataset.i;
-  if(!state[cl])state[cl]={};
-  if(state[cl][i])inp.checked=true;
-  inp.addEventListener('change',()=>{state[cl][i]=inp.checked;save();});
-});
-const answers={quiz1:0,quiz2:0,quiz3:0};
-document.querySelectorAll('.quiz-option').forEach(opt=>{
-  opt.addEventListener('click',()=>{
-    const q=opt.dataset.q,fb=document.getElementById(q+'-fb');
-    opt.parentElement.querySelectorAll('.quiz-option').forEach(o=>o.classList.remove('correct','wrong'));
-    if(+opt.dataset.c===answers[q]){opt.classList.add('correct');fb.textContent='Correct.';fb.className='feedback show ok';}
-    else{opt.classList.add('wrong');fb.textContent='Re-read the section above.';fb.className='feedback show no';}
+
+$$('.checklist input').forEach(function (inp) {
+  inp.addEventListener('change', function () {
+    S.c[inp.dataset.key] = { v: inp.checked, t: nowMs() };
+    mark('c:' + inp.dataset.key);
   });
 });
-function markComplete(){state.complete=true;state.completeDate=new Date().toISOString().split('T')[0];save();document.getElementById('completeNote').textContent='Training marked complete on '+state.completeDate+'.';}
-if(state.complete)document.getElementById('completeNote').textContent='Completed on '+state.completeDate+'.';
-updateProgress();
+
+$$('.quiz').forEach(function (box) {
+  var id = box.dataset.q, answer = +box.dataset.a;
+  $$('.quiz-option', box).forEach(function (o, i) {
+    o.addEventListener('click', function () {
+      var st = S.q[id] || { pick: null, ok: false, wrong: 0, t: 0 };
+      if (st.ok) return;
+      st.pick = i; st.ok = (i === answer); if (!st.ok) st.wrong = (st.wrong || 0) + 1; st.t = nowMs();
+      S.q[id] = st;
+      renderQuiz(box);
+      mark('q:' + id);
+    });
+  });
+});
+
+$('#startBtn').addEventListener('click', function () {
+  var name = $('#u_name').value.trim(), email = $('#u_email').value.trim().toLowerCase();
+  var err = $('#startErr');
+  if (!name) { err.textContent = 'Enter your name so your chair can find your work.'; return; }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = 'Enter a valid email address.'; return; }
+  err.textContent = '';
+  S.user = { name: name, email: email };
+  persist();
+  status('Looking for saved progress...');
+  pull().then(function (found) {
+    markAll(); persist();
+    status(found ? 'Found your saved progress.' : (CFG.endpoint ? 'Starting fresh.' : 'Saved in this browser only (PVV sync is not set up yet).'));
+    render();
+    go(S.last > 0 ? S.last : 1);
+    sync();
+  });
+});
+
+$('#resumeBtn').addEventListener('click', function () { go(S.last > 0 ? S.last : 1); });
+$('#switchUser').addEventListener('click', function () {
+  if (!confirm('Switch to a different person? Answers saved on this device for ' + S.user.email + ' stay in PVV\'s sheet.')) return;
+  sync();
+  S = fresh(); persist();
+  $$('[data-f]').forEach(function (el) { el.value = ''; });
+  render(); go(0);
+});
+
+$('#downloadBtn').addEventListener('click', function () {
+  var rows = [['Module', 'Type', 'Prompt', 'Answer']];
+  $$('[data-f]').forEach(function (el) { if (el.value.trim()) rows.push([modOf(el), el.dataset.cap === '1' ? 'capstone' : 'text', labelOf(el), el.value]); });
+  $$('.quiz').forEach(function (b) { var s = S.q[b.dataset.q]; if (s && s.pick != null) rows.push([modOf(b), 'quiz', $('p', b).textContent.trim(), $$('.quiz-option', b)[s.pick].textContent.trim() + (s.ok ? ' (correct)' : ' (incorrect)')]); });
+  var csv = rows.map(function (r) { return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = 'pvv-' + CFG.track + '-answers.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+});
+
+var cb = $('#completeBtn');
+if (cb) cb.addEventListener('click', function () {
+  var note = $('#completeNote');
+  var caps = $$('#mod' + NMOD + ' [data-cap="1"][data-req="1"]');
+  var missing = caps.some(function (e) { return !e.value.trim(); });
+  if (missing) { note.textContent = 'Add your capstone link above first, then mark the training complete.'; return; }
+  S.done = { date: new Date().toISOString().slice(0, 10), t: nowMs() };
+  S.pdirty = true; persist(); render(); sync();
+});
+
+window.addEventListener('beforeunload', function () { if (S.dirty.length || S.pdirty) sync(); });
+document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden' && (S.dirty.length || S.pdirty)) sync(); });
+
+/* ---------- init ---------- */
+render();
+if (S.user) {
+  status(CFG.endpoint ? 'Signed in as ' + S.user.email + '.' : 'Saved in this browser only (PVV sync is not set up yet).');
+  go(S.last > 0 ? S.last : 0);
+  pull().then(function (found) { if (found) { status('Synced with PVV at ' + clock() + '.'); } });
+} else {
+  go(0);
+}
+})();
 </script>
 </body>
 </html>

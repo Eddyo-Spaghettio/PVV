@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PVV Marketing Training</title>
 <style>
+
   :root { --bg: #faf9f7; --card: #fff; --accent: #2d6a4f; --accent-light: #d8f3dc; --text: #1b1b1b; --muted: #666; --border: #e0ddd8; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
@@ -34,11 +35,11 @@
   .quiz { margin: 1rem 0; }
   .quiz-option { display: block; padding: 0.6rem 1rem; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 0.5rem; cursor: pointer; transition: background 0.15s; }
   .quiz-option:hover { background: var(--accent-light); }
-  .quiz-option.correct { background: #d8f3dc; border-color: var(--accent); }
+  .quiz-option.correct { background: var(--accent-light); border-color: var(--accent); }
   .quiz-option.wrong { background: #fde8e8; border-color: #c0392b; }
   .feedback { padding: 0.75rem 1rem; border-radius: 4px; margin-top: 0.75rem; display: none; }
   .feedback.show { display: block; }
-  .feedback.ok { background: #d8f3dc; }
+  .feedback.ok { background: var(--accent-light); }
   .feedback.no { background: #fde8e8; }
   .btn { background: var(--accent); color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.95rem; margin-top: 0.5rem; }
   .btn:hover { opacity: 0.9; }
@@ -48,210 +49,386 @@
   th { background: var(--accent-light); font-weight: normal; }
   .nav-buttons { display: flex; justify-content: space-between; margin-top: 2rem; }
   .saved-note { font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; }
+
+  /* additions (same look, small helpers) */
+  a { color: var(--accent); }
+  ul, ol { margin: 0 0 1rem 1.25rem; }
+  li { margin-bottom: 0.35rem; }
+  button.quiz-option { width: 100%; text-align: left; background: var(--card); font: inherit; color: inherit; }
+  .meta { font-size: 0.8rem; color: var(--muted); margin-top: -0.5rem; margin-bottom: 1rem; }
+  .media { margin: 1.25rem 0; }
+  .media .kind { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.25rem; }
+  .media p:last-child { margin-bottom: 0; }
+  .fig { width: 100%; height: auto; display: block; }
+  .fig text { font-family: Georgia, 'Times New Roman', serif; fill: var(--text); font-size: 14px; }
+  .fig .box { fill: var(--accent-light); stroke: var(--accent); stroke-width: 1.5; }
+  .fig .plain { fill: var(--card); stroke: var(--border); stroke-width: 1.5; }
+  .fig .solid { fill: var(--accent); }
+  .fig text.onsolid { fill: #fff; }
+  .figrow { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; }
+  .figrow .fig { flex: 0 0 220px; max-width: 220px; margin: 0 auto; }
+  .figrow .legend { flex: 1 1 220px; margin: 0 0 0 1.25rem; }
+  .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .panel { border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.25rem; background: var(--card); }
+  .panel.on { background: var(--accent-light); border-color: var(--accent); }
+  .panel h4 { font-size: 1rem; font-weight: normal; color: var(--accent); margin-bottom: 0.5rem; }
+  .panel p { margin-bottom: 0.4rem; font-size: 0.92rem; }
+  .flow { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; align-items: center; }
+  .step { background: var(--accent-light); border: 1px solid var(--accent); border-radius: 4px; padding: 0.45rem 0.9rem; font-size: 0.92rem; }
+  .arrow { color: var(--accent); }
+  figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.75rem; }
+  .header .note { font-size: 0.8rem; opacity: 0.8; margin: 0.5rem 0 0; }
+  .nav-buttons .btn[disabled] { opacity: 0.5; cursor: default; }
+  .field-note { font-size: 0.85rem; color: var(--muted); margin: -0.75rem 0 1rem; min-height: 1em; }
+  .linkbtn { background: none; border: none; color: var(--accent); text-decoration: underline; cursor: pointer; font: inherit; padding: 0; }
+  .err { color: #c0392b; font-size: 0.9rem; margin-top: 0.5rem; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (max-width: 560px) { .panels { grid-template-columns: 1fr; } .figrow .legend { margin-left: 1.25rem; } .container { padding: 1.25rem 1rem 3rem; } nav { padding: 0.6rem 0.75rem; } .header { padding: 1.5rem 1rem; } }
+
 </style>
 </head>
 <body>
 
+<!-- GENERATED FILE. Edit training/src/marketing.json and run: python3 training/build.py -->
+
 <div class="header">
   <h1>PVV Marketing Training</h1>
-  <p>Three modules. Work at your own pace. Progress saves automatically in your browser.</p>
+  <p>6 short modules, about an hour in total. Your progress saves automatically, and you can pick up where you left off.</p>
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <p class="note" id="syncStatus" aria-live="polite"></p>
 </div>
 
-<nav id="nav">
-  <button class="active" data-mod="0">1. Strategy</button>
-  <button data-mod="1">2. Bridge Kit Assets</button>
-  <button data-mod="2">3. Launch & Measure</button>
+<nav id="nav" aria-label="Modules">
+<button class="active" data-mod="0">Start</button>
+<button data-mod="1">1. Your role</button>
+<button data-mod="2">2. Goal</button>
+<button data-mod="3">3. Message</button>
+<button data-mod="4">4. Flyer</button>
+<button data-mod="5">5. Channels</button>
+<button data-mod="6">6. Measure</button>
 </nav>
 
 <div class="container">
 
-<!-- MODULE 1 -->
-<div class="module active" id="mod0">
-  <h2>Module 1: Strategy Before Posting</h2>
-  <p>Most small nonprofits fail at marketing not because they're bad at it, but because they try to do everything at once. One Instagram post won't fix a visibility problem. A clear plan might.</p>
+<!-- START -->
+<div class="module" id="mod0">
+  <h2>Welcome to Marketing training</h2>
+  <p class="meta">About 60 minutes in total</p>
+  <p>Marketing is how a small nonprofit gets seen, gets supported, and gets sustainable. PVV's marketing team helps clients with social media, flyers, and promoting their events to Stanford students through the Haas Center. This training walks you through that work with one practice client from start to finish.</p>
 
   <div class="callout">
-    <strong>The rule</strong>
-    One goal. One audience. One or two channels. Master those before adding anything else.
+    <strong>What you'll leave with</strong>
+    A one-goal campaign plan, flyer copy, a launch timeline, and a metric you can defend. All of it built for a practice client, ready to adapt for a real one.
   </div>
 
-  <h3>Pick one goal for the next 90 days</h3>
   <div class="card">
     <table>
-      <tr><th>Goal</th><th>Measure it by</th></tr>
-      <tr><td>Event attendance</td><td>RSVPs or head count</td></tr>
-      <tr><td>Volunteer recruitment</td><td>Form submissions</td></tr>
-      <tr><td>Donations</td><td>Dollars raised or donate-link clicks</td></tr>
-      <tr><td>Awareness</td><td>Followers, reach, or "how did you hear about us" responses</td></tr>
+      <tr><th>#</th><th>Module</th><th>Time</th></tr><tr><td>1</td><td>Your role at PVV</td><td>8 min</td></tr><tr><td>2</td><td>One goal, one audience</td><td>10 min</td></tr><tr><td>3</td><td>Message and story</td><td>10 min</td></tr><tr><td>4</td><td>Design a flyer people read</td><td>12 min</td></tr><tr><td>5</td><td>Channels and Stanford promotion</td><td>10 min</td></tr><tr><td>6</td><td>Measure and hand off</td><td>10 min</td></tr>
     </table>
   </div>
 
-  <h3>Exercise: Define your client's campaign</h3>
-  <p>Fill this in for a real or practice client. Your answers save automatically.</p>
-  <label>Client organization</label>
-  <input type="text" id="f_org" placeholder="e.g., Ecumenical Hunger Program">
-  <label>One goal (with a number)</label>
-  <input type="text" id="f_goal" placeholder="e.g., 30 Stanford students at March food drive">
-  <label>Primary audience</label>
-  <input type="text" id="f_audience" placeholder="e.g., Stanford undergrads interested in service">
-  <label>Key message (one sentence)</label>
-  <textarea id="f_message" placeholder="e.g., EHP has fed EPA families for 50 years - we need you at our next distribution day."></textarea>
-  <label>Primary channel</label>
-  <select id="f_channel">
-    <option value="">Choose one</option>
-    <option>Instagram</option>
-    <option>Haas service4all email</option>
-    <option>Printed QR flyer</option>
-    <option>Facebook</option>
-  </select>
-  <p class="saved-note" id="saveNote0"></p>
-
-  <h3>Quick check</h3>
-  <div class="quiz" id="quiz1">
-    <p>A client says their goal is "increase awareness, get donations, recruit volunteers, and go viral." What do you tell them?</p>
-    <span class="quiz-option" data-q="quiz1" data-c="0">Pick one primary goal for the next 90 days and save the rest for later</span>
-    <span class="quiz-option" data-q="quiz1" data-c="1">Great - the more goals the better</span>
-    <span class="quiz-option" data-q="quiz1" data-c="2">Skip goals and just start posting daily</span>
-    <div class="feedback" id="quiz1-fb"></div>
+  <div class="callout">
+    <strong>How your answers are used</strong>
+    Your name, email, and answers are saved to PVV's training sheet so your category chair can see your progress and give feedback. Use practice scenarios only. Never type real client names, contact details, or personal information into an exercise.
   </div>
 
+  <div id="signupBox">
+    <label for="u_name">Your name</label>
+    <input type="text" id="u_name" autocomplete="name">
+    <label for="u_email">Your email</label>
+    <input type="text" id="u_email" autocomplete="email" inputmode="email">
+    <button class="btn" id="startBtn" type="button">Save and begin</button>
+    <p class="err" id="startErr" role="alert"></p>
+  </div>
+
+  <div id="resumeBox" style="display:none">
+    <p>Welcome back, <strong id="whoName"></strong>. You can open any module from the tabs above, in any order.</p>
+    <button class="btn" id="resumeBtn" type="button"></button>
+    <p class="saved-note"><button class="linkbtn" id="switchUser" type="button">Not you? Switch person</button> &nbsp; <button class="linkbtn" id="downloadBtn" type="button">Download my answers (CSV)</button></p>
+  </div>
+</div>
+
+<!-- MODULE 1 -->
+<div class="module" id="mod1">
+  <h2>Module 1: Your role at PVV</h2>
+  <p class="meta">About 8 minutes</p>
+
+  <p>PVV exists to connect local nonprofits and community organizations serving low-income communities with free, student-provided consulting. Marketing is one of three consulting tracks, alongside Financial and Technical.</p>
+
+  <p>Under PVV's constitution, marketing help means three things: creating and maintaining a client's online presence (social media), designing and distributing flyers, and promoting client events to Stanford students through the Haas Center for Public Service.</p>
+
+  <div class="card"><table><tr><th>Who</th><th>What they do for you</th></tr><tr><td>Consulting Category Chair</td><td>Directs the marketing team, assigns projects, and reviews your work.</td></tr><tr><td>Vice President</td><td>Oversees the chairs and helps with workflow.</td></tr><tr><td>Treasurer</td><td>Handles the club's own money, including printing costs. Ask before you spend.</td></tr><tr><td>Community Outreach Organizers</td><td>Find new partner nonprofits and organize events.</td></tr></table></div>
+
+  <div class="callout"><strong>PVV advises. Clients decide.</strong>You draft; the client approves. Nothing goes out in a client's name until they have seen the final version and said yes.</div>
+
+  <div class="card media"><p class="kind">Read, about 3 min, PVV repo</p><p><a href="https://github.com/Eddyo-Spaghettio/PVV/blob/main/docs/constitution-2026-draft.md" target="_blank" rel="noopener">PVV constitution (2026 draft)</a></p><p>Skim Articles II and III: the club's purpose and what each team does.</p></div>
+
+  <h3>Exercise: Say it in your own words</h3>
+  <label for="m1_role">In two sentences, explain to a friend what PVV does and what the marketing team's job is.</label>
+  <textarea id="m1_role" data-f="m1_role" placeholder="PVV helps..."></textarea>
+  <label for="m1_interest">Which part of this work are you most excited about?</label>
+  <select id="m1_interest" data-f="m1_interest"><option value="">Choose one</option><option>Social media</option><option>Flyers and print design</option><option>Promoting events to Stanford students</option><option>Not sure yet</option></select>
+
+  <h3>Quick check</h3>
+
+  <div class="quiz" data-q="q1_a" data-a="1" data-ok="Clients approve anything published in their name." data-no="Think about whose name is on the post."><p>A client asks you to post their fundraiser flyer tonight, but they haven't seen the final design. What do you do?</p><button type="button" class="quiz-option">Post it. You're the expert.</button><button type="button" class="quiz-option">Get their approval on the final version first, then post.</button><button type="button" class="quiz-option">Post it from PVV's account instead.</button><div class="feedback" aria-live="polite"></div></div>
+
+  <div class="quiz" data-q="q1_b" data-a="2" data-ok="Event promotion through the Haas Center is named in the constitution." data-no="Look back at the three things marketing help means."><p>Which of these is part of the marketing team's scope?</p><button type="button" class="quiz-option">Preparing the client's tax filings</button><button type="button" class="quiz-option">Writing the client's legal contracts</button><button type="button" class="quiz-option">Promoting the client's events to Stanford students through the Haas Center</button><div class="feedback" aria-live="polite"></div></div>
+
   <h3>Module 1 checklist</h3>
-  <div class="checklist card" id="cl0">
-    <label><input type="checkbox" data-cl="cl0" data-i="0"> I can explain why "one goal" matters to a new member</label>
-    <label><input type="checkbox" data-cl="cl0" data-i="1"> I filled in the campaign exercise above</label>
-    <label><input type="checkbox" data-cl="cl0" data-i="2"> I know the difference between a Stanford audience and a community audience</label>
+  <div class="checklist card" id="cl1">
+    <label><input type="checkbox" data-cl="cl1" data-i="0" data-key="cl1_0"> I can explain what PVV does in one sentence</label>
+    <label><input type="checkbox" data-cl="cl1" data-i="1" data-key="cl1_1"> I know who my category chair is</label>
+    <label><input type="checkbox" data-cl="cl1" data-i="2" data-key="cl1_2"> I know that clients approve before anything is published</label>
   </div>
 
   <div class="nav-buttons">
-    <span></span>
-    <button class="btn" onclick="goMod(1)">Next: Bridge Kit Assets →</button>
+    <button class="btn btn-outline" onclick="goMod(0)">Back to start</button>
+    <button class="btn" onclick="goMod(2)">Next: Goal</button>
   </div>
 </div>
 
 <!-- MODULE 2 -->
-<div class="module" id="mod1">
-  <h2>Module 2: Building Bridge Kit Marketing Assets</h2>
-  <p>Bridge Kit is PVV's core deliverable. The marketing team owns three of its five components: the QR flyer, the 90-day content calendar, and the Stanford Channel Pack.</p>
+<div class="module" id="mod2">
+  <h2>Module 2: One goal, one audience</h2>
+  <p class="meta">About 10 minutes</p>
 
-  <h3>The QR Flyer</h3>
-  <p>A stranger at a laundromat or church bulletin board should understand in 3 seconds: what's happening, when, where, and what to do. The QR code goes to the Reach Page (technical team builds that).</p>
-  <div class="card">
-    <p><strong>Must include:</strong> event/org name (biggest text), date + time, location, one impact line, QR code, logo.</p>
-    <p><strong>Tools:</strong> Canva (free), Adobe Express, or Google Slides. Use the client's colors. Print at Haas copiers or FedEx.</p>
-  </div>
+  <p>Small nonprofits rarely struggle with marketing because they're bad at it. They struggle because they try to do everything at once. Your first job is to narrow the plan.</p>
 
-  <h3>Exercise: Write flyer copy</h3>
-  <label>Headline</label>
-  <input type="text" id="f_headline" placeholder="e.g., Volunteer at EHP - Feed 200 Families">
-  <label>Impact line</label>
-  <input type="text" id="f_impact" placeholder="e.g., 2 hours of your time = groceries for 50 families">
-  <label>Date, time, location</label>
-  <input type="text" id="f_event" placeholder="e.g., Sat March 15, 9am–12pm, 2411 Pulgas Ave EPA">
+  <div class="callout"><strong>The rule</strong>One goal. One primary audience. One or two channels. Master those before adding anything else.</div>
 
-  <h3>The 90-Day Content Calendar</h3>
-  <p>You're not inventing posts from scratch every week. You're filling in a template. Open <code>templates/bridge-kit/90-day-calendar-template.csv</code> in Google Sheets - it has 24 pre-planned posts. Customize the bracketed fields for your client.</p>
-  <div class="callout">
-    <strong>Cadence that works for small orgs</strong>
-    2–3 posts per week beats daily mediocre posts. Consistency over volume.
-  </div>
+  <div class="card"><table><tr><th>Goal</th><th>Measure it by</th></tr><tr><td>Event attendance</td><td>RSVPs or head count</td></tr><tr><td>Volunteer recruitment</td><td>Sign-up form submissions</td></tr><tr><td>Donations</td><td>Dollars raised or donate-link clicks</td></tr><tr><td>Awareness</td><td>Followers, reach, or "how did you hear about us" answers</td></tr></table></div>
 
-  <h3>Caption formula</h3>
-  <div class="card">
-    <p><strong>Hook</strong> - question, stat, or bold statement<br>
-    <strong>Story</strong> - 2–3 sentences about why this matters<br>
-    <strong>Details</strong> - date, time, location, link<br>
-    <strong>CTA</strong> - one clear action ("Link in bio to sign up")</p>
-  </div>
+  <h3>Two audiences, two messages</h3>
 
-  <h3>Exercise: Write one caption</h3>
-  <textarea id="f_caption" placeholder="Write a full caption for your client's next volunteer event using the formula above."></textarea>
+  <p>Most PVV campaigns speak to two groups. The first is the community the nonprofit serves, who find events on Instagram, Facebook, and flyers at laundromats and churches. The second is Stanford students who might attend or volunteer, who hear about things through Haas Center emails and Instagram. They need different words in different places.</p>
 
-  <h3>Stanford Channel Pack</h3>
-  <p>This is PVV's biggest advantage. Every client event should go out on Haas's <strong>service4all</strong> listserv. Template is in <code>templates/bridge-kit/README.md</code>.</p>
+  <div class="card media"><p class="kind">Read, about 4 min, Canva</p><p><a href="https://www.canva.com/learn/your-guide-to-nonprofit-marketing-social-media-and-fundraising/" target="_blank" rel="noopener">Canva: A guide to nonprofit marketing, social media, and fundraising</a></p><p>Skim the parts on knowing your supporters and segmenting your campaign goals.</p></div>
+
+  <h3>Exercise: Define a practice campaign</h3>
+  <p>Practice client: <strong>Eastside Community Pantry</strong>, a fictional food pantry in East Palo Alto holding a Taco Tuesday fundraiser on March 15.</p>
+  <label for="m2_goal">One goal, with a number</label>
+  <input type="text" id="m2_goal" data-f="m2_goal" placeholder="e.g., 150 people at the March 15 fundraiser">
+  <label for="m2_comm">Community audience: who exactly, and where do they look?</label>
+  <input type="text" id="m2_comm" data-f="m2_comm" placeholder="e.g., parents in East Palo Alto who check Facebook events">
+  <label for="m2_stan">Stanford audience: who exactly, and where do they look?</label>
+  <input type="text" id="m2_stan" data-f="m2_stan" placeholder="e.g., undergrads who read Haas Center emails">
 
   <h3>Quick check</h3>
-  <div class="quiz" id="quiz2">
-    <p>What's PVV's unique marketing advantage over a professional agency?</p>
-    <span class="quiz-option" data-q="quiz2" data-c="0">Access to Stanford students as volunteers and Haas promotion channels</span>
-    <span class="quiz-option" data-q="quiz2" data-c="1">Better graphic design skills</span>
-    <span class="quiz-option" data-q="quiz2" data-c="2">A larger budget for ads</span>
-    <div class="feedback" id="quiz2-fb"></div>
-  </div>
+
+  <div class="quiz" data-q="q2_a" data-a="1" data-ok="One goal with a number is what lets you tell if the campaign worked." data-no="What does the rule say about goals?"><p>A client says their goal is "increase awareness, get donations, recruit volunteers, and go viral." What do you tell them?</p><button type="button" class="quiz-option">Great, more goals is better.</button><button type="button" class="quiz-option">Pick one primary goal for the next 90 days and save the rest for later.</button><button type="button" class="quiz-option">Skip goals and just start posting daily.</button><div class="feedback" aria-live="polite"></div></div>
+
+  <div class="quiz" data-q="q2_b" data-a="2" data-ok="Different audiences, different words, different channels." data-no="Where does each group hear about events?"><p>Why does a PVV campaign usually have two audiences?</p><button type="button" class="quiz-option">The Haas Center requires it.</button><button type="button" class="quiz-option">Two audiences doubles the follower count.</button><button type="button" class="quiz-option">Community members and Stanford students look in different places and need different messages.</button><div class="feedback" aria-live="polite"></div></div>
 
   <h3>Module 2 checklist</h3>
-  <div class="checklist card" id="cl1">
-    <label><input type="checkbox" data-cl="cl1" data-i="0"> I wrote flyer copy for a practice client</label>
-    <label><input type="checkbox" data-cl="cl1" data-i="1"> I wrote one full Instagram caption</label>
-    <label><input type="checkbox" data-cl="cl1" data-i="2"> I know where the 90-day calendar template lives</label>
-    <label><input type="checkbox" data-cl="cl1" data-i="3"> I can draft a service4all email from the template</label>
+  <div class="checklist card" id="cl2">
+    <label><input type="checkbox" data-cl="cl2" data-i="0" data-key="cl2_0"> I wrote a goal with a number</label>
+    <label><input type="checkbox" data-cl="cl2" data-i="1" data-key="cl2_1"> I described both a community and a Stanford audience</label>
+    <label><input type="checkbox" data-cl="cl2" data-i="2" data-key="cl2_2"> I can explain why 'more goals' makes a campaign weaker</label>
   </div>
 
   <div class="nav-buttons">
-    <button class="btn btn-outline" onclick="goMod(0)">← Back</button>
-    <button class="btn" onclick="goMod(2)">Next: Launch & Measure →</button>
+    <button class="btn btn-outline" onclick="goMod(1)">Back</button>
+    <button class="btn" onclick="goMod(3)">Next: Message</button>
   </div>
 </div>
 
 <!-- MODULE 3 -->
-<div class="module" id="mod2">
-  <h2>Module 3: Launch, Promote, Measure</h2>
-  <p>Posting is half the job. The other half is making sure the right people see it, show up, and come back.</p>
+<div class="module" id="mod3">
+  <h2>Module 3: Message and story</h2>
+  <p class="meta">About 10 minutes</p>
 
-  <h3>Launch sequence</h3>
-  <div class="card">
-    <table>
-      <tr><th>When</th><th>Action</th></tr>
-      <tr><td>2 weeks before event</td><td>Teaser post + service4all email</td></tr>
-      <tr><td>1 week before</td><td>Flyer goes up (QR codes in community + Haas)</td></tr>
-      <tr><td>3 days before</td><td>Countdown post + Assigned Liaison shares on personal account</td></tr>
-      <tr><td>Day of</td><td>Story posts, live updates, photos</td></tr>
-      <tr><td>Week after</td><td>Thank-you post with numbers + "see you next time"</td></tr>
-    </table>
-  </div>
+  <p>People act when they understand what's happening and why it matters to someone. A key message gives every post, flyer, and email the same spine, so you aren't reinventing the pitch each time.</p>
 
-  <h3>What to measure (and what to ignore)</h3>
-  <div class="card">
-    <table>
-      <tr><th>Track this</th><th>Ignore this (for now)</th></tr>
-      <tr><td>Volunteer form submissions</td><td>Total followers</td></tr>
-      <tr><td>Event attendance</td><td>Likes on unrelated posts</td></tr>
-      <tr><td>Donation link clicks</td><td>Vanity impressions</td></tr>
-      <tr><td>"How did you hear about us?" responses</td><td>Competitor follower counts</td></tr>
-    </table>
-  </div>
+  <div class="callout"><strong>Key message formula</strong><strong>[Organization]</strong> helps <strong>[who]</strong> by <strong>[how]</strong>. Right now, we need <strong>[specific ask]</strong> so that <strong>[impact]</strong>.</div>
 
-  <h3>Exercise: Build a launch plan</h3>
-  <label>Client event or campaign</label>
-  <input type="text" id="f_launch" placeholder="e.g., EHP Spring Food Drive, April 12">
-  <label>Launch timeline (list 3 actions with dates)</label>
-  <textarea id="f_timeline" placeholder="e.g., Apr 1: service4all email. Apr 5: QR flyers at Haas + EPA community center. Apr 10: countdown Instagram post."></textarea>
-  <label>Primary metric and target</label>
-  <input type="text" id="f_metric" placeholder="e.g., 25 volunteer sign-ups via Google Form">
+  <p>Example: Eastside Community Pantry helps low-income families in East Palo Alto by providing free weekly groceries. Right now, we need you at our Taco Tuesday fundraiser on March 15 so that we can keep our shelves stocked through summer.</p>
 
-  <h3>Assigned Liaison role</h3>
-  <p>Every Bridge Kit includes one PVV member as the Assigned Liaison for the quarter. As a marketing team member, you might be that liaison. Your job: post approved content, recruit Stanford peers, share on your personal account, attend one client event. The client approves copy once at kickoff; you handle execution so they are not adding a new job. Document everything in the handoff template for the next liaison.</p>
+  <h3>The caption formula</h3>
+
+  <div class="card"><table><tr><th>Part</th><th>What it does</th></tr><tr><td>Hook</td><td>A question, a number, or a bold statement that stops the scroll</td></tr><tr><td>Story</td><td>Two or three sentences on why this matters to a real person</td></tr><tr><td>Details</td><td>Date, time, location, and where to find more</td></tr><tr><td>Call to action</td><td>One clear next step, such as "Link in bio to RSVP"</td></tr></table></div>
+
+  <div class="callout"><strong>Stories need permission</strong>Before you share a client's photo, name, or story, get their permission and the nonprofit's approval. When in doubt, tell the story without identifying details.</div>
+
+  <div class="card media"><p class="kind">Explore, about 3 min, Candid Learning</p><p><a href="https://learning.candid.org/page/course-catalog" target="_blank" rel="noopener">Candid Learning course catalog (find the video on storytelling tips)</a></p><p>Search the page for the storytelling tips video for nonprofit communications.</p></div>
+
+  <h3>Exercise: Write the message and one caption</h3>
+  <label for="m3_message">Write the key message for Eastside Community Pantry using the formula.</label>
+  <textarea id="m3_message" data-f="m3_message" placeholder="Eastside Community Pantry helps..."></textarea>
+  <label for="m3_caption">Write one Instagram caption for the fundraiser: hook, story, details, one clear call to action.</label>
+  <textarea id="m3_caption" data-f="m3_caption" placeholder="Hook first. Then two or three sentences of story..."></textarea>
 
   <h3>Quick check</h3>
-  <div class="quiz" id="quiz3">
-    <p>A client's Instagram gained 200 followers but zero new volunteers signed up. What happened?</p>
-    <span class="quiz-option" data-q="quiz3" data-c="0">They tracked the wrong metric - followers don't equal volunteers</span>
-    <span class="quiz-option" data-q="quiz3" data-c="1">They need more followers</span>
-    <span class="quiz-option" data-q="quiz3" data-c="2">Instagram doesn't work for nonprofits</span>
-    <div class="feedback" id="quiz3-fb"></div>
-  </div>
+
+  <div class="quiz" data-q="q3_a" data-a="2" data-ok="A specific number and a stake beat a generic greeting." data-no="Which one gives a reader a reason to keep reading?"><p>Which caption opening makes the strongest hook?</p><button type="button" class="quiz-option">Hello everyone! We are having an event.</button><button type="button" class="quiz-option">Please like and share this post.</button><button type="button" class="quiz-option">200 families eat from our pantry every week. Help us keep the shelves full on March 15.</button><div class="feedback" aria-live="polite"></div></div>
+
+  <div class="quiz" data-q="q3_b" data-a="1" data-ok="Permission comes first, and the client approves what goes out." data-no="Who has to say yes?"><p>You'd like to feature a photo of a family picking up groceries. What first?</p><button type="button" class="quiz-option">Post it. The pantry is public.</button><button type="button" class="quiz-option">Get permission from the family and approval from the nonprofit.</button><button type="button" class="quiz-option">Blur the name and post it.</button><div class="feedback" aria-live="polite"></div></div>
 
   <h3>Module 3 checklist</h3>
-  <div class="checklist card" id="cl2">
-    <label><input type="checkbox" data-cl="cl2" data-i="0"> I wrote a launch timeline for a practice event</label>
-    <label><input type="checkbox" data-cl="cl2" data-i="1"> I can name 3 metrics that matter for a volunteer campaign</label>
-    <label><input type="checkbox" data-cl="cl2" data-i="2"> I understand the Assigned Liaison role and handoff process</label>
-    <label><input type="checkbox" data-cl="cl2" data-i="3"> I'm ready to work on a real Bridge Kit marketing deliverable</label>
+  <div class="checklist card" id="cl3">
+    <label><input type="checkbox" data-cl="cl3" data-i="0" data-key="cl3_0"> I wrote a key message with a specific ask</label>
+    <label><input type="checkbox" data-cl="cl3" data-i="1" data-key="cl3_1"> I wrote a caption with a hook and one call to action</label>
+    <label><input type="checkbox" data-cl="cl3" data-i="2" data-key="cl3_2"> I know to get permission before sharing stories or photos</label>
   </div>
 
   <div class="nav-buttons">
-    <button class="btn btn-outline" onclick="goMod(1)">← Back</button>
-    <button class="btn" onclick="markComplete()">Mark training complete</button>
+    <button class="btn btn-outline" onclick="goMod(2)">Back</button>
+    <button class="btn" onclick="goMod(4)">Next: Flyer</button>
+  </div>
+</div>
+
+<!-- MODULE 4 -->
+<div class="module" id="mod4">
+  <h2>Module 4: Design a flyer people read</h2>
+  <p class="meta">About 12 minutes</p>
+
+  <p>A stranger at a laundromat bulletin board gives your flyer about three seconds. In that time they should know what's happening, when, where, and what to do next. If any of those is missing, the flyer fails.</p>
+
+  <figure class="card"><div class="figrow"><svg class="fig" viewBox="0 0 240 300" role="img" aria-label="A flyer layout with five zones: event name, date and time, location, one line of impact, and a QR code with logo">
+<rect class="plain" x="6" y="6" width="228" height="288" rx="4"/>
+<circle class="solid" cx="24" cy="42" r="10"/><text class="onsolid" x="24" y="47" text-anchor="middle">1</text>
+<rect class="box" x="44" y="20" width="180" height="44" rx="3"/><text x="134" y="48" text-anchor="middle" font-size="18">Event name</text>
+<circle class="solid" cx="24" cy="87" r="10"/><text class="onsolid" x="24" y="92" text-anchor="middle">2</text>
+<rect class="box" x="44" y="72" width="180" height="30" rx="3"/><text x="134" y="92" text-anchor="middle">Date and time</text>
+<circle class="solid" cx="24" cy="123" r="10"/><text class="onsolid" x="24" y="128" text-anchor="middle">3</text>
+<rect class="box" x="44" y="110" width="180" height="26" rx="3"/><text x="134" y="128" text-anchor="middle">Location and address</text>
+<circle class="solid" cx="24" cy="164" r="10"/><text class="onsolid" x="24" y="169" text-anchor="middle">4</text>
+<rect class="box" x="44" y="144" width="180" height="40" rx="3"/><text x="134" y="168" text-anchor="middle">One line of impact</text>
+<circle class="solid" cx="24" cy="228" r="10"/><text class="onsolid" x="24" y="233" text-anchor="middle">5</text>
+<rect class="solid" x="44" y="198" width="60" height="60" rx="3"/><text class="onsolid" x="74" y="233" text-anchor="middle">QR</text>
+<rect class="plain" x="114" y="210" width="110" height="36" rx="3"/><text x="169" y="233" text-anchor="middle">Logo</text>
+</svg><ol class="legend"><li>Event name: biggest, readable from 10 feet</li><li>Date and time: second biggest</li><li>Location: always include the street address</li><li>One line on why it matters</li><li>QR code and logo: smallest, but always there</li></ol></div><figcaption>Build the flyer from biggest to smallest. If everything is the same size, nothing stands out.</figcaption></figure>
+
+  <div class="callout"><strong>The squint test</strong>Zoom out until the flyer is thumbnail-sized. Can you still read the event name and the date? If not, simplify.</div>
+
+  <p>Readable also means high contrast. WCAG, the standard for accessible design, asks for at least 4.5:1 contrast between normal-size text and its background, and 3:1 for large text. A free checker will tell you the ratio for any pair of colors.</p>
+
+  <div class="card media"><p class="kind">Explore, about 4 min, Canva</p><p><a href="https://www.canva.com/design-school/courses/canva-pro-for-nonprofits/" target="_blank" rel="noopener">Canva Design School: Canva Pro for Nonprofits</a></p><p>Watch the lessons on nonprofit templates and Brand Kit. Canva's nonprofit program is free for registered nonprofits, so your clients may qualify. PVV, as a student group, does not.</p></div>
+
+  <div class="card media"><p class="kind">Try, about 2 min, WebAIM</p><p><a href="https://webaim.org/resources/contrastchecker/" target="_blank" rel="noopener">WebAIM contrast checker</a></p><p>Enter your text and background colors as hex codes and read the ratio.</p></div>
+
+  <h3>Exercise: Write the flyer copy</h3>
+  <p>Practice client: Eastside Community Pantry, Taco Tuesday fundraiser, March 15, 5 to 8 PM. Colors: forest green and gold.</p>
+  <label for="m4_headline">Headline (the event name, biggest text)</label>
+  <input type="text" id="m4_headline" data-f="m4_headline" placeholder="e.g., Taco Tuesday for 200 Families">
+  <label for="m4_impact">One line on why it matters</label>
+  <input type="text" id="m4_impact" data-f="m4_impact" placeholder="e.g., Every plate keeps a family&#x27;s shelves stocked">
+  <label for="m4_details">Date, time, and location (make up a realistic address)</label>
+  <input type="text" id="m4_details" data-f="m4_details" placeholder="March 15, 5 to 8 PM, ...">
+  <label for="m4_contrast">Your text and background colors, and the contrast ratio the checker reports</label>
+  <input type="text" id="m4_contrast" data-f="m4_contrast" placeholder="e.g., #1B4332 on #FFFFFF = 11.3:1">
+
+  <h3>Quick check</h3>
+
+  <div class="quiz" data-q="q4_a" data-a="2" data-ok="The event name comes first in the reading order, then date and time." data-no="Check the diagram&#x27;s number 1."><p>Which element should be the largest text on the flyer?</p><button type="button" class="quiz-option">The mission statement</button><button type="button" class="quiz-option">The sponsor logos</button><button type="button" class="quiz-option">The event name</button><div class="feedback" aria-live="polite"></div></div>
+
+  <div class="quiz" data-q="q4_b" data-a="1" data-ok="3:1 is only enough for large text." data-no="Remember the two thresholds."><p>The checker says your normal-size text has a 3.1:1 contrast ratio. Does it meet the WCAG AA minimum?</p><button type="button" class="quiz-option">Yes, anything above 3:1 passes.</button><button type="button" class="quiz-option">No. Normal text needs at least 4.5:1, so darken the text or lighten the background.</button><button type="button" class="quiz-option">It depends on the printer.</button><div class="feedback" aria-live="polite"></div></div>
+
+  <h3>Module 4 checklist</h3>
+  <div class="checklist card" id="cl4">
+    <label><input type="checkbox" data-cl="cl4" data-i="0" data-key="cl4_0"> I wrote flyer copy in biggest-to-smallest order</label>
+    <label><input type="checkbox" data-cl="cl4" data-i="1" data-key="cl4_1"> I checked a color pair with the contrast checker</label>
+    <label><input type="checkbox" data-cl="cl4" data-i="2" data-key="cl4_2"> I know the squint test</label>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goMod(3)">Back</button>
+    <button class="btn" onclick="goMod(5)">Next: Channels</button>
+  </div>
+</div>
+
+<!-- MODULE 5 -->
+<div class="module" id="mod5">
+  <h2>Module 5: Channels and Stanford promotion</h2>
+  <p class="meta">About 10 minutes</p>
+
+  <p>Pick one primary channel and one secondary channel, and do them well. Consistency beats volume: two or three good posts a week outperform daily filler.</p>
+
+  <div class="card"><table><tr><th>Channel</th><th>Best for</th><th>Effort</th></tr><tr><td>Instagram</td><td>Visual stories, events, younger audiences</td><td>Medium</td></tr><tr><td>Facebook</td><td>Community groups, event pages, older audiences</td><td>Medium</td></tr><tr><td>Printed flyer with QR code</td><td>Laundromats, churches, libraries, Haas Center boards</td><td>Low after design</td></tr><tr><td>Haas Center promotion</td><td>Stanford volunteers and attendees</td><td>Low: one blurb or email</td></tr><tr><td>Email</td><td>Existing supporters and donors</td><td>Low if a list exists</td></tr></table></div>
+
+  <h3>A launch sequence that works</h3>
+
+  <div class="card"><table><tr><th>When</th><th>Action</th></tr><tr><td>2 weeks before</td><td>Teaser post and Haas promotion</td></tr><tr><td>1 week before</td><td>Flyers go up in the community and at Haas</td></tr><tr><td>3 days before</td><td>Countdown post; PVV liaison shares it</td></tr><tr><td>Day of</td><td>Story posts and photos (with permission)</td></tr><tr><td>Week after</td><td>Thank-you post with real numbers</td></tr></table></div>
+
+  <div class="card media"><p class="kind">Open, PVV repo</p><p><a href="https://github.com/Eddyo-Spaghettio/PVV/blob/main/templates/bridge-kit/90-day-calendar-template.csv" target="_blank" rel="noopener">90-day content calendar template (24 pre-planned posts)</a></p><p>Open it in Google Sheets and customize the bracketed fields. You aren't inventing posts from scratch.</p></div>
+
+  <div class="card media"><p class="kind">Read, about 2 min, Haas Center</p><p><a href="https://haas.stanford.edu/resources/student" target="_blank" rel="noopener">Haas Center: resources for student groups</a></p><p>This is where PVV's Stanford-facing promotion and event support lives.</p></div>
+
+  <h3>Exercise: Plan the launch</h3>
+  <label for="m5_primary">Primary channel for Eastside Community Pantry</label>
+  <select id="m5_primary" data-f="m5_primary"><option value="">Choose one</option><option>Instagram</option><option>Facebook</option><option>Printed flyer with QR code</option><option>Haas Center promotion</option><option>Email</option></select>
+  <label for="m5_secondary">Secondary channel</label>
+  <select id="m5_secondary" data-f="m5_secondary"><option value="">Choose one</option><option>Instagram</option><option>Facebook</option><option>Printed flyer with QR code</option><option>Haas Center promotion</option><option>Email</option></select>
+  <label for="m5_plan">List three launch actions with dates.</label>
+  <textarea id="m5_plan" data-f="m5_plan" placeholder="Mar 1: ... Mar 8: ... Mar 12: ..."></textarea>
+  <label for="m5_blurb">Write a three-sentence blurb for Stanford students: what, when and where, and why come.</label>
+  <textarea id="m5_blurb" data-f="m5_blurb" placeholder="This Tuesday..."></textarea>
+
+  <h3>Quick check</h3>
+
+  <div class="quiz" data-q="q5_a" data-a="1" data-ok="Consistency over volume." data-no="Think about what a small team can keep up."><p>What posting rhythm works best for a small nonprofit?</p><button type="button" class="quiz-option">Daily posts, even if they're rushed</button><button type="button" class="quiz-option">Two or three consistent posts a week</button><button type="button" class="quiz-option">One big post a month</button><div class="feedback" aria-live="polite"></div></div>
+
+  <div class="quiz" data-q="q5_b" data-a="2" data-ok="Reaching Stanford students is something clients can&#x27;t easily buy." data-no="Think about what only PVV can offer."><p>What is PVV's biggest marketing advantage over a professional agency?</p><button type="button" class="quiz-option">A large ad budget</button><button type="button" class="quiz-option">Better design software</button><button type="button" class="quiz-option">Access to Stanford student volunteers and Haas Center promotion channels</button><div class="feedback" aria-live="polite"></div></div>
+
+  <h3>Module 5 checklist</h3>
+  <div class="checklist card" id="cl5">
+    <label><input type="checkbox" data-cl="cl5" data-i="0" data-key="cl5_0"> I picked one primary and one secondary channel</label>
+    <label><input type="checkbox" data-cl="cl5" data-i="1" data-key="cl5_1"> I wrote a dated launch plan</label>
+    <label><input type="checkbox" data-cl="cl5" data-i="2" data-key="cl5_2"> I wrote a blurb for Stanford students</label>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goMod(4)">Back</button>
+    <button class="btn" onclick="goMod(6)">Next: Measure</button>
+  </div>
+</div>
+
+<!-- MODULE 6 -->
+<div class="module" id="mod6">
+  <h2>Module 6: Measure and hand off</h2>
+  <p class="meta">About 10 minutes</p>
+
+  <p>Posting is half the job. The other half is knowing whether it worked and leaving the client able to carry on without you.</p>
+
+  <div class="card"><table><tr><th>Track this</th><th>Ignore this, for now</th></tr><tr><td>Volunteer form submissions</td><td>Total follower count</td></tr><tr><td>Event attendance</td><td>Likes on unrelated posts</td></tr><tr><td>Donation link clicks</td><td>Impressions with no action</td></tr><tr><td>"How did you hear about us?" answers</td><td>Competitors' follower counts</td></tr></table></div>
+
+  <h3>The Assigned Liaison</h3>
+
+  <p>Each Bridge Kit has one PVV member as its Assigned Liaison for the quarter. The client approves copy once at kickoff, and the liaison handles posting, recruiting Stanford peers, and attending one client event. At the end of the quarter, the liaison writes a handoff note so the next person can pick up cleanly. The client keeps the logins.</p>
+
+  <div class="card media"><p class="kind">Try, about 3 min, Google Workspace Learning Center</p><p><a href="https://support.google.com/a/users/answer/9303071?hl=en" target="_blank" rel="noopener">Create your first form in Google Forms</a></p><p>A short form with a "how did you hear about us?" question is the simplest way to measure what worked.</p></div>
+
+  <h3>Exercise: Choose what to measure</h3>
+  <label for="m6_metric">Primary metric and target for the Taco Tuesday campaign</label>
+  <input type="text" id="m6_metric" data-f="m6_metric" placeholder="e.g., 150 RSVPs through the Google Form">
+  <label for="m6_ignore">One week after the event, what will you check, and what will you deliberately ignore?</label>
+  <textarea id="m6_ignore" data-f="m6_ignore" placeholder="I&#x27;ll check... I&#x27;ll ignore..."></textarea>
+
+  <h3>Exercise: Capstone: your campaign in one place</h3>
+  <p>Pull your work from this training into one Google Doc or Canva design: goal, audiences, key message, flyer, launch plan, and metric. Set sharing to <strong>Anyone with the link can view</strong>, then paste the link. Your category chair will review it.</p>
+  <label for="cap_link">Link to your practice campaign</label>
+  <input type="url" id="cap_link" data-f="cap_link" data-cap="1" data-req="1" placeholder="https://docs.google.com/...">
+  <p class="field-note" id="rv_cap_link"></p>
+  <label for="cap_reflect">What is one thing you would do differently on a real client campaign?</label>
+  <textarea id="cap_reflect" data-f="cap_reflect" data-cap="1" placeholder="I would..."></textarea>
+  <p class="field-note" id="rv_cap_reflect"></p>
+
+  <h3>Quick check</h3>
+
+  <div class="quiz" data-q="q6_a" data-a="2" data-ok="Measure the action you want, not the vanity number." data-no="What was the goal?"><p>A client's Instagram gained 200 followers but zero new volunteers signed up. What happened?</p><button type="button" class="quiz-option">Instagram doesn't work for nonprofits.</button><button type="button" class="quiz-option">They need even more followers.</button><button type="button" class="quiz-option">They tracked the wrong metric. Followers aren't volunteers.</button><div class="feedback" aria-live="polite"></div></div>
+
+  <div class="quiz" data-q="q6_b" data-a="1" data-ok="The client owns their accounts. PVV never keeps the keys." data-no="Who owns the account?"><p>After the handoff, who holds the client's social media logins?</p><button type="button" class="quiz-option">The PVV liaison, so they can keep posting</button><button type="button" class="quiz-option">The client</button><button type="button" class="quiz-option">Whoever posted last</button><div class="feedback" aria-live="polite"></div></div>
+
+  <h3>Module 6 checklist</h3>
+  <div class="checklist card" id="cl6">
+    <label><input type="checkbox" data-cl="cl6" data-i="0" data-key="cl6_0"> I chose a primary metric with a target</label>
+    <label><input type="checkbox" data-cl="cl6" data-i="1" data-key="cl6_1"> I submitted my capstone link</label>
+    <label><input type="checkbox" data-cl="cl6" data-i="2" data-key="cl6_2"> I understand the Assigned Liaison role and handoff</label>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goMod(5)">Back</button>
+    <button class="btn" id="completeBtn">Mark training complete</button>
   </div>
   <p class="saved-note" id="completeNote"></p>
 </div>
@@ -259,89 +436,327 @@
 </div>
 
 <script>
-const KEY = 'pvv_marketing_v2';
-let state = JSON.parse(localStorage.getItem(KEY) || '{}');
+(function () {
+'use strict';
 
-function save() {
-  localStorage.setItem(KEY, JSON.stringify(state));
-  updateProgress();
+var CFG = {"endpoint": "", "key": "CHANGE-ME-to-the-same-word-you-set-as-PVV_KEY", "track": "marketing"};
+var STORE = 'pvv_' + CFG.track + '_v3';
+
+function $(s, r) { return (r || document).querySelector(s); }
+function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+function enc(s) { return encodeURIComponent(s); }
+function nowMs() { return Date.now(); }
+
+var NMOD = $$('.module').length - 1; // module 0 is the Start panel
+
+/* ---------- state ---------- */
+function fresh() { return { user: null, last: 0, f: {}, c: {}, q: {}, rv: {}, done: null, dirty: [], pdirty: false }; }
+var S = fresh();
+try { var raw = localStorage.getItem(STORE); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
+function persist() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} }
+
+function stamp(k) {
+  var p = k.indexOf(':'), type = k.slice(0, p), id = k.slice(p + 1);
+  var o = type === 'f' ? S.f[id] : type === 'c' ? S.c[id] : S.q[id];
+  return o ? o.t : 0;
+}
+function mark(k) {
+  if (S.dirty.indexOf(k) < 0) S.dirty.push(k);
+  persist(); schedule(1500);
+}
+function markAll() {
+  Object.keys(S.f).forEach(function (id) { if (S.dirty.indexOf('f:' + id) < 0) S.dirty.push('f:' + id); });
+  Object.keys(S.c).forEach(function (id) { if (S.dirty.indexOf('c:' + id) < 0) S.dirty.push('c:' + id); });
+  Object.keys(S.q).forEach(function (id) { if (S.dirty.indexOf('q:' + id) < 0) S.dirty.push('q:' + id); });
+  S.pdirty = true; persist();
 }
 
-function updateProgress() {
-  let total = 0, done = 0;
-  ['cl0','cl1','cl2'].forEach(cl => {
-    const items = document.querySelectorAll(`#${cl} input`);
-    total += items.length;
-    items.forEach((inp, i) => { if (state[cl]?.[i]) done++; });
-  });
-  document.getElementById('progressFill').style.width = (done / total * 100) + '%';
-  [0,1,2].forEach(i => {
-    const cl = 'cl' + i;
-    const items = document.querySelectorAll(`#${cl} input`);
-    const allDone = [...items].every((_, j) => state[cl]?.[j]);
-    document.querySelector(`nav button[data-mod="${i}"]`).classList.toggle('done', allDone);
-  });
-}
+/* ---------- helpers that read the page ---------- */
+function modOf(el) { var m = el.closest('.module'); return m ? +m.id.replace('mod', '') : 0; }
+function labelOf(el) { var l = document.querySelector('label[for="' + el.id + '"]'); return l ? l.textContent.trim() : el.id; }
+function modTitle(k) { var h = $('#mod' + k + ' h2'); return h ? h.textContent.replace(/^Module \d+:\s*/, '') : ''; }
 
-function goMod(n) {
-  document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
-  document.getElementById('mod' + n).classList.add('active');
-  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  document.querySelector(`nav button[data-mod="${n}"]`).classList.add('active');
-  window.scrollTo(0, 0);
-}
+/* ---------- status line ---------- */
+function status(msg) { $('#syncStatus').textContent = msg; }
+function clock() { var d = new Date(); return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); }
 
-document.querySelectorAll('nav button').forEach(b => {
-  b.addEventListener('click', () => goMod(+b.dataset.mod));
-});
-
-// Text fields
-['f_org','f_goal','f_audience','f_message','f_channel','f_headline','f_impact','f_event','f_caption','f_launch','f_timeline','f_metric'].forEach(id => {
-  const el = document.getElementById(id);
-  if (!el) return;
-  if (state[id]) el.value = state[id];
-  el.addEventListener('input', () => { state[id] = el.value; save(); });
-  el.addEventListener('change', () => { state[id] = el.value; save(); });
-});
-
-// Checklists
-document.querySelectorAll('.checklist input').forEach(inp => {
-  const cl = inp.dataset.cl, i = +inp.dataset.i;
-  if (!state[cl]) state[cl] = {};
-  if (state[cl][i]) inp.checked = true;
-  inp.addEventListener('change', () => { state[cl][i] = inp.checked; save(); });
-});
-
-// Quizzes
-const answers = { quiz1: 0, quiz2: 0, quiz3: 0 };
-document.querySelectorAll('.quiz-option').forEach(opt => {
-  opt.addEventListener('click', () => {
-    const q = opt.dataset.q;
-    const fb = document.getElementById(q + '-fb');
-    opt.parentElement.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('correct','wrong'));
-    if (+opt.dataset.c === answers[q]) {
-      opt.classList.add('correct');
-      fb.textContent = 'Correct.';
-      fb.className = 'feedback show ok';
-    } else {
-      opt.classList.add('wrong');
-      fb.textContent = 'Not quite - re-read the section above and try again.';
-      fb.className = 'feedback show no';
+/* ---------- payload builders ---------- */
+function buildItems(keys) {
+  var items = [];
+  keys.forEach(function (k) {
+    var p = k.indexOf(':'), type = k.slice(0, p), id = k.slice(p + 1);
+    if (type === 'f') {
+      var el = document.getElementById(id), s = S.f[id];
+      if (!el || !s) return;
+      items.push({ id: id, module: modOf(el), type: el.dataset.cap === '1' ? 'capstone' : 'text', prompt: labelOf(el), answer: s.v, t: s.t });
+    } else if (type === 'c') {
+      var inp = document.querySelector('input[data-key="' + id + '"]'), c = S.c[id];
+      if (!inp || !c) return;
+      items.push({ id: id, module: modOf(inp), type: 'checklist', prompt: inp.parentElement.textContent.trim(), answer: c.v ? 'TRUE' : 'FALSE', t: c.t });
+    } else if (type === 'q') {
+      var box = document.querySelector('.quiz[data-q="' + id + '"]'), q = S.q[id];
+      if (!box || !q || q.pick == null) return;
+      var opts = $$('.quiz-option', box);
+      items.push({ id: id, module: modOf(box), type: 'quiz', prompt: $('p', box).textContent.trim(), answer: opts[q.pick] ? opts[q.pick].textContent.trim() : '', correct: !!q.ok, wrong: q.wrong || 0, t: q.t });
     }
   });
+  return items;
+}
+
+function buildProgress() {
+  var out = [];
+  for (var k = 1; k <= NMOD; k++) {
+    var mod = $('#mod' + k);
+    var cks = $$('.checklist input', mod), qs = $$('.quiz', mod), fs = $$('[data-f]', mod);
+    var cd = cks.filter(function (i) { return i.checked; }).length;
+    var qc = qs.filter(function (b) { var s = S.q[b.dataset.q]; return s && s.ok; }).length;
+    var ff = fs.filter(function (e) { return e.value.trim(); }).length;
+    var st = (cks.length && cd === cks.length && qc === qs.length) ? 'Complete' : ((cd || qc || ff) ? 'In progress' : 'Not started');
+    out.push({ module: k, title: modTitle(k), status: st, checklistDone: cd, checklistTotal: cks.length, quizCorrect: qc, quizTotal: qs.length, fieldsFilled: ff, fieldsTotal: fs.length });
+  }
+  return out;
+}
+
+/* ---------- sync to the PVV Google Sheet ---------- */
+var timer = null, retry = null, busy = false;
+function schedule(ms) {
+  clearTimeout(timer);
+  timer = setTimeout(sync, ms || 1500);
+  if (S.user) status(CFG.endpoint ? 'Saving...' : 'Saved in this browser.');
+  updateProgress();
+}
+function sync() {
+  if (!S.user) return;
+  if (!CFG.endpoint) { status('Saved in this browser only (PVV sync is not set up yet).'); return; }
+  if (!S.dirty.length && !S.pdirty) return;
+  if (busy) { schedule(1500); return; }
+  var keys = S.dirty.slice(), sent = {};
+  keys.forEach(function (k) { sent[k] = stamp(k); });
+  var wasP = S.pdirty;
+  S.pdirty = false;
+  var body = JSON.stringify({ action: 'save', key: CFG.key, track: CFG.track, user: S.user, items: buildItems(keys), progress: buildProgress(), last: S.last, complete: S.done ? S.done.date : '' });
+  busy = true;
+  return fetch(CFG.endpoint, { method: 'POST', body: body, keepalive: body.length < 60000 })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      busy = false;
+      if (!d || !d.ok) throw new Error((d && d.error) || 'Sync failed');
+      S.dirty = S.dirty.filter(function (k) { return !(k in sent) || stamp(k) !== sent[k]; });
+      persist();
+      status('Saved to PVV at ' + clock() + '.');
+      if (S.dirty.length || S.pdirty) schedule(500);
+    })
+    .catch(function () {
+      busy = false;
+      if (wasP) S.pdirty = true;
+      persist();
+      status("Couldn't reach PVV's sheet. Your answers are saved in this browser and will retry.");
+      clearTimeout(retry); retry = setTimeout(sync, 20000);
+    });
+}
+
+function pull() {
+  if (!CFG.endpoint || !S.user) return Promise.resolve(false);
+  var url = CFG.endpoint + '?action=load&key=' + enc(CFG.key) + '&track=' + enc(CFG.track) + '&email=' + enc(S.user.email);
+  return fetch(url).then(function (r) { return r.json(); }).then(function (d) {
+    if (!d || !d.ok) return false;
+    merge(d);
+    return true;
+  }).catch(function () { return false; });
+}
+
+function merge(d) {
+  (d.items || []).forEach(function (it) {
+    var t = +it.t || 0;
+    if (it.type === 'text' || it.type === 'capstone') {
+      var cur = S.f[it.id];
+      if (!cur || cur.t < t) S.f[it.id] = { v: String(it.answer == null ? '' : it.answer), t: t };
+      if (it.review && it.review.status) S.rv[it.id] = it.review;
+    } else if (it.type === 'checklist') {
+      var cc = S.c[it.id];
+      if (!cc || cc.t < t) S.c[it.id] = { v: String(it.answer).toUpperCase() === 'TRUE', t: t };
+    } else if (it.type === 'quiz') {
+      var box = document.querySelector('.quiz[data-q="' + it.id + '"]');
+      if (!box) return;
+      var idx = -1;
+      $$('.quiz-option', box).forEach(function (o, i) { if (o.textContent.trim() === String(it.answer).trim()) idx = i; });
+      var cq = S.q[it.id];
+      if (idx >= 0 && (!cq || cq.t < t)) S.q[it.id] = { pick: idx, ok: it.correct === true || String(it.correct).toUpperCase() === 'TRUE', wrong: +it.wrong || 0, t: t };
+    }
+  });
+  if (+d.last > 0 && !S.last) S.last = +d.last;
+  if (d.complete && !S.done) S.done = { date: String(d.complete).slice(0, 10), t: nowMs() };
+  persist(); render();
+}
+
+/* ---------- rendering ---------- */
+function renderQuiz(box) {
+  var st = S.q[box.dataset.q], opts = $$('.quiz-option', box), fb = $('.feedback', box);
+  opts.forEach(function (o) { o.classList.remove('correct', 'wrong'); });
+  if (!st || st.pick == null || !opts[st.pick]) { fb.className = 'feedback'; fb.textContent = ''; return; }
+  opts[st.pick].classList.add(st.ok ? 'correct' : 'wrong');
+  fb.className = 'feedback show ' + (st.ok ? 'ok' : 'no');
+  fb.textContent = st.ok ? ('Correct. ' + box.dataset.ok) : ('Not quite. ' + box.dataset.no);
+}
+function checkExpect(el) {
+  var ex = el.dataset.expect;
+  if (!ex) return;
+  var note = document.querySelector('[data-for="' + el.id + '"]');
+  if (!note) return;
+  if (!el.value.trim()) { note.textContent = ''; return; }
+  var v = parseFloat(el.value.replace(/[$,\s]/g, ''));
+  note.textContent = (Math.abs(v - parseFloat(ex)) < 0.005) ? 'That matches.' : "That doesn't match yet. Recheck your math.";
+}
+function updateProgress() {
+  var total = 0, done = 0;
+  for (var k = 1; k <= NMOD; k++) {
+    var mod = $('#mod' + k);
+    var cks = $$('.checklist input', mod), qs = $$('.quiz', mod);
+    var cd = cks.filter(function (i) { return i.checked; }).length;
+    var qc = qs.filter(function (b) { var s = S.q[b.dataset.q]; return s && s.ok; }).length;
+    total += cks.length + qs.length; done += cd + qc;
+    var all = cks.length && cd === cks.length && qc === qs.length;
+    var btn = document.querySelector('nav button[data-mod="' + k + '"]');
+    if (btn) btn.classList.toggle('done', !!all);
+  }
+  $('#progressFill').style.width = (total ? (done / total * 100) : 0) + '%';
+}
+function render() {
+  $$('[data-f]').forEach(function (el) {
+    var s = S.f[el.id];
+    if (s && el.value !== s.v) el.value = s.v;
+    checkExpect(el);
+  });
+  $$('.checklist input').forEach(function (i) { var s = S.c[i.dataset.key]; i.checked = !!(s && s.v); });
+  $$('.quiz').forEach(renderQuiz);
+  Object.keys(S.rv).forEach(function (id) {
+    var n = document.getElementById('rv_' + id), r = S.rv[id];
+    if (n && r && r.status) n.textContent = 'Chair review: ' + r.status + (r.notes ? ' - ' + r.notes : '');
+  });
+  var cn = $('#completeNote');
+  if (cn) cn.textContent = S.done ? ('Training marked complete on ' + S.done.date + '. Your category chair will review your capstone.') : '';
+  renderStart();
+  updateProgress();
+}
+function renderStart() {
+  var has = !!S.user;
+  $('#signupBox').style.display = has ? 'none' : 'block';
+  $('#resumeBox').style.display = has ? 'block' : 'none';
+  if (has) {
+    $('#whoName').textContent = S.user.name;
+    var n = S.last > 0 ? S.last : 1;
+    $('#resumeBtn').textContent = (S.last > 0 ? 'Resume: Module ' : 'Begin: Module ') + n + ' - ' + modTitle(n);
+  }
+}
+
+/* ---------- navigation ---------- */
+function go(n) {
+  $$('.module').forEach(function (m) { m.classList.remove('active'); });
+  $('#mod' + n).classList.add('active');
+  $$('nav button').forEach(function (b) { b.classList.remove('active'); b.removeAttribute('aria-current'); });
+  var btn = document.querySelector('nav button[data-mod="' + n + '"]');
+  btn.classList.add('active'); btn.setAttribute('aria-current', 'page');
+  window.scrollTo(0, 0);
+  if (n > 0 && S.last !== n) { S.last = n; S.pdirty = true; persist(); if (S.user) schedule(1500); }
+  if (n === 0) renderStart();
+}
+window.goMod = go;
+
+/* ---------- wiring ---------- */
+$$('nav button').forEach(function (b) { b.addEventListener('click', function () { go(+b.dataset.mod); }); });
+
+$$('[data-f]').forEach(function (el) {
+  function onEdit() {
+    S.f[el.id] = { v: el.value, t: nowMs() };
+    checkExpect(el);
+    mark('f:' + el.id);
+  }
+  el.addEventListener('input', onEdit);
+  el.addEventListener('change', onEdit);
 });
 
-function markComplete() {
-  state.complete = true;
-  state.completeDate = new Date().toISOString().split('T')[0];
-  save();
-  document.getElementById('completeNote').textContent = 'Training marked complete on ' + state.completeDate + '. Nice work.';
-}
+$$('.checklist input').forEach(function (inp) {
+  inp.addEventListener('change', function () {
+    S.c[inp.dataset.key] = { v: inp.checked, t: nowMs() };
+    mark('c:' + inp.dataset.key);
+  });
+});
 
-if (state.complete) {
-  document.getElementById('completeNote').textContent = 'Training completed on ' + state.completeDate + '.';
+$$('.quiz').forEach(function (box) {
+  var id = box.dataset.q, answer = +box.dataset.a;
+  $$('.quiz-option', box).forEach(function (o, i) {
+    o.addEventListener('click', function () {
+      var st = S.q[id] || { pick: null, ok: false, wrong: 0, t: 0 };
+      if (st.ok) return;
+      st.pick = i; st.ok = (i === answer); if (!st.ok) st.wrong = (st.wrong || 0) + 1; st.t = nowMs();
+      S.q[id] = st;
+      renderQuiz(box);
+      mark('q:' + id);
+    });
+  });
+});
+
+$('#startBtn').addEventListener('click', function () {
+  var name = $('#u_name').value.trim(), email = $('#u_email').value.trim().toLowerCase();
+  var err = $('#startErr');
+  if (!name) { err.textContent = 'Enter your name so your chair can find your work.'; return; }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = 'Enter a valid email address.'; return; }
+  err.textContent = '';
+  S.user = { name: name, email: email };
+  persist();
+  status('Looking for saved progress...');
+  pull().then(function (found) {
+    markAll(); persist();
+    status(found ? 'Found your saved progress.' : (CFG.endpoint ? 'Starting fresh.' : 'Saved in this browser only (PVV sync is not set up yet).'));
+    render();
+    go(S.last > 0 ? S.last : 1);
+    sync();
+  });
+});
+
+$('#resumeBtn').addEventListener('click', function () { go(S.last > 0 ? S.last : 1); });
+$('#switchUser').addEventListener('click', function () {
+  if (!confirm('Switch to a different person? Answers saved on this device for ' + S.user.email + ' stay in PVV\'s sheet.')) return;
+  sync();
+  S = fresh(); persist();
+  $$('[data-f]').forEach(function (el) { el.value = ''; });
+  render(); go(0);
+});
+
+$('#downloadBtn').addEventListener('click', function () {
+  var rows = [['Module', 'Type', 'Prompt', 'Answer']];
+  $$('[data-f]').forEach(function (el) { if (el.value.trim()) rows.push([modOf(el), el.dataset.cap === '1' ? 'capstone' : 'text', labelOf(el), el.value]); });
+  $$('.quiz').forEach(function (b) { var s = S.q[b.dataset.q]; if (s && s.pick != null) rows.push([modOf(b), 'quiz', $('p', b).textContent.trim(), $$('.quiz-option', b)[s.pick].textContent.trim() + (s.ok ? ' (correct)' : ' (incorrect)')]); });
+  var csv = rows.map(function (r) { return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = 'pvv-' + CFG.track + '-answers.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+});
+
+var cb = $('#completeBtn');
+if (cb) cb.addEventListener('click', function () {
+  var note = $('#completeNote');
+  var caps = $$('#mod' + NMOD + ' [data-cap="1"][data-req="1"]');
+  var missing = caps.some(function (e) { return !e.value.trim(); });
+  if (missing) { note.textContent = 'Add your capstone link above first, then mark the training complete.'; return; }
+  S.done = { date: new Date().toISOString().slice(0, 10), t: nowMs() };
+  S.pdirty = true; persist(); render(); sync();
+});
+
+window.addEventListener('beforeunload', function () { if (S.dirty.length || S.pdirty) sync(); });
+document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden' && (S.dirty.length || S.pdirty)) sync(); });
+
+/* ---------- init ---------- */
+render();
+if (S.user) {
+  status(CFG.endpoint ? 'Signed in as ' + S.user.email + '.' : 'Saved in this browser only (PVV sync is not set up yet).');
+  go(S.last > 0 ? S.last : 0);
+  pull().then(function (found) { if (found) { status('Synced with PVV at ' + clock() + '.'); } });
+} else {
+  go(0);
 }
-updateProgress();
+})();
 </script>
 </body>
 </html>

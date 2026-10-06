@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PVV Training</title><style>
+
+  :root { --bg: #faf9f7; --card: #fff; --accent: #2d6a4f; --accent-light: #d8f3dc; --text: #1b1b1b; --muted: #666; --border: #e0ddd8; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  .header { background: var(--accent); color: white; padding: 2rem; }
+  .header h1 { font-size: 1.6rem; font-weight: normal; }
+  .header p { opacity: 0.85; margin-top: 0.5rem; font-size: 0.95rem; }
+  .progress-bar { background: rgba(255,255,255,0.2); height: 6px; border-radius: 3px; margin-top: 1rem; }
+  .progress-fill { background: white; height: 100%; border-radius: 3px; transition: width 0.3s; width: 0%; }
+  nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0.75rem 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; position: sticky; top: 0; z-index: 10; }
+  nav button { background: none; border: 1px solid var(--border); padding: 0.4rem 0.9rem; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.85rem; }
+  nav button.active { background: var(--accent); color: white; border-color: var(--accent); }
+  nav button.done { border-color: var(--accent); color: var(--accent); }
+  .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .module { display: none; }
+  .module.active { display: block; }
+  h2 { font-size: 1.4rem; font-weight: normal; margin-bottom: 1rem; color: var(--accent); }
+  h3 { font-size: 1.1rem; font-weight: normal; margin: 1.5rem 0 0.75rem; }
+  p { margin-bottom: 1rem; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; }
+  .callout { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+  .callout strong { display: block; margin-bottom: 0.25rem; }
+  label { display: block; margin-bottom: 0.25rem; font-size: 0.9rem; color: var(--muted); }
+  input[type="text"], textarea, select { width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 4px; font-family: inherit; font-size: 0.95rem; margin-bottom: 1rem; }
+  textarea { min-height: 80px; resize: vertical; }
+  .checklist label { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.6rem; color: var(--text); cursor: pointer; font-size: 0.95rem; }
+  .checklist input { margin-top: 0.3rem; }
+  .quiz { margin: 1rem 0; }
+  .quiz-option { display: block; padding: 0.6rem 1rem; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 0.5rem; cursor: pointer; transition: background 0.15s; }
+  .quiz-option:hover { background: var(--accent-light); }
+  .quiz-option.correct { background: var(--accent-light); border-color: var(--accent); }
+  .quiz-option.wrong { background: #fde8e8; border-color: #c0392b; }
+  .feedback { padding: 0.75rem 1rem; border-radius: 4px; margin-top: 0.75rem; display: none; }
+  .feedback.show { display: block; }
+  .feedback.ok { background: var(--accent-light); }
+  .feedback.no { background: #fde8e8; }
+  .btn { background: var(--accent); color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.95rem; margin-top: 0.5rem; }
+  .btn:hover { opacity: 0.9; }
+  .btn-outline { background: none; color: var(--accent); border: 1px solid var(--accent); }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th, td { border: 1px solid var(--border); padding: 0.5rem 0.75rem; text-align: left; }
+  th { background: var(--accent-light); font-weight: normal; }
+  .nav-buttons { display: flex; justify-content: space-between; margin-top: 2rem; }
+  .saved-note { font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; }
+
+  /* additions (same look, small helpers) */
+  a { color: var(--accent); }
+  ul, ol { margin: 0 0 1rem 1.25rem; }
+  li { margin-bottom: 0.35rem; }
+  button.quiz-option { width: 100%; text-align: left; background: var(--card); font: inherit; color: inherit; }
+  .meta { font-size: 0.8rem; color: var(--muted); margin-top: -0.5rem; margin-bottom: 1rem; }
+  .media { margin: 1.25rem 0; }
+  .media .kind { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.25rem; }
+  .media p:last-child { margin-bottom: 0; }
+  .fig { width: 100%; height: auto; display: block; }
+  .fig text { font-family: Georgia, 'Times New Roman', serif; fill: var(--text); font-size: 14px; }
+  .fig .box { fill: var(--accent-light); stroke: var(--accent); stroke-width: 1.5; }
+  .fig .plain { fill: var(--card); stroke: var(--border); stroke-width: 1.5; }
+  .fig .solid { fill: var(--accent); }
+  .fig text.onsolid { fill: #fff; }
+  .figrow { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; }
+  .figrow .fig { flex: 0 0 220px; max-width: 220px; margin: 0 auto; }
+  .figrow .legend { flex: 1 1 220px; margin: 0 0 0 1.25rem; }
+  .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .panel { border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.25rem; background: var(--card); }
+  .panel.on { background: var(--accent-light); border-color: var(--accent); }
+  .panel h4 { font-size: 1rem; font-weight: normal; color: var(--accent); margin-bottom: 0.5rem; }
+  .panel p { margin-bottom: 0.4rem; font-size: 0.92rem; }
+  .flow { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; align-items: center; }
+  .step { background: var(--accent-light); border: 1px solid var(--accent); border-radius: 4px; padding: 0.45rem 0.9rem; font-size: 0.92rem; }
+  .arrow { color: var(--accent); }
+  figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.75rem; }
+  .header .note { font-size: 0.8rem; opacity: 0.8; margin: 0.5rem 0 0; }
+  .nav-buttons .btn[disabled] { opacity: 0.5; cursor: default; }
+  .field-note { font-size: 0.85rem; color: var(--muted); margin: -0.75rem 0 1rem; min-height: 1em; }
+  .linkbtn { background: none; border: none; color: var(--accent); text-decoration: underline; cursor: pointer; font: inherit; padding: 0; }
+  .err { color: #c0392b; font-size: 0.9rem; margin-top: 0.5rem; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (max-width: 560px) { .panels { grid-template-columns: 1fr; } .figrow .legend { margin-left: 1.25rem; } .container { padding: 1.25rem 1rem 3rem; } nav { padding: 0.6rem 0.75rem; } .header { padding: 1.5rem 1rem; } }
+</style></head><body>
+<!-- GENERATED FILE. Run: python3 training/build.py -->
+<div class="header"><h1>PVV Training</h1><p>Pick your consulting track. Each one takes about an hour.</p></div>
+<div class="container">
+<p>Proyecto Vidas Valiosas connects local nonprofits with free, student-provided consulting. Choose the team you joined. Your progress saves automatically, so you can stop and come back.</p>
+<div class="card"><h3 style="margin-top:0">Marketing track</h3><p>6 modules, about 60 minutes. Audiences, messages, flyers, and launch plans for nonprofit clients.</p><a class="btn" style="text-decoration:none;display:inline-block" href="marketing-workbook.html">Open Marketing training</a></div><div class="card"><h3 style="margin-top:0">Financial track</h3><p>6 modules, about 60 minutes. Funding sources, proposals, budgets, and letters of inquiry for nonprofit clients.</p><a class="btn" style="text-decoration:none;display:inline-block" href="financial-workbook.html">Open Financial training</a></div><div class="card"><h3 style="margin-top:0">Technical track</h3><p>6 modules, about 60 minutes. Discovery, Reach Pages, forms, data, accessibility, and secure handoff for nonprofit clients.</p><a class="btn" style="text-decoration:none;display:inline-block" href="technical-workbook.html">Open Technical training</a></div>
+</div></body></html>

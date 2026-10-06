@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PVV %%TITLE%% Training</title>
+<style>
+%%CSS%%
+</style>
+</head>
+<body>
+
+<!-- GENERATED FILE. Edit training/src/%%TRACK%%.json and run: python3 training/build.py -->
+
+<div class="header">
+  <h1>PVV %%TITLE%% Training</h1>
+  <p>%%SUBTITLE%%</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <p class="note" id="syncStatus" aria-live="polite"></p>
+</div>
+
+<nav id="nav" aria-label="Modules">
+%%NAV%%
+</nav>
+
+<div class="container">
+
+%%START%%
+
+%%MODULES%%
+
+</div>
+
+<script>
+(function () {
+'use strict';
+
+var CFG = %%CFG%%;
+var STORE = 'pvv_' + CFG.track + '_v3';
+
+function $(s, r) { return (r || document).querySelector(s); }
+function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+function enc(s) { return encodeURIComponent(s); }
+function nowMs() { return Date.now(); }
+
+var NMOD = $$('.module').length - 1; // module 0 is the Start panel
+
+/* ---------- state ---------- */
+function fresh() { return { user: null, last: 0, f: {}, c: {}, q: {}, rv: {}, done: null, dirty: [], pdirty: false }; }
+var S = fresh();
+try { var raw = localStorage.getItem(STORE); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
+function persist() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} }
+
+function stamp(k) {
+  var p = k.indexOf(':'), type = k.slice(0, p), id = k.slice(p + 1);
+  var o = type === 'f' ? S.f[id] : type === 'c' ? S.c[id] : S.q[id];
+  return o ? o.t : 0;
+}
+function mark(k) {
+  if (S.dirty.indexOf(k) < 0) S.dirty.push(k);
+  persist(); schedule(1500);
+}
+function markAll() {
+  Object.keys(S.f).forEach(function (id) { if (S.dirty.indexOf('f:' + id) < 0) S.dirty.push('f:' + id); });
+  Object.keys(S.c).forEach(function (id) { if (S.dirty.indexOf('c:' + id) < 0) S.dirty.push('c:' + id); });
+  Object.keys(S.q).forEach(function (id) { if (S.dirty.indexOf('q:' + id) < 0) S.dirty.push('q:' + id); });
+  S.pdirty = true; persist();
+}
+
+/* ---------- helpers that read the page ---------- */
+function modOf(el) { var m = el.closest('.module'); return m ? +m.id.replace('mod', '') : 0; }
+function labelOf(el) { var l = document.querySelector('label[for="' + el.id + '"]'); return l ? l.textContent.trim() : el.id; }
+function modTitle(k) { var h = $('#mod' + k + ' h2'); return h ? h.textContent.replace(/^Module \d+:\s*/, '') : ''; }
+
+/* ---------- status line ---------- */
+function status(msg) { $('#syncStatus').textContent = msg; }
+function clock() { var d = new Date(); return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); }
+
+/* ---------- payload builders ---------- */
+function buildItems(keys) {
+  var items = [];
+  keys.forEach(function (k) {
+    var p = k.indexOf(':'), type = k.slice(0, p), id = k.slice(p + 1);
+    if (type === 'f') {
+      var el = document.getElementById(id), s = S.f[id];
+      if (!el || !s) return;
+      items.push({ id: id, module: modOf(el), type: el.dataset.cap === '1' ? 'capstone' : 'text', prompt: labelOf(el), answer: s.v, t: s.t });
+    } else if (type === 'c') {
+      var inp = document.querySelector('input[data-key="' + id + '"]'), c = S.c[id];
+      if (!inp || !c) return;
+      items.push({ id: id, module: modOf(inp), type: 'checklist', prompt: inp.parentElement.textContent.trim(), answer: c.v ? 'TRUE' : 'FALSE', t: c.t });
+    } else if (type === 'q') {
+      var box = document.querySelector('.quiz[data-q="' + id + '"]'), q = S.q[id];
+      if (!box || !q || q.pick == null) return;
+      var opts = $$('.quiz-option', box);
+      items.push({ id: id, module: modOf(box), type: 'quiz', prompt: $('p', box).textContent.trim(), answer: opts[q.pick] ? opts[q.pick].textContent.trim() : '', correct: !!q.ok, wrong: q.wrong || 0, t: q.t });
+    }
+  });
+  return items;
+}
+
+function buildProgress() {
+  var out = [];
+  for (var k = 1; k <= NMOD; k++) {
+    var mod = $('#mod' + k);
+    var cks = $$('.checklist input', mod), qs = $$('.quiz', mod), fs = $$('[data-f]', mod);
+    var cd = cks.filter(function (i) { return i.checked; }).length;
+    var qc = qs.filter(function (b) { var s = S.q[b.dataset.q]; return s && s.ok; }).length;
+    var ff = fs.filter(function (e) { return e.value.trim(); }).length;
+    var st = (cks.length && cd === cks.length && qc === qs.length) ? 'Complete' : ((cd || qc || ff) ? 'In progress' : 'Not started');
+    out.push({ module: k, title: modTitle(k), status: st, checklistDone: cd, checklistTotal: cks.length, quizCorrect: qc, quizTotal: qs.length, fieldsFilled: ff, fieldsTotal: fs.length });
+  }
+  return out;
+}
+
+/* ---------- sync to the PVV Google Sheet ---------- */
+var timer = null, retry = null, busy = false;
+function schedule(ms) {
+  clearTimeout(timer);
+  timer = setTimeout(sync, ms || 1500);
+  if (S.user) status(CFG.endpoint ? 'Saving...' : 'Saved in this browser.');
+  updateProgress();
+}
+function sync() {
+  if (!S.user) return;
+  if (!CFG.endpoint) { status('Saved in this browser only (PVV sync is not set up yet).'); return; }
+  if (!S.dirty.length && !S.pdirty) return;
+  if (busy) { schedule(1500); return; }
+  var keys = S.dirty.slice(), sent = {};
+  keys.forEach(function (k) { sent[k] = stamp(k); });
+  var wasP = S.pdirty;
+  S.pdirty = false;
+  var body = JSON.stringify({ action: 'save', key: CFG.key, track: CFG.track, user: S.user, items: buildItems(keys), progress: buildProgress(), last: S.last, complete: S.done ? S.done.date : '' });
+  busy = true;
+  return fetch(CFG.endpoint, { method: 'POST', body: body, keepalive: body.length < 60000 })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      busy = false;
+      if (!d || !d.ok) throw new Error((d && d.error) || 'Sync failed');
+      S.dirty = S.dirty.filter(function (k) { return !(k in sent) || stamp(k) !== sent[k]; });
+      persist();
+      status('Saved to PVV at ' + clock() + '.');
+      if (S.dirty.length || S.pdirty) schedule(500);
+    })
+    .catch(function () {
+      busy = false;
+      if (wasP) S.pdirty = true;
+      persist();
+      status("Couldn't reach PVV's sheet. Your answers are saved in this browser and will retry.");
+      clearTimeout(retry); retry = setTimeout(sync, 20000);
+    });
+}
+
+function pull() {
+  if (!CFG.endpoint || !S.user) return Promise.resolve(false);
+  var url = CFG.endpoint + '?action=load&key=' + enc(CFG.key) + '&track=' + enc(CFG.track) + '&email=' + enc(S.user.email);
+  return fetch(url).then(function (r) { return r.json(); }).then(function (d) {
+    if (!d || !d.ok) return false;
+    merge(d);
+    return true;
+  }).catch(function () { return false; });
+}
+
+function merge(d) {
+  (d.items || []).forEach(function (it) {
+    var t = +it.t || 0;
+    if (it.type === 'text' || it.type === 'capstone') {
+      var cur = S.f[it.id];
+      if (!cur || cur.t < t) S.f[it.id] = { v: String(it.answer == null ? '' : it.answer), t: t };
+      if (it.review && it.review.status) S.rv[it.id] = it.review;
+    } else if (it.type === 'checklist') {
+      var cc = S.c[it.id];
+      if (!cc || cc.t < t) S.c[it.id] = { v: String(it.answer).toUpperCase() === 'TRUE', t: t };
+    } else if (it.type === 'quiz') {
+      var box = document.querySelector('.quiz[data-q="' + it.id + '"]');
+      if (!box) return;
+      var idx = -1;
+      $$('.quiz-option', box).forEach(function (o, i) { if (o.textContent.trim() === String(it.answer).trim()) idx = i; });
+      var cq = S.q[it.id];
+      if (idx >= 0 && (!cq || cq.t < t)) S.q[it.id] = { pick: idx, ok: it.correct === true || String(it.correct).toUpperCase() === 'TRUE', wrong: +it.wrong || 0, t: t };
+    }
+  });
+  if (+d.last > 0 && !S.last) S.last = +d.last;
+  if (d.complete && !S.done) S.done = { date: String(d.complete).slice(0, 10), t: nowMs() };
+  persist(); render();
+}
+
+/* ---------- rendering ---------- */
+function renderQuiz(box) {
+  var st = S.q[box.dataset.q], opts = $$('.quiz-option', box), fb = $('.feedback', box);
+  opts.forEach(function (o) { o.classList.remove('correct', 'wrong'); });
+  if (!st || st.pick == null || !opts[st.pick]) { fb.className = 'feedback'; fb.textContent = ''; return; }
+  opts[st.pick].classList.add(st.ok ? 'correct' : 'wrong');
+  fb.className = 'feedback show ' + (st.ok ? 'ok' : 'no');
+  fb.textContent = st.ok ? ('Correct. ' + box.dataset.ok) : ('Not quite. ' + box.dataset.no);
+}
+function checkExpect(el) {
+  var ex = el.dataset.expect;
+  if (!ex) return;
+  var note = document.querySelector('[data-for="' + el.id + '"]');
+  if (!note) return;
+  if (!el.value.trim()) { note.textContent = ''; return; }
+  var v = parseFloat(el.value.replace(/[$,\s]/g, ''));
+  note.textContent = (Math.abs(v - parseFloat(ex)) < 0.005) ? 'That matches.' : "That doesn't match yet. Recheck your math.";
+}
+function updateProgress() {
+  var total = 0, done = 0;
+  for (var k = 1; k <= NMOD; k++) {
+    var mod = $('#mod' + k);
+    var cks = $$('.checklist input', mod), qs = $$('.quiz', mod);
+    var cd = cks.filter(function (i) { return i.checked; }).length;
+    var qc = qs.filter(function (b) { var s = S.q[b.dataset.q]; return s && s.ok; }).length;
+    total += cks.length + qs.length; done += cd + qc;
+    var all = cks.length && cd === cks.length && qc === qs.length;
+    var btn = document.querySelector('nav button[data-mod="' + k + '"]');
+    if (btn) btn.classList.toggle('done', !!all);
+  }
+  $('#progressFill').style.width = (total ? (done / total * 100) : 0) + '%';
+}
+function render() {
+  $$('[data-f]').forEach(function (el) {
+    var s = S.f[el.id];
+    if (s && el.value !== s.v) el.value = s.v;
+    checkExpect(el);
+  });
+  $$('.checklist input').forEach(function (i) { var s = S.c[i.dataset.key]; i.checked = !!(s && s.v); });
+  $$('.quiz').forEach(renderQuiz);
+  Object.keys(S.rv).forEach(function (id) {
+    var n = document.getElementById('rv_' + id), r = S.rv[id];
+    if (n && r && r.status) n.textContent = 'Chair review: ' + r.status + (r.notes ? ' - ' + r.notes : '');
+  });
+  var cn = $('#completeNote');
+  if (cn) cn.textContent = S.done ? ('Training marked complete on ' + S.done.date + '. Your category chair will review your capstone.') : '';
+  renderStart();
+  updateProgress();
+}
+function renderStart() {
+  var has = !!S.user;
+  $('#signupBox').style.display = has ? 'none' : 'block';
+  $('#resumeBox').style.display = has ? 'block' : 'none';
+  if (has) {
+    $('#whoName').textContent = S.user.name;
+    var n = S.last > 0 ? S.last : 1;
+    $('#resumeBtn').textContent = (S.last > 0 ? 'Resume: Module ' : 'Begin: Module ') + n + ' - ' + modTitle(n);
+  }
+}
+
+/* ---------- navigation ---------- */
+function go(n) {
+  $$('.module').forEach(function (m) { m.classList.remove('active'); });
+  $('#mod' + n).classList.add('active');
+  $$('nav button').forEach(function (b) { b.classList.remove('active'); b.removeAttribute('aria-current'); });
+  var btn = document.querySelector('nav button[data-mod="' + n + '"]');
+  btn.classList.add('active'); btn.setAttribute('aria-current', 'page');
+  window.scrollTo(0, 0);
+  if (n > 0 && S.last !== n) { S.last = n; S.pdirty = true; persist(); if (S.user) schedule(1500); }
+  if (n === 0) renderStart();
+}
+window.goMod = go;
+
+/* ---------- wiring ---------- */
+$$('nav button').forEach(function (b) { b.addEventListener('click', function () { go(+b.dataset.mod); }); });
+
+$$('[data-f]').forEach(function (el) {
+  function onEdit() {
+    S.f[el.id] = { v: el.value, t: nowMs() };
+    checkExpect(el);
+    mark('f:' + el.id);
+  }
+  el.addEventListener('input', onEdit);
+  el.addEventListener('change', onEdit);
+});
+
+$$('.checklist input').forEach(function (inp) {
+  inp.addEventListener('change', function () {
+    S.c[inp.dataset.key] = { v: inp.checked, t: nowMs() };
+    mark('c:' + inp.dataset.key);
+  });
+});
+
+$$('.quiz').forEach(function (box) {
+  var id = box.dataset.q, answer = +box.dataset.a;
+  $$('.quiz-option', box).forEach(function (o, i) {
+    o.addEventListener('click', function () {
+      var st = S.q[id] || { pick: null, ok: false, wrong: 0, t: 0 };
+      if (st.ok) return;
+      st.pick = i; st.ok = (i === answer); if (!st.ok) st.wrong = (st.wrong || 0) + 1; st.t = nowMs();
+      S.q[id] = st;
+      renderQuiz(box);
+      mark('q:' + id);
+    });
+  });
+});
+
+$('#startBtn').addEventListener('click', function () {
+  var name = $('#u_name').value.trim(), email = $('#u_email').value.trim().toLowerCase();
+  var err = $('#startErr');
+  if (!name) { err.textContent = 'Enter your name so your chair can find your work.'; return; }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = 'Enter a valid email address.'; return; }
+  err.textContent = '';
+  S.user = { name: name, email: email };
+  persist();
+  status('Looking for saved progress...');
+  pull().then(function (found) {
+    markAll(); persist();
+    status(found ? 'Found your saved progress.' : (CFG.endpoint ? 'Starting fresh.' : 'Saved in this browser only (PVV sync is not set up yet).'));
+    render();
+    go(S.last > 0 ? S.last : 1);
+    sync();
+  });
+});
+
+$('#resumeBtn').addEventListener('click', function () { go(S.last > 0 ? S.last : 1); });
+$('#switchUser').addEventListener('click', function () {
+  if (!confirm('Switch to a different person? Answers saved on this device for ' + S.user.email + ' stay in PVV\'s sheet.')) return;
+  sync();
+  S = fresh(); persist();
+  $$('[data-f]').forEach(function (el) { el.value = ''; });
+  render(); go(0);
+});
+
+$('#downloadBtn').addEventListener('click', function () {
+  var rows = [['Module', 'Type', 'Prompt', 'Answer']];
+  $$('[data-f]').forEach(function (el) { if (el.value.trim()) rows.push([modOf(el), el.dataset.cap === '1' ? 'capstone' : 'text', labelOf(el), el.value]); });
+  $$('.quiz').forEach(function (b) { var s = S.q[b.dataset.q]; if (s && s.pick != null) rows.push([modOf(b), 'quiz', $('p', b).textContent.trim(), $$('.quiz-option', b)[s.pick].textContent.trim() + (s.ok ? ' (correct)' : ' (incorrect)')]); });
+  var csv = rows.map(function (r) { return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = 'pvv-' + CFG.track + '-answers.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+});
+
+var cb = $('#completeBtn');
+if (cb) cb.addEventListener('click', function () {
+  var note = $('#completeNote');
+  var caps = $$('#mod' + NMOD + ' [data-cap="1"][data-req="1"]');
+  var missing = caps.some(function (e) { return !e.value.trim(); });
+  if (missing) { note.textContent = 'Add your capstone link above first, then mark the training complete.'; return; }
+  S.done = { date: new Date().toISOString().slice(0, 10), t: nowMs() };
+  S.pdirty = true; persist(); render(); sync();
+});
+
+window.addEventListener('beforeunload', function () { if (S.dirty.length || S.pdirty) sync(); });
+document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden' && (S.dirty.length || S.pdirty)) sync(); });
+
+/* ---------- init ---------- */
+render();
+if (S.user) {
+  status(CFG.endpoint ? 'Signed in as ' + S.user.email + '.' : 'Saved in this browser only (PVV sync is not set up yet).');
+  go(S.last > 0 ? S.last : 0);
+  pull().then(function (found) { if (found) { status('Synced with PVV at ' + clock() + '.'); } });
+} else {
+  go(0);
+}
+})();
+</script>
+</body>
+</html>
