@@ -78,8 +78,8 @@ def render_field(f, seen_ids, mod_no):
     if fid in seen_ids:
         raise BuildError(f"Duplicate id: {fid}")
     seen_ids.add(fid)
-    if not fid.startswith(f"m{mod_no}_") and not fid.startswith("cap_"):
-        raise BuildError(f"Field id '{fid}' in module {mod_no} should start with 'm{mod_no}_' (or 'cap_')")
+    if not fid.startswith(f"m{mod_no}_") and not fid.startswith(("cap_", "fb_")):
+        raise BuildError(f"Field id '{fid}' in module {mod_no} should start with 'm{mod_no}_' (or 'cap_' / 'fb_')")
     typ = f.get("type", "text")
     attrs = f' id="{esc(fid)}" data-f="{esc(fid)}"'
     if f.get("capstone"):
@@ -88,7 +88,21 @@ def render_field(f, seen_ids, mod_no):
             attrs += ' data-req="1"'
     if f.get("expect") is not None:
         attrs += f' data-expect="{esc(f["expect"])}"'
+    if f.get("feedback"):
+        attrs += ' data-fb="1"'
+    if f.get("optional"):
+        attrs += ' data-opt="1"'
     ph = f' placeholder="{esc(f["placeholder"])}"' if f.get("placeholder") else ""
+    if typ == "scale":
+        pts = int(f.get("points", 5))
+        lid = f"{fid}_l"
+        btns = "".join(
+            f'<button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="{i}">{i}</button>'
+            for i in range(1, pts + 1))
+        return (f'<label for="{esc(fid)}" id="{esc(lid)}">{f["label"]}</label>\n  '
+                f'<div class="scale" role="radiogroup" aria-labelledby="{esc(lid)}" data-scale="{esc(fid)}">{btns}</div>\n  '
+                f'<p class="scale-ends"><span>{f["low"]}</span><span>{f["high"]}</span></p>\n  '
+                f'<input type="hidden"{attrs}>')
     out = [f'<label for="{esc(fid)}">{f["label"]}</label>']
     if typ == "textarea":
         out.append(f"<textarea{attrs}{ph}></textarea>")
@@ -202,15 +216,44 @@ def render_module(m, n, total, ctx_global):
 </div>"""
 
 
-def render_start(data, theme):
+def render_feedback(fb, mods, n, ctx_global):
+    ms = fb["module_scale"]
+    fields = [dict(id=f"fb_mod{i}", type="scale", section=ms["section"], low=ms["low"], high=ms["high"], feedback=True,
+                   label=ms["label"].replace("{title}", f"Module {i}: {m['title']}")) for i, m in enumerate(mods, 1)]
+    fields += [dict(q, feedback=True) for q in fb["questions"]]
+    parts, section = [], None
+    for f in fields:
+        if f.get("section") != section:
+            section = f.get("section")
+            parts.append(f"<h3>{section}</h3>")
+        parts.append(render_field(f, ctx_global["ids"], n))
+    body = "\n\n  ".join(parts)
+    return f"""<!-- FEEDBACK -->
+<div class="module" id="mod{n}">
+  <h2>{fb["title"]}</h2>
+  <p class="meta">About {fb["mins"]} minutes. Optional, but it helps.</p>
+  <p>{fb["intro"]}</p>
+
+  {body}
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goMod({n - 1})">Back</button>
+    <button class="btn" id="completeBtn">Mark training complete</button>
+  </div>
+  <p class="saved-note" id="completeNote"></p>
+</div>"""
+
+
+def render_start(data, theme, fb):
     mods = data["modules"]
     rows = "".join(f"<tr><td>{i}</td><td>{m['title']}</td><td>{m['mins']} min</td></tr>" for i, m in enumerate(mods, 1))
+    rows += f"<tr><td>{len(mods) + 1}</td><td>{fb['title']} (optional)</td><td>{fb['mins']} min</td></tr>"
     total = sum(m["mins"] for m in mods)
     w = data["welcome"]
     return f"""<!-- START -->
 <div class="module" id="mod0">
   <h2>Welcome to {theme['title']} training</h2>
-  <p class="meta">About {total} minutes in total</p>
+  <p class="meta">About {total} minutes, plus a {fb['mins']}-minute feedback form</p>
   <p>{w['intro']}</p>
 
   <div class="callout">
@@ -256,11 +299,14 @@ def build_track(track, cfg):
     if not 50 <= total_min <= 70:
         print(f"  warning: {track} totals {total_min} minutes (target is about 60)")
 
-    ctx_global = {"ids": set(), "answers": [], "links": [], "modules": mods}
+    fb = json.loads((SRC / "feedback.json").read_text(encoding="utf-8"))
+    ctx_global = {"ids": set(), "answers": [], "links": [], "modules": mods + [{"short": fb["short"]}]}
     nav = ['<button class="active" data-mod="0">Start</button>']
     for i, m in enumerate(mods, 1):
         nav.append(f'<button data-mod="{i}">{i}. {m["short"]}</button>')
-    modules_html = "\n\n".join(render_module(m, i, len(mods), ctx_global) for i, m in enumerate(mods, 1))
+    nav.append(f'<button data-mod="{len(mods) + 1}">{len(mods) + 1}. {fb["short"]}</button>')
+    modules_html = "\n\n".join(render_module(m, i, len(mods) + 1, ctx_global) for i, m in enumerate(mods, 1))
+    modules_html += "\n\n" + render_feedback(fb, mods, len(mods) + 1, ctx_global)
 
     css = (SRC / "_css.txt").read_text(encoding="utf-8").replace("%%ACCENT_LIGHT%%", theme["light"]).replace("%%ACCENT%%", theme["accent"])
     page_cfg = {"endpoint": cfg.get("endpoint", ""), "key": cfg.get("key", ""), "track": track}
@@ -268,9 +314,9 @@ def build_track(track, cfg):
     page = (tpl.replace("%%CSS%%", css)
                .replace("%%TITLE%%", theme["title"])
                .replace("%%TRACK%%", track)
-               .replace("%%SUBTITLE%%", f"{len(mods)} short modules, about an hour in total. Your progress saves automatically, and you can pick up where you left off.")
+               .replace("%%SUBTITLE%%", f"{len(mods)} short modules, about an hour in total, plus a quick feedback form. Your progress saves automatically, and you can pick up where you left off.")
                .replace("%%NAV%%", "\n".join(nav))
-               .replace("%%START%%", render_start(data, theme))
+               .replace("%%START%%", render_start(data, theme, fb))
                .replace("%%MODULES%%", modules_html)
                .replace("%%CFG%%", json.dumps(page_cfg)))
     (OUT / f"{track}-workbook.html").write_text(page, encoding="utf-8")
@@ -307,6 +353,7 @@ def write_curriculum(tracks, ctxs):
         lines += [f"## {THEMES[t]['title']} track ({sum(m['mins'] for m in mods)} min)", ""]
         for i, m in enumerate(mods, 1):
             lines.append(f"{i}. **{m['title']}** ({m['mins']} min)")
+        lines.append(f"{len(mods) + 1}. **Feedback** (optional, 2 min)")
         lines += ["", "Linked resources:", ""]
         seen = set()
         for title, url, kind in ctxs[t]["links"]:

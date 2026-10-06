@@ -64,6 +64,18 @@ Each module has a `title`, a short tab label (`short`), a time (`mins`), a list 
 
 `answer` counts from **zero**: 0 is the first option, 1 is the second, and so on. Vary where the right answer sits.
 
+## The feedback module
+
+Every track ends with a short, optional **Feedback** module (a 1 to 5 rating for each module, a few overall ratings, and written comments). It is the same for all three tracks and lives in one file: `training/src/feedback.json`. The per-module ratings are generated automatically from each track's module titles, so adding a module needs no change here.
+
+To add a question, add an entry to `questions`:
+
+```json
+{"id": "fb_pace", "type": "scale", "section": "The training overall", "label": "The pace felt right.", "low": "Too slow or fast", "high": "Just right"}
+```
+
+`type` can be `scale` (buttons 1 to 5), `select` (with `options`), or `textarea` (add `"optional": true` for comments). Feedback IDs start with `fb_`. Ratings count toward the module being "Complete" unless the field is marked optional.
+
 ## Rules that keep saved answers safe
 
 - **IDs are permanent once people have used the training.** Field IDs (`m2_goal`), quiz IDs (`q3_a`), and capstone IDs (`cap_link`) are how answers are matched in the Google Sheet. Renaming one makes earlier answers look like a different question. Changing the *wording* is always fine.

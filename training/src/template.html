@@ -84,7 +84,7 @@ function buildItems(keys) {
     if (type === 'f') {
       var el = document.getElementById(id), s = S.f[id];
       if (!el || !s) return;
-      items.push({ id: id, module: modOf(el), type: el.dataset.cap === '1' ? 'capstone' : 'text', prompt: labelOf(el), answer: s.v, t: s.t });
+      items.push({ id: id, module: modOf(el), type: el.dataset.cap === '1' ? 'capstone' : (el.dataset.fb === '1' ? 'feedback' : 'text'), prompt: labelOf(el), answer: s.v, t: s.t });
     } else if (type === 'c') {
       var inp = document.querySelector('input[data-key="' + id + '"]'), c = S.c[id];
       if (!inp || !c) return;
@@ -107,7 +107,11 @@ function buildProgress() {
     var cd = cks.filter(function (i) { return i.checked; }).length;
     var qc = qs.filter(function (b) { var s = S.q[b.dataset.q]; return s && s.ok; }).length;
     var ff = fs.filter(function (e) { return e.value.trim(); }).length;
-    var st = (cks.length && cd === cks.length && qc === qs.length) ? 'Complete' : ((cd || qc || ff) ? 'In progress' : 'Not started');
+    var req = fs.filter(function (e) { return e.dataset.opt !== '1'; });
+    var reqDone = req.filter(function (e) { return e.value.trim(); }).length;
+    var st = (cks.length || qs.length)
+      ? ((cks.length && cd === cks.length && qc === qs.length) ? 'Complete' : ((cd || qc || ff) ? 'In progress' : 'Not started'))
+      : ((req.length && reqDone === req.length) ? 'Complete' : (ff ? 'In progress' : 'Not started'));
     out.push({ module: k, title: modTitle(k), status: st, checklistDone: cd, checklistTotal: cks.length, quizCorrect: qc, quizTotal: qs.length, fieldsFilled: ff, fieldsTotal: fs.length });
   }
   return out;
@@ -164,7 +168,7 @@ function pull() {
 function merge(d) {
   (d.items || []).forEach(function (it) {
     var t = +it.t || 0;
-    if (it.type === 'text' || it.type === 'capstone') {
+    if (it.type === 'text' || it.type === 'capstone' || it.type === 'feedback') {
       var cur = S.f[it.id];
       if (!cur || cur.t < t) S.f[it.id] = { v: String(it.answer == null ? '' : it.answer), t: t };
       if (it.review && it.review.status) S.rv[it.id] = it.review;
@@ -203,6 +207,16 @@ function checkExpect(el) {
   var v = parseFloat(el.value.replace(/[$,\s]/g, ''));
   note.textContent = (Math.abs(v - parseFloat(ex)) < 0.005) ? 'That matches.' : "That doesn't match yet. Recheck your math.";
 }
+function paintScales() {
+  $$('.scale').forEach(function (g) {
+    var v = document.getElementById(g.dataset.scale).value;
+    $$('.scale-btn', g).forEach(function (b) {
+      var on = b.dataset.v === v;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+  });
+}
 function updateProgress() {
   var total = 0, done = 0;
   for (var k = 1; k <= NMOD; k++) {
@@ -223,6 +237,7 @@ function render() {
     if (s && el.value !== s.v) el.value = s.v;
     checkExpect(el);
   });
+  paintScales();
   $$('.checklist input').forEach(function (i) { var s = S.c[i.dataset.key]; i.checked = !!(s && s.v); });
   $$('.quiz').forEach(renderQuiz);
   Object.keys(S.rv).forEach(function (id) {
@@ -269,6 +284,17 @@ $$('[data-f]').forEach(function (el) {
   }
   el.addEventListener('input', onEdit);
   el.addEventListener('change', onEdit);
+});
+
+$$('.scale').forEach(function (g) {
+  var hid = document.getElementById(g.dataset.scale);
+  $$('.scale-btn', g).forEach(function (b) {
+    b.addEventListener('click', function () {
+      hid.value = b.dataset.v;
+      hid.dispatchEvent(new Event('input', { bubbles: true }));
+      paintScales();
+    });
+  });
 });
 
 $$('.checklist input').forEach(function (inp) {
@@ -321,7 +347,7 @@ $('#switchUser').addEventListener('click', function () {
 
 $('#downloadBtn').addEventListener('click', function () {
   var rows = [['Module', 'Type', 'Prompt', 'Answer']];
-  $$('[data-f]').forEach(function (el) { if (el.value.trim()) rows.push([modOf(el), el.dataset.cap === '1' ? 'capstone' : 'text', labelOf(el), el.value]); });
+  $$('[data-f]').forEach(function (el) { if (el.value.trim()) rows.push([modOf(el), el.dataset.cap === '1' ? 'capstone' : (el.dataset.fb === '1' ? 'feedback' : 'text'), labelOf(el), el.value]); });
   $$('.quiz').forEach(function (b) { var s = S.q[b.dataset.q]; if (s && s.pick != null) rows.push([modOf(b), 'quiz', $('p', b).textContent.trim(), $$('.quiz-option', b)[s.pick].textContent.trim() + (s.ok ? ' (correct)' : ' (incorrect)')]); });
   var csv = rows.map(function (r) { return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
   var a = document.createElement('a');
@@ -333,7 +359,7 @@ $('#downloadBtn').addEventListener('click', function () {
 var cb = $('#completeBtn');
 if (cb) cb.addEventListener('click', function () {
   var note = $('#completeNote');
-  var caps = $$('#mod' + NMOD + ' [data-cap="1"][data-req="1"]');
+  var caps = $$('[data-cap="1"][data-req="1"]');
   var missing = caps.some(function (e) { return !e.value.trim(); });
   if (missing) { note.textContent = 'Add your capstone link above first, then mark the training complete.'; return; }
   S.done = { date: new Date().toISOString().slice(0, 10), t: nowMs() };

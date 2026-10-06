@@ -90,10 +90,17 @@ function buildDashboard_(ss) {
   sh.getRange('F11').setFormula('=IFERROR(QUERY(Responses!A:O,"select D, E, H, sum(K) where G = \'quiz\' and K > 0 group by D, E, H order by sum(K) desc limit 10 label D \'Track\', E \'Module\', H \'Question\', sum(K) \'Wrong attempts\'",1),"Nothing yet")');
 
   sh.getRange('A30').setValue('Capstones waiting for review').setFontWeight('bold');
-  sh.getRange('A31').setFormula('=IFERROR(QUERY(Responses!A:O,"select B, C, D, H, I where G = \'capstone\' and I is not null and L is null order by A desc label B \'Email\', C \'Name\', D \'Track\', H \'Prompt\', I \'Answer\'",1),"Nothing waiting")');
+  sh.getRange('A31').setFormula('=IFERROR(QUERY(Responses!A:O,"select B, C, D, H, I where G = \'capstone\' and I is not null and L is null order by A desc limit 18 label B \'Email\', C \'Name\', D \'Track\', H \'Prompt\', I \'Answer\'",1),"Nothing waiting")');
 
   sh.getRange('A50').setValue('Recent activity').setFontWeight('bold');
   sh.getRange('A51').setFormula('=IFERROR(QUERY(Members!A:H,"select B, C, F, E order by E desc limit 15 label B \'Name\', C \'Track\', F \'Current module\', E \'Last seen\'",1),"Nothing yet")');
+
+  // Feedback: ratings are stored as text, so convert them to numbers before averaging.
+  sh.getRange('A70').setValue('Feedback: average rating by question (1 to 5)').setFontWeight('bold');
+  sh.getRange('A71').setFormula('=IFERROR(QUERY({Responses!D2:D, Responses!G2:G, Responses!H2:H, ARRAYFORMULA(IFERROR(VALUE(Responses!I2:I),""))},"select Col1, Col3, avg(Col4), count(Col4) where Col2 = \'feedback\' and Col4 is not null group by Col1, Col3 label Col1 \'Track\', Col3 \'Question\', avg(Col4) \'Average\', count(Col4) \'Responses\'"),"No feedback yet")');
+
+  sh.getRange('A112').setValue('Feedback: written comments (newest first)').setFontWeight('bold');
+  sh.getRange('A113').setFormula('=IFERROR(QUERY(Responses!A:O,"select D, C, H, I where G = \'feedback\' and I is not null and (F = \'fb_improve\' or F = \'fb_best\' or F = \'fb_broken\') order by A desc limit 30 label D \'Track\', C \'Name\', H \'Question\', I \'Comment\'",1),"No comments yet")');
 
   sh.setColumnWidth(1, 160);
   sh.setColumnWidth(3, 260);

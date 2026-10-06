@@ -4,7 +4,7 @@
 
 ## The tracks
 
-Each track is **6 modules and about one hour**, with videos and readings, short exercises, quick checks, and a capstone your category chair reviews.
+Each track is **6 modules and about one hour**, with videos and readings, short exercises, quick checks, and a capstone your category chair reviews. A short, optional **Feedback** module at the end collects ratings and suggestions.
 
 | Track | For | Modules |
 |-------|-----|---------|
@@ -18,7 +18,7 @@ Start page: `https://YOUR-USERNAME.github.io/PVV/training/interactive/` (or open
 
 1. Open your track and enter your name and email on the Start tab.
 2. Work through the modules in any order. Answers save automatically, and you can leave and come back on any device: enter the same email and you'll resume where you left off.
-3. Submit your capstone link in the last module and click **Mark training complete**.
+3. Submit your capstone link in module 6, then rate the training in the optional Feedback module and click **Mark training complete**.
 4. Your category chair reviews the capstone. Their status and notes appear next to it the next time you open the workbook.
 5. Then you're assigned a **shadow project** with a real client, supervised by your chair, before solo client work.
 

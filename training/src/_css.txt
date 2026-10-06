@@ -70,6 +70,11 @@
   .step { background: var(--accent-light); border: 1px solid var(--accent); border-radius: 4px; padding: 0.45rem 0.9rem; font-size: 0.92rem; }
   .arrow { color: var(--accent); }
   figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.75rem; }
+  .scale { display: flex; gap: 0.5rem; margin-bottom: 0.35rem; }
+  .scale-btn { flex: 1; max-width: 3.5rem; padding: 0.55rem 0; border: 1px solid var(--border); border-radius: 6px; background: var(--card); font: inherit; color: var(--text); cursor: pointer; }
+  .scale-btn:hover { border-color: var(--accent); }
+  .scale-btn.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .scale-ends { display: flex; justify-content: space-between; max-width: 19.5rem; font-size: 0.8rem; color: var(--muted); margin-bottom: 1.25rem; }
   .header .note { font-size: 0.8rem; opacity: 0.8; margin: 0.5rem 0 0; }
   .nav-buttons .btn[disabled] { opacity: 0.5; cursor: default; }
   .field-note { font-size: 0.85rem; color: var(--muted); margin: -0.75rem 0 1rem; min-height: 1em; }

@@ -77,6 +77,11 @@
   .step { background: var(--accent-light); border: 1px solid var(--accent); border-radius: 4px; padding: 0.45rem 0.9rem; font-size: 0.92rem; }
   .arrow { color: var(--accent); }
   figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.75rem; }
+  .scale { display: flex; gap: 0.5rem; margin-bottom: 0.35rem; }
+  .scale-btn { flex: 1; max-width: 3.5rem; padding: 0.55rem 0; border: 1px solid var(--border); border-radius: 6px; background: var(--card); font: inherit; color: var(--text); cursor: pointer; }
+  .scale-btn:hover { border-color: var(--accent); }
+  .scale-btn.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .scale-ends { display: flex; justify-content: space-between; max-width: 19.5rem; font-size: 0.8rem; color: var(--muted); margin-bottom: 1.25rem; }
   .header .note { font-size: 0.8rem; opacity: 0.8; margin: 0.5rem 0 0; }
   .nav-buttons .btn[disabled] { opacity: 0.5; cursor: default; }
   .field-note { font-size: 0.85rem; color: var(--muted); margin: -0.75rem 0 1rem; min-height: 1em; }
@@ -93,7 +98,7 @@
 
 <div class="header">
   <h1>PVV Financial Training</h1>
-  <p>6 short modules, about an hour in total. Your progress saves automatically, and you can pick up where you left off.</p>
+  <p>6 short modules, about an hour in total, plus a quick feedback form. Your progress saves automatically, and you can pick up where you left off.</p>
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   <p class="note" id="syncStatus" aria-live="polite"></p>
 </div>
@@ -106,6 +111,7 @@
 <button data-mod="4">4. Budgets</button>
 <button data-mod="5">5. LOI</button>
 <button data-mod="6">6. Track</button>
+<button data-mod="7">7. Feedback</button>
 </nav>
 
 <div class="container">
@@ -113,7 +119,7 @@
 <!-- START -->
 <div class="module" id="mod0">
   <h2>Welcome to Financial training</h2>
-  <p class="meta">About 60 minutes in total</p>
+  <p class="meta">About 60 minutes, plus a 2-minute feedback form</p>
   <p>Funders don't fund good intentions. They fund clear needs, measurable outcomes, and budgets where every dollar has a job. PVV's financial team helps clients find funding and write grant materials, and this training walks you through that process with one practice client.</p>
 
   <div class="callout">
@@ -123,7 +129,7 @@
 
   <div class="card">
     <table>
-      <tr><th>#</th><th>Module</th><th>Time</th></tr><tr><td>1</td><td>Two doors of funding</td><td>8 min</td></tr><tr><td>2</td><td>Find funders that fit</td><td>10 min</td></tr><tr><td>3</td><td>Anatomy of a proposal</td><td>10 min</td></tr><tr><td>4</td><td>Budgets funders trust</td><td>12 min</td></tr><tr><td>5</td><td>Narrative and letter of inquiry</td><td>10 min</td></tr><tr><td>6</td><td>Track, comply, and stay in scope</td><td>10 min</td></tr>
+      <tr><th>#</th><th>Module</th><th>Time</th></tr><tr><td>1</td><td>Two doors of funding</td><td>8 min</td></tr><tr><td>2</td><td>Find funders that fit</td><td>10 min</td></tr><tr><td>3</td><td>Anatomy of a proposal</td><td>10 min</td></tr><tr><td>4</td><td>Budgets funders trust</td><td>12 min</td></tr><tr><td>5</td><td>Narrative and letter of inquiry</td><td>10 min</td></tr><tr><td>6</td><td>Track, comply, and stay in scope</td><td>10 min</td></tr><tr><td>7</td><td>Your feedback (optional)</td><td>2 min</td></tr>
     </table>
   </div>
 
@@ -416,6 +422,86 @@
 
   <div class="nav-buttons">
     <button class="btn btn-outline" onclick="goMod(5)">Back</button>
+    <button class="btn" onclick="goMod(7)">Next: Feedback</button>
+  </div>
+</div>
+
+<!-- FEEDBACK -->
+<div class="module" id="mod7">
+  <h2>Your feedback</h2>
+  <p class="meta">About 2 minutes. Optional, but it helps.</p>
+  <p>Two minutes, and it directly shapes the next version of this training. Your answers go to PVV's leadership. Be honest: nothing here affects your capstone review.</p>
+
+  <h3>How useful was each module?</h3>
+
+  <label for="fb_mod1" id="fb_mod1_l">Module 1: Two doors of funding</label>
+  <div class="scale" role="radiogroup" aria-labelledby="fb_mod1_l" data-scale="fb_mod1"><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="1">1</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="2">2</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="3">3</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="4">4</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="5">5</button></div>
+  <p class="scale-ends"><span>Not useful</span><span>Very useful</span></p>
+  <input type="hidden" id="fb_mod1" data-f="fb_mod1" data-fb="1">
+
+  <label for="fb_mod2" id="fb_mod2_l">Module 2: Find funders that fit</label>
+  <div class="scale" role="radiogroup" aria-labelledby="fb_mod2_l" data-scale="fb_mod2"><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="1">1</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="2">2</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="3">3</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="4">4</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="5">5</button></div>
+  <p class="scale-ends"><span>Not useful</span><span>Very useful</span></p>
+  <input type="hidden" id="fb_mod2" data-f="fb_mod2" data-fb="1">
+
+  <label for="fb_mod3" id="fb_mod3_l">Module 3: Anatomy of a proposal</label>
+  <div class="scale" role="radiogroup" aria-labelledby="fb_mod3_l" data-scale="fb_mod3"><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="1">1</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="2">2</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="3">3</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="4">4</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="5">5</button></div>
+  <p class="scale-ends"><span>Not useful</span><span>Very useful</span></p>
+  <input type="hidden" id="fb_mod3" data-f="fb_mod3" data-fb="1">
+
+  <label for="fb_mod4" id="fb_mod4_l">Module 4: Budgets funders trust</label>
+  <div class="scale" role="radiogroup" aria-labelledby="fb_mod4_l" data-scale="fb_mod4"><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="1">1</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="2">2</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="3">3</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="4">4</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="5">5</button></div>
+  <p class="scale-ends"><span>Not useful</span><span>Very useful</span></p>
+  <input type="hidden" id="fb_mod4" data-f="fb_mod4" data-fb="1">
+
+  <label for="fb_mod5" id="fb_mod5_l">Module 5: Narrative and letter of inquiry</label>
+  <div class="scale" role="radiogroup" aria-labelledby="fb_mod5_l" data-scale="fb_mod5"><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="1">1</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="2">2</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="3">3</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="4">4</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="5">5</button></div>
+  <p class="scale-ends"><span>Not useful</span><span>Very useful</span></p>
+  <input type="hidden" id="fb_mod5" data-f="fb_mod5" data-fb="1">
+
+  <label for="fb_mod6" id="fb_mod6_l">Module 6: Track, comply, and stay in scope</label>
+  <div class="scale" role="radiogroup" aria-labelledby="fb_mod6_l" data-scale="fb_mod6"><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="1">1</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="2">2</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="3">3</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="4">4</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="5">5</button></div>
+  <p class="scale-ends"><span>Not useful</span><span>Very useful</span></p>
+  <input type="hidden" id="fb_mod6" data-f="fb_mod6" data-fb="1">
+
+  <h3>The training overall</h3>
+
+  <label for="fb_clear" id="fb_clear_l">The training was clear and easy to follow.</label>
+  <div class="scale" role="radiogroup" aria-labelledby="fb_clear_l" data-scale="fb_clear"><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="1">1</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="2">2</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="3">3</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="4">4</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="5">5</button></div>
+  <p class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></p>
+  <input type="hidden" id="fb_clear" data-f="fb_clear" data-fb="1">
+
+  <label for="fb_ready" id="fb_ready_l">I feel ready to start a shadow project with a client.</label>
+  <div class="scale" role="radiogroup" aria-labelledby="fb_ready_l" data-scale="fb_ready"><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="1">1</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="2">2</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="3">3</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="4">4</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="5">5</button></div>
+  <p class="scale-ends"><span>Not ready</span><span>Very ready</span></p>
+  <input type="hidden" id="fb_ready" data-f="fb_ready" data-fb="1">
+
+  <label for="fb_media" id="fb_media_l">The videos, readings, and diagrams helped me learn.</label>
+  <div class="scale" role="radiogroup" aria-labelledby="fb_media_l" data-scale="fb_media"><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="1">1</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="2">2</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="3">3</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="4">4</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="5">5</button></div>
+  <p class="scale-ends"><span>Not at all</span><span>A lot</span></p>
+  <input type="hidden" id="fb_media" data-f="fb_media" data-fb="1">
+
+  <label for="fb_recommend" id="fb_recommend_l">I would recommend this training to a new member.</label>
+  <div class="scale" role="radiogroup" aria-labelledby="fb_recommend_l" data-scale="fb_recommend"><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="1">1</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="2">2</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="3">3</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="4">4</button><button type="button" class="scale-btn" role="radio" aria-checked="false" data-v="5">5</button></div>
+  <p class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></p>
+  <input type="hidden" id="fb_recommend" data-f="fb_recommend" data-fb="1">
+
+  <label for="fb_time">About how long did the whole training take you?</label>
+  <select id="fb_time" data-f="fb_time" data-fb="1"><option value="">Choose one</option><option>Under 45 minutes</option><option>45 to 60 minutes</option><option>60 to 75 minutes</option><option>More than 75 minutes</option></select>
+
+  <h3>In your own words</h3>
+
+  <label for="fb_best">What was the most useful thing you learned?</label>
+  <textarea id="fb_best" data-f="fb_best" data-fb="1" data-opt="1" placeholder="Optional"></textarea>
+
+  <label for="fb_improve">How could we improve this training? What should we change, cut, or add?</label>
+  <textarea id="fb_improve" data-f="fb_improve" data-fb="1" data-opt="1" placeholder="Optional, but this is the most helpful question"></textarea>
+
+  <label for="fb_broken">Did anything feel confusing, broken, or out of date?</label>
+  <textarea id="fb_broken" data-f="fb_broken" data-fb="1" data-opt="1" placeholder="Optional. Tell us which module."></textarea>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goMod(6)">Back</button>
     <button class="btn" id="completeBtn">Mark training complete</button>
   </div>
   <p class="saved-note" id="completeNote"></p>
@@ -476,7 +562,7 @@ function buildItems(keys) {
     if (type === 'f') {
       var el = document.getElementById(id), s = S.f[id];
       if (!el || !s) return;
-      items.push({ id: id, module: modOf(el), type: el.dataset.cap === '1' ? 'capstone' : 'text', prompt: labelOf(el), answer: s.v, t: s.t });
+      items.push({ id: id, module: modOf(el), type: el.dataset.cap === '1' ? 'capstone' : (el.dataset.fb === '1' ? 'feedback' : 'text'), prompt: labelOf(el), answer: s.v, t: s.t });
     } else if (type === 'c') {
       var inp = document.querySelector('input[data-key="' + id + '"]'), c = S.c[id];
       if (!inp || !c) return;
@@ -499,7 +585,11 @@ function buildProgress() {
     var cd = cks.filter(function (i) { return i.checked; }).length;
     var qc = qs.filter(function (b) { var s = S.q[b.dataset.q]; return s && s.ok; }).length;
     var ff = fs.filter(function (e) { return e.value.trim(); }).length;
-    var st = (cks.length && cd === cks.length && qc === qs.length) ? 'Complete' : ((cd || qc || ff) ? 'In progress' : 'Not started');
+    var req = fs.filter(function (e) { return e.dataset.opt !== '1'; });
+    var reqDone = req.filter(function (e) { return e.value.trim(); }).length;
+    var st = (cks.length || qs.length)
+      ? ((cks.length && cd === cks.length && qc === qs.length) ? 'Complete' : ((cd || qc || ff) ? 'In progress' : 'Not started'))
+      : ((req.length && reqDone === req.length) ? 'Complete' : (ff ? 'In progress' : 'Not started'));
     out.push({ module: k, title: modTitle(k), status: st, checklistDone: cd, checklistTotal: cks.length, quizCorrect: qc, quizTotal: qs.length, fieldsFilled: ff, fieldsTotal: fs.length });
   }
   return out;
@@ -556,7 +646,7 @@ function pull() {
 function merge(d) {
   (d.items || []).forEach(function (it) {
     var t = +it.t || 0;
-    if (it.type === 'text' || it.type === 'capstone') {
+    if (it.type === 'text' || it.type === 'capstone' || it.type === 'feedback') {
       var cur = S.f[it.id];
       if (!cur || cur.t < t) S.f[it.id] = { v: String(it.answer == null ? '' : it.answer), t: t };
       if (it.review && it.review.status) S.rv[it.id] = it.review;
@@ -595,6 +685,16 @@ function checkExpect(el) {
   var v = parseFloat(el.value.replace(/[$,\s]/g, ''));
   note.textContent = (Math.abs(v - parseFloat(ex)) < 0.005) ? 'That matches.' : "That doesn't match yet. Recheck your math.";
 }
+function paintScales() {
+  $$('.scale').forEach(function (g) {
+    var v = document.getElementById(g.dataset.scale).value;
+    $$('.scale-btn', g).forEach(function (b) {
+      var on = b.dataset.v === v;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+  });
+}
 function updateProgress() {
   var total = 0, done = 0;
   for (var k = 1; k <= NMOD; k++) {
@@ -615,6 +715,7 @@ function render() {
     if (s && el.value !== s.v) el.value = s.v;
     checkExpect(el);
   });
+  paintScales();
   $$('.checklist input').forEach(function (i) { var s = S.c[i.dataset.key]; i.checked = !!(s && s.v); });
   $$('.quiz').forEach(renderQuiz);
   Object.keys(S.rv).forEach(function (id) {
@@ -661,6 +762,17 @@ $$('[data-f]').forEach(function (el) {
   }
   el.addEventListener('input', onEdit);
   el.addEventListener('change', onEdit);
+});
+
+$$('.scale').forEach(function (g) {
+  var hid = document.getElementById(g.dataset.scale);
+  $$('.scale-btn', g).forEach(function (b) {
+    b.addEventListener('click', function () {
+      hid.value = b.dataset.v;
+      hid.dispatchEvent(new Event('input', { bubbles: true }));
+      paintScales();
+    });
+  });
 });
 
 $$('.checklist input').forEach(function (inp) {
@@ -713,7 +825,7 @@ $('#switchUser').addEventListener('click', function () {
 
 $('#downloadBtn').addEventListener('click', function () {
   var rows = [['Module', 'Type', 'Prompt', 'Answer']];
-  $$('[data-f]').forEach(function (el) { if (el.value.trim()) rows.push([modOf(el), el.dataset.cap === '1' ? 'capstone' : 'text', labelOf(el), el.value]); });
+  $$('[data-f]').forEach(function (el) { if (el.value.trim()) rows.push([modOf(el), el.dataset.cap === '1' ? 'capstone' : (el.dataset.fb === '1' ? 'feedback' : 'text'), labelOf(el), el.value]); });
   $$('.quiz').forEach(function (b) { var s = S.q[b.dataset.q]; if (s && s.pick != null) rows.push([modOf(b), 'quiz', $('p', b).textContent.trim(), $$('.quiz-option', b)[s.pick].textContent.trim() + (s.ok ? ' (correct)' : ' (incorrect)')]); });
   var csv = rows.map(function (r) { return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
   var a = document.createElement('a');
@@ -725,7 +837,7 @@ $('#downloadBtn').addEventListener('click', function () {
 var cb = $('#completeBtn');
 if (cb) cb.addEventListener('click', function () {
   var note = $('#completeNote');
-  var caps = $$('#mod' + NMOD + ' [data-cap="1"][data-req="1"]');
+  var caps = $$('[data-cap="1"][data-req="1"]');
   var missing = caps.some(function (e) { return !e.value.trim(); });
   if (missing) { note.textContent = 'Add your capstone link above first, then mark the training complete.'; return; }
   S.done = { date: new Date().toISOString().slice(0, 10), t: nowMs() };

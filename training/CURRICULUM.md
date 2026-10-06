@@ -10,6 +10,7 @@
 4. **Design a flyer people read** (12 min)
 5. **Channels and Stanford promotion** (10 min)
 6. **Measure and hand off** (10 min)
+7. **Feedback** (optional, 2 min)
 
 Linked resources:
 
@@ -30,6 +31,7 @@ Linked resources:
 4. **Budgets funders trust** (12 min)
 5. **Narrative and letter of inquiry** (10 min)
 6. **Track, comply, and stay in scope** (10 min)
+7. **Feedback** (optional, 2 min)
 
 Linked resources:
 
@@ -51,6 +53,7 @@ Linked resources:
 4. **Data and spreadsheets** (10 min)
 5. **Accessibility and mobile** (10 min)
 6. **Security, privacy, and handoff** (10 min)
+7. **Feedback** (optional, 2 min)
 
 Linked resources:
 
