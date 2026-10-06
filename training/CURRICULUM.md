@@ -13,7 +13,7 @@
 
 Linked resources:
 
-- Read: [PVV constitution (2026 draft)](https://github.com/Eddyo-Spaghettio/PVV/blob/main/docs/constitution-2026-draft.md)
+- Read: [PVV constitution (AY 2025-26)](https://github.com/Eddyo-Spaghettio/PVV/blob/main/docs/constitution.md)
 - Read: [Canva: A guide to nonprofit marketing, social media, and fundraising](https://www.canva.com/learn/your-guide-to-nonprofit-marketing-social-media-and-fundraising/)
 - Explore: [Candid Learning course catalog (find the video on storytelling tips)](https://learning.candid.org/page/course-catalog)
 - Explore: [Canva Design School: Canva Pro for Nonprofits](https://www.canva.com/design-school/courses/canva-pro-for-nonprofits/)
