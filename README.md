@@ -11,7 +11,7 @@ Everything PVV needs to operate, train members, and deliver Bridge Kits to partn
 | **Run Bridge Kit (Reach Pages + Console)** | [`bridge-kit/README.md`](bridge-kit/README.md) · [Deploy guide](bridge-kit/docs/DEPLOY.md) |
 | Understand how the club runs | [`docs/operations-plan.md`](docs/operations-plan.md) |
 | Learn what Bridge Kit is and pitch it | [`docs/bridge-kit-proposal.md`](docs/bridge-kit-proposal.md) |
-| Revise the constitution | [`docs/constitution-2026-draft.md`](docs/constitution-2026-draft.md) |
+| Read the constitution | [`docs/constitution.md`](docs/constitution.md) |
 | See the research behind our decisions | [`docs/research-notes.md`](docs/research-notes.md) |
 | Onboard a new marketing member | [`training/interactive/marketing-workbook.html`](training/interactive/marketing-workbook.html) |
 | Onboard a new financial member | [`training/interactive/financial-workbook.html`](training/interactive/financial-workbook.html) |
@@ -59,7 +59,7 @@ PVV/
 ├── README.md                          <- you are here
 ├── bridge-kit/                        <- Reach Pages + PVV Console
 │   └── site/                          <- generated, but committed ON PURPOSE: GitHub Pages serves from main
-├── docs/                              <- operations plan, proposal, constitution draft, research
+├── docs/                              <- operations plan, proposal, constitution, research
 ├── training/                          <- consultant training (see training/README.md)
 │   ├── src/                           <- lesson content (JSON) and page template
 │   ├── interactive/                   <- generated workbooks members open
